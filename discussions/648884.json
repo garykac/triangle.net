@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1456268",
+    "ThreadId": "648884",
+    "Html": "Hi,\r<br />\n<br />\nI need to increase the <em>limit</em> from 8 to 10 in with my polygons inside this function. It would be great to add a small description on how this method finds a point in a polygon and why you may need to increase the <em>limit = 8</em> threshold.\r<br />\n<br />\nThanks,\r<br />\n<br />\nAlberto<br />\n",
+    "PostedDate": "2015-12-17T05:12:58.5-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456271",
+    "ThreadId": "648884",
+    "Html": "See <a href=\"https://triangle.codeplex.com/discussions/542075\" rel=\"nofollow\">https://triangle.codeplex.com/discussions/542075</a><br />\n<br />\n<strong>EDIT:</strong> Actually, the way it is implemented now, the algorithm can easily be defeated:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">int</span> limit = 8;\n<span style=\"color:Blue;\">double</span> h = 1.0 / limit;\n\n<span style=\"color:Blue;\">var</span> contour = <span style=\"color:Blue;\">new</span> List&lt;Vertex&gt;() {\n    <span style=\"color:Blue;\">new</span> Vertex(0, 0), <span style=\"color:Blue;\">new</span> Vertex(1, 0), <span style=\"color:Blue;\">new</span> Vertex(h, h), <span style=\"color:Blue;\">new</span> Vertex(0, 1)\n};\n\n<span style=\"color:Blue;\">try</span>\n{\n    Contour.FindPointInPolygon(contour, limit);\n}\n<span style=\"color:Blue;\">catch</span>\n{\n    Console.WriteLine(<span style=\"color:#A31515;\">&quot;Failed.&quot;</span>);\n}\r\n</pre></div>The algorithm described in the above link (searching at a convex corner) might be a better option.<br />\n",
+    "PostedDate": "2015-12-17T05:37:20.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456272",
+    "ThreadId": "648884",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://triangle.codeplex.com/workitem/11038\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2015-12-17T05:38:23.257-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

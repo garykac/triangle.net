@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1498229",
+    "ThreadId": "663872",
+    "Html": "I was very happy to find triangle.net, and am working through an issue.\r<br />\n I hope this project is still alive, last activity was a while ago.\r<br />\n<br />\nHere is the data, it is three segments x,y,z vals:\r<br />\n Seg 1\r<br />\n from = 3470.24446228851,2026.74647195611,0.081678324900508\r<br />\n to = 3470.23824070941,2025.38518075843,0\r<br />\n Seg 2\r<br />\n from = 3470.23824070941,2025.38518075843,0\r<br />\n to = 3470.23554561524,2024.79548995642,-0.040289679343289\r<br />\n Seg 3\r<br />\n from = 3470.23824070941,2025.3851807584,0\r<br />\n to = 3469.65964599373,2025.84786418632,0\r<br />\n<br />\nThese are rounded to 15 sig figs\r<br />\n I noticed if I move the data closer to 0,0 the problem stops.\r<br />\n Hopefully this small set of data will be simple enough to reveal the problem.\r<br />\n thanks<br />\n",
+    "PostedDate": "2017-10-11T13:16:47.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1498230",
+    "ThreadId": "663872",
+    "Html": "I figured it out, soooooooooo stoked.\r<br />\nAs I was doing test cases, I noticed triangles were being split where I did not have points. I thought I had set minimum angle to 0, and I had, so why was this happening? I looked at the ConstraintOptions class and noticed the SegmentSplitting param. Sounds about exactly what I did not want on, so I set to 2. It worked. I tried on my &quot;large dataset&quot; way away from 0,0 and it worked perfect. I think my idea of no duplicate verts might be needed when segmentsplitting is on, but never tried it. Hopefully others benefit from my 8 hours playing around with this.\r<br />\n<br />\nI duplicated this post on the Github site, so I know its in two places, and I think its worth having it in both.\r<br />\nI sure wish I had the contact name of someone familiar with this set of code, I could hire them here and there and point them to others that would want their help too.\r<br />\nI still feel like I have not decently explored what triangle.net can do.<br />\n",
+    "PostedDate": "2017-10-11T16:13:50.733-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

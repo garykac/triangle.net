@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1458919",
+    "ThreadId": "649920",
+    "Html": "Hi,\r<br />\n<br />\nFirst of all thanks for the tip-top library!\r<br />\n<br />\nI created a mesh with multiple regions and am trying to choose a different net precision in each one.\r<br />\n<br />\nThis seemed a cakewalk in the older version as can be seen in the example “Refining regions” on your site.\r<br />\n<br />\nHowever I can’t figure it out for the new version. My best try so long was the following ( analogous to your old example but in VB.NET):<br />\n<pre><code>    '// Define the mesh parameters:</code></pre>\n\nDim options As New ConstraintOptions With {.ConformingDelaunay = True,               .UseRegions = True}\r<br />\n<br />\nDim quality As New QualityOptions With {.MinimumAngle = 25, .MaximumAngle = 180, .MaximumArea = 300}<br />\n<pre><code>    '// Triangulate the mesh:\n    Dim mesh = Q.Triangulate(options, quality)\n\n\n    '// Calculate mesh quality\n    Dim qualitycheck As New QualityMeasure\n    qualitycheck.Update(mesh)\n\n    '// Use the minimum triangle area for region refinement\n    Dim area As Double = 1.75 * qualitycheck.AreaMinimum\n\n    For Each t In mesh.Triangles\n\n        '// Set area constraint for all triangles in region 1\n        If t.Label = 1 Then t.Area = area\n\n    Next t\n\n    '// Use per triangle area constraint for next refinement\n    quality.VariableArea = True\n    mesh.Refine(quality)\n\n    Dim s = New SimpleSmoother\n    s.Smooth(mesh)\n</code></pre>\n\nRefining the mesh in this way has unfortunately shown no effect and the smoother throws an internal error.\r<br />\n<br />\nIs it possible? How can I achieve this?\r<br />\n<br />\nThank you<br />\n",
+    "PostedDate": "2016-01-12T06:34:50.023-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458951",
+    "ThreadId": "649920",
+    "Html": "The <code>VariableArea</code> option wasn't taken into account.<br />\n<br />\nPlease download the latest source code and take a look at the new <a href=\"https://triangle.codeplex.com/wikipage?title=Example%204&amp;referringTitle=Documentation\" rel=\"nofollow\">example</a>.<br />\n",
+    "PostedDate": "2016-01-12T09:02:54.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459076",
+    "ThreadId": "649920",
+    "Html": "Thanks a lot for the update!\r<br />\n<br />\nNow it's working perfectly<br />\n",
+    "PostedDate": "2016-01-13T05:12:56.147-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

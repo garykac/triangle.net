@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1497159",
+    "ThreadId": "663294",
+    "Html": "Hi,\r<br />\nwhere can I enumerate <strong>Voronoi regions</strong> (and its points) in the Beta 4 implementation?\r<br />\n<br />\nCould you just point me to the right direction?\r<br />\nThanks.<br />\n",
+    "PostedDate": "2017-06-22T06:21:25.037-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497164",
+    "ThreadId": "663294",
+    "Html": "It's the <code>Faces</code> property of the DCEL:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">var</span> voronoi = <span style=\"color:Blue;\">new</span> StandardVoronoi(mesh);\n\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> face <span style=\"color:Blue;\">in</span> voronoi.Faces)\n{\n    HalfEdge e = <span style=\"color:Blue;\">null</span>;\n\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> edge <span style=\"color:Blue;\">in</span> face.EnumerateEdges())\n    {\n        e = edge;\n\n        Console.WriteLine(e.Origin);\n    }\n\n    <span style=\"color:Blue;\">if</span> (!face.Bounded)\n    {\n        Console.WriteLine(e.Twin.Origin);\n    }\n}\r\n</pre></div><strong>EDIT</strong>: added code to report points of the Voronoi region.<br />\n<br />\nFor unbounded regions, the first and last point reported are not part of the Voronoi diagram (meaning they aren't dual to any triangle), so you decide if you want to have them included or not.<br />\n",
+    "PostedDate": "2017-06-22T14:18:28.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497176",
+    "ThreadId": "663294",
+    "Html": "Thanks for that!\r<br />\n<br />\nI have some code integrating Triangle.NET into Unity here <a href=\"https://github.com/eppz/Unity.Library.eppz.Geometry/blob/master/AddOns/TriangleNetAddOns.cs\" rel=\"nofollow\">https://github.com/eppz/Unity.Library.eppz.Geometry/blob/master/AddOns/TriangleNetAddOns.cs</a>, I can now update it to beta 4. Awesome tools, thanks!<br />\n",
+    "PostedDate": "2017-06-23T04:33:27.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

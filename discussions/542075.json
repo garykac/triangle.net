@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1233470",
+    "ThreadId": "542075",
+    "Html": "The way to define holes by having to provide a point inside of the hole seems quirky.\r<br />\n<br />\nIt's rather tricky to define such a point when the hole is concave.\r<br />\n<br />\nWhat's a reliable way to find a point inside a concave hole?\r<br />\n<br />\nIs an algorithm <a href=\"http://alienryderflex.com/polygon/\" rel=\"nofollow\">like this</a> really needed?<br />\n",
+    "PostedDate": "2014-04-12T06:15:15.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1233596",
+    "ThreadId": "542075",
+    "Html": "Probably not needed, but straightforward to implement:<br />\n<br />\nLet's assume your polygon is made up of the points <code>(a_0, a_1 ... a_n)</code>.<br />\n<ol>\n<li>Find a convex corner a_k.</li>\n<li>\nThere exists a point inside triangle <code>a_(k-1), a_k, a_(k+1)</code> which lies inside the polygon.<br />\n</li>\n</ol>\nTo find that point you use the above algorithm:<br />\n<ol>\n<li>Let <code>c = (a_(k-1) + a_(k+1)) / 2</code>, the center point on the line <code>[a_(k-1) a_(k+1)]</code>.</li>\n<li>Let <code>d = a_k - c</code>, the vector from c to a_k, and let <code>x = length(c) / 2</code><br />\nRepeat:</li>\n<li>Check if <code>p = c + (1 - x) * d</code> is inside the polygon</li>\n<li>\nLet <code>x = x / 2</code><br />\n</li>\n</ol>\nSo this is a binary search on the line from c to a_k. If the loop is processed <em>m</em> times, the total complexity is <em>O(m n)</em> since the &quot;is inside the polygon&quot; check is <em>O(n)</em>.<br />\n",
+    "PostedDate": "2014-04-13T02:16:19.713-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1233600",
+    "ThreadId": "542075",
+    "Html": "Actually, it is easier to just choose any segment of the hole and do the above binary search in <strong>both</strong> directions perpendicular to the segment. Probably not as efficient, but still <em>O(m n)</em>.<br />\n",
+    "PostedDate": "2014-04-13T02:28:59.523-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234203",
+    "ThreadId": "542075",
+    "Html": "Should the polygon points be stored in clockwise or anticlockwise direction? If there is not a specific rule, how can I identify a convex corner?<br />\n",
+    "PostedDate": "2014-04-15T00:18:50.77-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234221",
+    "ThreadId": "542075",
+    "Html": "Well, obviously the user should know how the contours are stored. I guess, that's one reason why Shewchuk chose to define holes the way he did: the user should know best how to handle them!<br />\n<br />\nIf you don't like the heuristic approach above, you could triangulate the hole and choose a point in any of the triangles. But this will always be O(n log n)...<br />\n",
+    "PostedDate": "2014-04-15T01:25:14.143-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1234236",
+    "ThreadId": "542075",
+    "Html": "Hey all,  I settled on <a href=\"http://stackoverflow.com/a/16391873/1391647\" rel=\"nofollow\">this very compact implementation</a> to check whether a point is inside the convex hole.<br />\n<br />\nI then iterate and construct a series of candidate points: two per corner (one on either 'side' of it, on the corner's bisector), and test until positive.<br />\n",
+    "PostedDate": "2014-04-15T02:54:03.94-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

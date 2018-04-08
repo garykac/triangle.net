@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "951516",
+    "ThreadId": "405607",
+    "Html": "\r\n<p>hallo,</p>\r\n<p>i thing in the file NewLocation.cs is a bug</p>\r\n<p>...<span style=\"color:green\">&nbsp;</span></p>\r\n<p><span style=\"color:green\">//&nbsp;keeps&nbsp;the&nbsp;coordinates&nbsp;of&nbsp;circumcenter&nbsp;of&nbsp;itself&nbsp;and&nbsp;neighbor&nbsp;triangle&nbsp;circumcenter\r\n</span><span style=\"color:#2b91af\">Point</span>&nbsp;myCircumcenter&nbsp;= default(<span style=\"color:#2b91af\">Point</span>()),&nbsp;neighborCircumcenter&nbsp;=&nbsp;<span style=\"color:blue\">default</span>(<span style=\"color:#2b91af\">Point</span>);</p>\r\n<p>...</p>\r\n<pre style=\"font-family:Consolas; font-size:13; color:black; background:white\">myCircumcenter.x&nbsp;=&nbsp;torg.x&nbsp;&#43;&nbsp;dx;\r\nmyCircumcenter.y&nbsp;=&nbsp;torg.y&nbsp;&#43;&nbsp;dy;<br><br><br>must ...<br><br><span style=\"color:#2b91af\">Point</span>&nbsp;myCircumcenter&nbsp;= new <span style=\"color:#2b91af\">Point</span>(),&nbsp;neighborCircumcenter&nbsp;=&nbsp;<span style=\"color:blue\">default</span>(<span style=\"color:#2b91af\">Point</span>);</pre>\r\n",
+    "PostedDate": "2012-12-04T23:04:30.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "951556",
+    "ThreadId": "405607",
+    "Html": "\r\n<p>Sure thing!</p>\r\n<p>Point once was struct, so initializing it with default() was ok. But now you will clearly get an exception when calling FindNewLocationWithoutMaxAngle...</p>\r\n<p>Thanks, will be fixed soon!</p>\r\n",
+    "PostedDate": "2012-12-05T01:32:33.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "951557",
+    "ThreadId": "405607",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"http://triangle.codeplex.com/workitem/9768\">here</a> to go to the work item and continue the discussion.",
+    "PostedDate": "2012-12-05T01:33:25.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

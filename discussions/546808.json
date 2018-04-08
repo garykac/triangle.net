@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1250429",
+    "ThreadId": "546808",
+    "Html": "I have a question, but wanted to first congratulate you on your great implementation.<br />\nI would like to use their algorithm to insert Steiner predefined points within a mesh. With Poly2Tri library that's possible, but I would like to use its code, it is possible to obtain the same result? how?<br />\nI need it to apply triangulation on a contour and points calculated by Straight Skeleton.<br />\n<br />\nThanks!<br />\n",
+    "PostedDate": "2014-05-28T05:44:52.243-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1250510",
+    "ThreadId": "546808",
+    "Html": "I got the results I need using Segments to define the outline of the mesh.\r<br />\nThis correct?\r<br />\n<a href=\"https://onedrive.live.com/?cid=568BCA577D6764CF&amp;id=568BCA577D6764CF!2424&amp;v=3\" rel=\"nofollow\">Image</a>\r<br />\nIts framework is really good, congratulations!!<br />\n",
+    "PostedDate": "2014-05-28T08:21:05.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

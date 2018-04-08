@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1228948",
+    "ThreadId": "540788",
+    "Html": "Is there any efficient way to get info of edge to adjacent triangles ?\r<br />\n<br />\nI need to search edge to triangle/triangle to edge information.\r<br />\n<br />\nThanks a lot for amazing library.\r<br />\n<br />\ncheers<br />\n",
+    "PostedDate": "2014-04-01T02:56:14.043-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1228964",
+    "ThreadId": "540788",
+    "Html": "I guess you are using the <code>mesh.Edges</code> property? At the moment, there's no way to get adjacent triangles out of the box. You could add a property to the <code>Edge</code> class (returning an <code>ITraingle</code> or just the corresponding ID) and then set it in the <code>EdgeEnumerator</code> class.<br />\n<br />\nBut it's fairly easy to do it by hand (have a look at the <a href=\"https://triangle.codeplex.com/wikipage?title=Quadratic%20Elements\" rel=\"nofollow\">Quadratic Elements</a> documentation):<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">private</span> <span style=\"color:Blue;\">void</span> ProcessEdges(Mesh mesh)\n{\n    mesh.Renumber();\n\n    <span style=\"color:Green;\">// Array storing the 3 vertices of a triangle.</span>\n    <span style=\"color:Blue;\">var</span> verts = <span style=\"color:Blue;\">new</span> Point[3];\n\n    <span style=\"color:Green;\">// Vertices of current edge.</span>\n    Point p, q;\n\n    ITriangle neighbor;\n    <span style=\"color:Blue;\">int</span> nid;\n\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> tri <span style=\"color:Blue;\">in</span> mesh.Triangles)\n    {\n        <span style=\"color:Green;\">// Get the vertices of the triangle.</span>\n        verts[0] = tri.GetVertex(0);\n        verts[1] = tri.GetVertex(1);\n        verts[2] = tri.GetVertex(2);\n\n        <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> i = 0; i &lt; 3; i++)\n        {\n            <span style=\"color:Green;\">// The edge opposite to vertex i.</span>\n            p = verts[(i + 1) % 3];\n            q = verts[(i + 2) % 3];\n\n            <span style=\"color:Green;\">// The neighbor opposite to vertex i.</span>\n            neighbor = tri.GetNeighbor(i);\n            nid = neighbor == <span style=\"color:Blue;\">null</span> ? -1 : neighbor.ID;\n\n            <span style=\"color:Green;\">// Consider each edge only once.</span>\n            <span style=\"color:Blue;\">if</span> ((tri.ID &lt; nid) || (nid &lt; 0))\n            {\n                <span style=\"color:Green;\">// Process edge [p -&gt; q] of triangle &quot;tri&quot;, shared with &quot;neighbor&quot;</span>\n            }\n        }\n    }\n}\r\n</pre></div>",
+    "PostedDate": "2014-04-01T04:31:48.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229356",
+    "ThreadId": "540788",
+    "Html": "I actually need extra properties in Edges. Each edge is either part of 2 triangles or 1 (in on boundary of triangulation). Similarly each triangle has 3 edges as properties. \r<br />\n<br />\nID cant be changed once done because I need to look from edge-triangle and triangle-edge relation. I am going though code, but some tips will help greatly.<br />\n",
+    "PostedDate": "2014-04-02T02:15:30.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229365",
+    "ThreadId": "540788",
+    "Html": "one more thing, what do you mean by &quot;// The neighbor opposite of vertex i.&quot;? There can be N-number of triangle associated with a vertex. How come 1 or 2 only ? \r<br />\n<br />\nI hope I am clear. \r<br />\n<br />\nThanks again, <br />\n",
+    "PostedDate": "2014-04-02T02:22:58.8-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1229412",
+    "ThreadId": "540788",
+    "Html": "Make sure you understand how Triangle.NET stores its <a href=\"https://triangle.codeplex.com/wikipage?title=Topology\" rel=\"nofollow\">Topology</a>.\r<br />\n<br />\nThe above code (I edited it a bit) clearly shows how you get the edges for each triangle and the corresponding neighbor across an edge. What's left for you is to choose some clever datastructures for fast access to the information you need.<br />\n",
+    "PostedDate": "2014-04-02T04:51:23.107-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

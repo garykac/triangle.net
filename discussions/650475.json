@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1460668",
+    "ThreadId": "650475",
+    "Html": "First of all great library, has been much more robust for me than poly2tri thanks.\r<br />\n<br />\nI am still using clipper to cut holes out of polys prior to passing to Triangle.NET but this introduces accuracy issues as that uses int coordinates - what do other people use, any change to add poly clipping in the future?\r<br />\n<br />\nAlso can anyone tell me what happened with the original Quake <a href=\"https://www.cs.cmu.edu/~quake/triangle.html\" rel=\"nofollow\">https://www.cs.cmu.edu/~quake/triangle.html</a> code - did Jonathan Richard Shewchuk release the code into the public domain or commercial license is still an issue?\r<br />\nThanks<br />\n",
+    "PostedDate": "2016-01-26T01:08:27.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463024",
+    "ThreadId": "650475",
+    "Html": "Sorry for delay.\r<br />\n<br />\nThere are no plans to add clipping. Why don't you use the built-in hole cutting that comes with Triangle?\r<br />\n<br />\nThe original license isn't compatible with any open source license, so, as someone on SO put it: you might doubt the legality of this project.<br />\n",
+    "PostedDate": "2016-02-12T12:34:49.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464385",
+    "ThreadId": "650475",
+    "Html": "A had a problem with the hole cutting in Triangle.Net - there was no solution that handles all cases of 'holes' that can span or split a polygon, potentially making more polygons. I merely wanted all polys of 1 winding to be removed from the other poly but I could get nothing consistently working like clipper.Execute(ClipType.ctDifference, solution, PolyFillType.pftEvenOdd, PolyFillType.pftNegative) and then using Triangle to triangulate each poly returned<br />\n",
+    "PostedDate": "2016-02-24T04:36:53.69-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

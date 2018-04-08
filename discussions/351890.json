@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "822317",
+    "ThreadId": "351890",
+    "Html": "<p>I found this project when searhing, and download and try your test code.&nbsp;I found it very powerful yet very fast.&nbsp;I think you've done a very good job. Yet I have some questions on it:</p>\n<p>1) how to control the refining process of a mesh? Does it have some parameters (such as min angle, max number of cells). In your test app, the only way to refine the mesh is to click&nbsp; the \"Refine\" buttton, and the mesh refined automatically without any aditonal paremeters to control it. Could you give some more explations or code on this?</p>\n<p>2) Since the C code of Triagle has been largely improved by&nbsp;&nbsp;Hale Erten and Alper &Uuml;ng&ouml;r, does Triangle.Net have the improved functions, or it&nbsp;is just the C# version of&nbsp;the orginal C version of&nbsp;Triagle (<a href=\"http://www.cs.berkeley.edu/~jrs\">Jonathan Richard Shewchuk</a>)?&nbsp;&nbsp;Or do you intend to include those improvements into Triangle.Net in the future?</p>\n<p>I am really very intersted in this project, and hope you gain great success. Thanks for your good job!</p>",
+    "PostedDate": "2012-04-11T03:51:16.077-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "822386",
+    "ThreadId": "351890",
+    "Html": "<p>You can't control the triangulation parameters form the test app at the moment. This will change for Beta 2. For now, if you want to do anything useful, you will have to write your own code. Use the SetOptions method to control the parameters:</p>\n<div style=\"color: black; background-color: white;\">\n<pre>Mesh mesh = <span style=\"color: blue;\">new</span> Mesh();\n\nmesh.SetOption(Options.Quality, <span style=\"color: blue;\">true</span>);\nmesh.SetOption(Options.MinAngle, 25);\nmesh.SetOption(Options.MaxArea, 0.05);\n\nmesh.Triangulate(pathToData + <span style=\"color: #a31515;\">\"someGeometry.poly\"</span>);\n\n<span style=\"color: green;\">// Refine with new max area</span>\nmesh.SetOption(Options.MaxArea, 0.01);\nmesh.Refine();\n</pre>\n</div>\n<p>You can find more code examples in the documentation section. There's also an option for the maximum number of steiner points to use, so you will have some control over the maximum number of elements produced. But you probably don't want to use this option  (the meshes produced aren't good).<br /> <br /> Triangle.NET already uses the improved algorithm by Erten/&Uuml;ng&ouml;r for min/max angle constraints. For area constraints, it uses offcenters as the original Triangle code. I'm currently working on a mesh smoothing algorithm, which will improve mesh quality even  more. It's planned for Beta 2 ...</p>",
+    "PostedDate": "2012-04-11T06:51:11.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "822698",
+    "ThreadId": "351890",
+    "Html": "<p>Thanks for you reply. And I'm much clear about Trangle.Net now. It is really a good job. I am also expecting for the enhanced ablities of Beta&nbsp;2. Thanks again.&nbsp;</p>",
+    "PostedDate": "2012-04-11T19:42:13.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

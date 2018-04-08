@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1478968",
+    "ThreadId": "656430",
+    "Html": "Hi, \r<br />\n<br />\nis it possible to specify concave holes when using Delaunay triangulation?\r<br />\n<br />\nI am well aware of this extension function: \r<br />\n<br />\n/// &lt;summary&gt;<br />\n<pre><code>    /// Add a polygon ring to the geometry and make it a hole.\n    /// &lt;/summary&gt;\n    /// &lt;remarks&gt;\n    /// WARNING: This works for convex polygons, but not for non-convex regions in general.\n    /// &lt;/remarks&gt;\n    /// &lt;param name=&quot;points&quot;&gt;List of points which make up the hole.&lt;/param&gt;\n    /// &lt;param name=&quot;mark&quot;&gt;Common boundary mark for all segments of the hole.&lt;/param&gt;\n    public static void AddRingAsHole(this InputGeometry geometry,\n            IEnumerable&lt;Point&gt; points, int mark = 0)\n\n</code></pre>\n\nIs there a work around for concave polygons?\r<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2016-07-14T11:39:50.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1478978",
+    "ThreadId": "656430",
+    "Html": "The latest source code (beta 4) adds support for concave holes, see <a href=\"http://triangle.codeplex.com/SourceControl/latest#Triangle.NET/Triangle/Geometry/Contour.cs\" rel=\"nofollow\">Contour</a> class.<br />\n",
+    "PostedDate": "2016-07-14T13:23:17.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1479051",
+    "ThreadId": "656430",
+    "Html": "Aha.. Yes I was using an old version. The new one works amazingly. Thanks so much!<br />\n",
+    "PostedDate": "2016-07-15T09:24:03.79-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

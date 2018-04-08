@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1492517",
+    "ThreadId": "661279",
+    "Html": "Great work ...\r<br />\ni use 3d points on a projects but when i triangulate them as a result i get 2d points for the extra  created points. it means i can not use them for making isolines on Autocad. Trying a couple of months to find a solution and finally i got it. i compile project with USE_Z and USE_ATTRIBS params and on the first attribute i set the Z. The triangulation calculates attributes and the result of first attribute is Z value of the point. after the triangulation i replace z value with attribute[0] and i have what i want<br />\n",
+    "PostedDate": "2017-02-11T09:34:57.477-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493490",
+    "ThreadId": "661279",
+    "Html": "Thanks for bringing up this issue. When compiling with USE_Z, the z coordinate should be interpolated properly.<br />\n",
+    "PostedDate": "2017-03-02T02:31:12.47-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1493491",
+    "ThreadId": "661279",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://triangle.codeplex.com/workitem/11165\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2017-03-02T02:32:41.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

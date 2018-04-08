@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1359839",
+    "ThreadId": "584611",
+    "Html": "First of wall, thanks for great library!\r<br />\n<br />\nI have two questions related to this case:\r<br />\n<img src=\"http://s4.postimg.org/vktdsfurh/picture.png\" alt=\"Image\" />\r<br />\n<br />\nResult Polygon is constructed using the following code:<br />\n<pre><code>            var polygon = new Polygon();\n\n            // tile borders\n            polygon.Add(new Vertex(0.0, 0.0, 1));\n            polygon.Add(new Vertex(0, 100, 1));\n            polygon.Add(new Vertex(100, 100, 1));\n            polygon.Add(new Vertex(100, 0, 1));\n\n            polygon.Add(new Edge(0, 1));\n            polygon.Add(new Edge(1, 2));\n            polygon.Add(new Edge(2, 3));\n            polygon.Add(new Edge(3, 0));\n\n            polygon.AddContour(new List&lt;Vertex&gt;()\n            {\n                new Vertex(30, -20),\n                new Vertex(50, -20),\n                new Vertex(50, 70),\n                new Vertex(30, 70)\n            }, 2);\n\n            polygon.AddContour(new List&lt;Vertex&gt;()\n            {\n                new Vertex(15, 20),\n                new Vertex(17, 31),\n                new Vertex(45, 30),\n                new Vertex(55, 15)\n            }, 3);\n\n            polygon.Regions.Add(new RegionPointer(1, 1, 1));\n            polygon.Regions.Add(new RegionPointer(40, 20, 2));\n\n            return polygon;</code></pre>\n\nHere I have three regions. I want to do with them the following:<br />\n<ol>\n<li>Restrict resulting mesh to be in first (big square) region. So, this bottom square should be removed from result.</li>\n<li>\nProcess these regions separately (e.g. fill with different color, last one wins). I can do it with RegionIterator, but if they intersects, only one part of region is processed (for example, yellow area for the query):<br />\n</li>\n</ol>\n<pre><code>            var regionIterator = new RegionIterator(mesh);\n            var tree = new QuadTree(mesh);\n            var start = tree.Query(&lt;coords of point inside yellow area&gt;) as Triangle;\n            regionIterator.Process(start, triangle =&gt;\n            {\n                // fill triangles with color for this region\n            });</code></pre>\n\nIs it possible to tweak somehow source code to achieve that?<br />\n",
+    "PostedDate": "2015-03-04T08:08:54.757-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1359888",
+    "ThreadId": "584611",
+    "Html": "Sorry, but this won't work. The region iterator will stop at any subsegment it finds.\r<br />\n<br />\nYou should probably have a look at polygon clipping. There's a nice library called Clipper: <a href=\"http://www.angusj.com/delphi/clipper.php\" rel=\"nofollow\">http://www.angusj.com/delphi/clipper.php</a><br />\n",
+    "PostedDate": "2015-03-04T12:36:50.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1359896",
+    "ThreadId": "584611",
+    "Html": "Know about it. So will try to clip polygons using clipper before triangulation.\r<br />\n<br />\nThanks for your help!<br />\n",
+    "PostedDate": "2015-03-04T13:16:58.297-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

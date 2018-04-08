@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1131800",
+    "ThreadId": "471919",
+    "Html": "Hello,\r<br />\n<br />\nWhen I try to create a quality mesh of the following .poly file, I get an Index Out of Bounds exception from Enqueue(BadTriangle badtri).  Can you provide me with any guidance?\r<br />\n<br />\nThank you.\r<br />\n<br />\n.poly\r<br />\n7 2 0 1\r<br />\n0 0 0 1\r<br />\n1 2 0 1\r<br />\n2 2 6 1\r<br />\n3 0.4 1.2 3\r<br />\n4 0.8 2.4 3\r<br />\n5 1.2 3.6 3\r<br />\n6 1.6 4.8 3\r<br />\n3 1\r<br />\n0 0 1 1\r<br />\n1 1 2 1\r<br />\n2 2 0 1\r<br />\n0<br />\n",
+    "PostedDate": "2013-12-04T10:37:15.133-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1131890",
+    "ThreadId": "471919",
+    "Html": "See <a href=\"http://www.cs.cmu.edu/~quake/triangle.trouble.html\" rel=\"nofollow\">http://www.cs.cmu.edu/~quake/triangle.trouble.html</a>:<br />\n<blockquote>\nStrange things can happen if you've taken liberties with your PSLG. Do you have a vertex lying in the middle of a segment? Triangle sometimes copes poorly with that sort of thing. Do you want to lay out a collinear row of evenly spaced, segment-connected vertices? <strong>Have you simply defined one long segment connecting the leftmost vertex to the rightmost vertex, and a bunch of vertices lying along it?</strong> This method occasionally works, especially with horizontal and vertical lines, but often it doesn't, and you'll have to connect each adjacent pair of vertices with a separate segment. If you don't like it, tough.<br />\n</blockquote>\n",
+    "PostedDate": "2013-12-04T13:15:17.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

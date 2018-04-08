@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1262096",
+    "ThreadId": "550397",
+    "Html": "wo, thanks so much for your help. \r<br />\n<br />\nI have another two related questions, so I open another thread.\r<br />\n<br />\nHow can I avoid adding additional vertexes to my boundary.  Also, I added a set of vertexes into the polygon, after smoothing, those points are moved.  I want those points fixed in the domain to simulate some structures.  For example, I added some dense points in the floodplain of rivers to simulate side channel.  How do I can better quality of mesh using smoothing or other functions while fixing those vertexes.\r<br />\n<br />\nMany thanks.\r<br />\n<br />\nVictor<br />\n",
+    "PostedDate": "2014-07-02T11:52:13.35-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1262105",
+    "ThreadId": "550397",
+    "Html": "To prevent boundary segment splitting, set the <code>ConstraintOptions</code> property <code>SegmentSplitting</code>:<br />\n<ul>\n<li><em>SegmentSplitting = 0</em> is the default splitting behavior</li>\n<li><em>SegmentSplitting = 1</em> means no new vertices on the boundary</li>\n<li>\n<em>SegmentSplitting = 2</em> prevents all segment splitting, including internal boundaries<br />\n</li>\n</ul>\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">var</span> options = <span style=\"color:Blue;\">new</span> ConstraintOptions() { SegmentSplitting = 1 };\n<span style=\"color:Blue;\">var</span> quality = <span style=\"color:Blue;\">new</span> QualityOptions() { MinimumAngle = 25 };\n\n<span style=\"color:Blue;\">var</span> mesh = poly.Triangulate(options, quality);\r\n</pre></div>Points that should not be moved during smoothing must have a mark &gt; 0, e.g.<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">int</span> fixedNodeMark = 1;\npoly.Add(<span style=\"color:Blue;\">new</span> Vertex(x, y, fixedNodeMark));\r\n</pre></div>",
+    "PostedDate": "2014-07-02T12:14:10.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1262112",
+    "ThreadId": "550397",
+    "Html": "I think that I got it after your suggestion.  Can you explain a little bit about vertex and edge marks?  Originally I did not have any marker on the edge, and I still have split segment on the boundary.  After I added a marker (5) on the edges, no additional vertex was added.  Can you give me an explanation of the markers.  For vertex, if it is &gt;0 it is fixed and for edge if it is &gt;0 it is a boundary.  Am I right?<br />\n<br />\nMany thanks. <br />\n<br />\nVictor<br />\n<pre><code>// Add the points.\npoly.Add(new Vertex(0.0, 0.0)); // Index 0\npoly.Add(new Vertex(3.0, 0.0)); // Index 1 etc.\npoly.Add(new Vertex(3.0, 3.0));\npoly.Add(new Vertex(0.0, 3.0, 1)); // Add a marker, fixed point?  why do I need this marker?\npoly.Add(new Vertex(1.0, 1.0));\npoly.Add(new Vertex(2.0, 1.0));\npoly.Add(new Vertex(2.0, 2.0));\npoly.Add(new Vertex(1.0, 2.0));\n\n// Add the segments. Notice the zero based indexing (in\n// contrast to Triangle's file format).\npoly.Add(new Edge(0, 1));\npoly.Add(new Edge(1, 2));\npoly.Add(new Edge(2, 3, 5)); // Add a marker. what is 5 meaning?\npoly.Add(new Edge(3, 0, 5));\npoly.Add(new Edge(4, 5));\npoly.Add(new Edge(5, 6));\npoly.Add(new Edge(6, 7));\npoly.Add(new Edge(7, 4));</code></pre>\n\n",
+    "PostedDate": "2014-07-02T12:39:22.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1262131",
+    "ThreadId": "550397",
+    "Html": "No. Thanks for reporting. It's a bug in the smoother code. It doesn't copy the mesh settings. Try the latest source code.<br />\n<br />\nEDIT: regarding the markers: generally, it's just a means of identifying items in the mesh. For example, if you're doing FEM and have different boundary conditions, just add a different marker and you can easily identify them when assembling the linear system.<br />\nThe smoother is just another example of using markers to distinguish fixed from free vertices.<br />\n",
+    "PostedDate": "2014-07-02T13:20:34.84-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1262138",
+    "ThreadId": "550397",
+    "Html": "Thanks a lot.  It works perfect right now.  Victor<br />\n",
+    "PostedDate": "2014-07-02T13:34:38.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

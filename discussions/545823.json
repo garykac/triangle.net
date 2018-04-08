@@ -1,0 +1,90 @@
+[
+  {
+    "Id": "1246950",
+    "ThreadId": "545823",
+    "Html": "Hi,\r<br />\n<br />\nIs there an easy way to create a voronoi diagram that is bounded by a triangle?\r<br />\n<br />\nI generate several random disconnected points in a triangle, triangulate them with delaunay and create a voronoi diagram after that. unfortunately i cant find a way to generate the diagram within the triangle bounds only. I already looked up the documentation but can't seem to find a way to properly achieve what i want. (i already tried bounded voronoi but they seem to work for connected regions only, the points that i have are completely disconnected)<br />\n",
+    "PostedDate": "2014-05-19T07:41:06.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1246977",
+    "ThreadId": "545823",
+    "Html": "Lets say your triangle has points a, b and c. Then, additionally to adding just the points to the <a href=\"https://triangle.codeplex.com/wikipage?title=InputGeometry\" rel=\"nofollow\">InputGeometry</a>, you also have to add the boundary segments:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">var</span> geometry = <span style=\"color:Blue;\">new</span> InputGeometry();\ngeoemtry.AddPoint(a.X, a.Y);\ngeoemtry.AddPoint(b.X, b.Y);\ngeoemtry.AddPoint(c.X, c.Y);\ngeometry.AddSegment(0, 1);\ngeometry.AddSegment(1, 2);\ngeometry.AddSegment(2, 0);\n\n<span style=\"color:Green;\">// Add more random points.</span>\n\n<span style=\"color:Blue;\">var</span> mesh = <span style=\"color:Blue;\">new</span> Mesh();\nmesh.Triangulate(geometry);\n\n<span style=\"color:Blue;\">var</span> voronoi = <span style=\"color:Blue;\">new</span> BoundedVoronoi (mesh);\r\n</pre></div>",
+    "PostedDate": "2014-05-19T08:35:40.997-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1246983",
+    "ThreadId": "545823",
+    "Html": "Hi,\r<br />\n<br />\nThanks for the reply.\r<br />\nWhen i run that code with my random points added the bounded voronoi class throws a index out of range exception on line 434.<br />\n",
+    "PostedDate": "2014-05-19T08:45:42.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247004",
+    "ThreadId": "545823",
+    "Html": "I'm also running into issues. As a quick test : I'm creating the outer segments to the shape by jumping through the poly edges. Then I'm adding a test point in the center (there will be more later). I'm getting an &quot;ConstructBvdCell: inconsistent topology.&quot; error:<br />\n<pre><code>        int totalPoints = (thisTile.poly.Edges.Length*2)+;\n        int counter = 0;\n        TriangleNet.Geometry.InputGeometry  subGeometry = new TriangleNet.Geometry.InputGeometry(totalPoints);\n        for (int i =0; i &lt;thisTile.poly.Edges.Length ; i++){\n            Vector3 asV30= new Vector3(thisTile.poly.Edges[i].Point0.x,0,thisTile.poly.Edges[i].Point0.y);\n            subGeometry.AddPoint(asV30.x,asV30.z);\n            int point0Pos = counter;\n            counter ++;\n\n            Vector3 asV31 = new Vector3(thisTile.poly.Edges[i].Point1.x,0,thisTile.poly.Edges[i].Point1.y);\n            int point1Pos = counter;\n            subGeometry.AddPoint(asV30.x,asV30.z);\n            counter ++;\n            subGeometry.AddSegment(point0Pos,point1Pos);\n            Debug.Log (&quot;segment &quot; + point0Pos + &quot; &quot; + point1Pos);\n\n        }\n        Vector2 center = thisTile.poly.CalcCenter();\n\n        subGeometry.AddPoint(center.x,center.y);\n\n\n        TriangleNet.Mesh newMesh = new TriangleNet.Mesh();\n        newMesh.Triangulate(subGeometry);\n\n        TriangleNet.Tools.BoundedVoronoi _subVoronoi = new TriangleNet.Tools.BoundedVoronoi (newMesh);\n</code></pre>\n\nAny idea what I'm doing wrong? <br />\n",
+    "PostedDate": "2014-05-19T09:07:46.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247005",
+    "ThreadId": "545823",
+    "Html": "I just tested my polygon within the supplied triangle.net test program and seem to got it working by setting following parameters:\r<br />\n<br />\n mesh.Behavior.ConformingDelaunay = true;\r<br />\n mesh.Behavior.Quality = true;\r<br />\n<br />\nI<br />\n",
+    "PostedDate": "2014-05-19T09:13:43.857-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247024",
+    "ThreadId": "545823",
+    "Html": "Well, I'd made a typo with my initial code (adding the save value twice) which explains my error. It's now : <br />\n<pre><code>int totalPoints = (thisTile.poly.Edges.Length*2)+1;\n        int counter = 0;\n        TriangleNet.Geometry.InputGeometry  subGeometry = new TriangleNet.Geometry.InputGeometry(totalPoints);\n        for (int i =0; i &lt;thisTile.poly.Edges.Length ; i++){\n            subGeometry.AddPoint(thisTile.poly.Edges[i].Point0.x,thisTile.poly.Edges[i].Point0.y);\n            int point0Pos = counter;\n            counter ++;\n\n            subGeometry.AddPoint(thisTile.poly.Edges[i].Point1.x,thisTile.poly.Edges[i].Point1.y);\n            int point1Pos = counter;\n            counter ++;\n\n            subGeometry.AddSegment(point0Pos,point1Pos);\n        }\n\n        Vector2 center = thisTile.poly.CalcCenter();\n        subGeometry.AddPoint(center.x,center.y);\n\n        TriangleNet.Mesh newMesh = new TriangleNet.Mesh();\n        newMesh.Triangulate(subGeometry);\n        newMesh.Behavior.ConformingDelaunay = true; \n        newMesh.Behavior.Quality = true; \n        TriangleNet.Tools.BoundedVoronoi _subVoronoi = new TriangleNet.Tools.BoundedVoronoi (newMesh);\n</code></pre>\n\nThrowing up the error : <br />\n<blockquote>\nNullReferenceException: Object reference not set to an instance of an object<br />\nTriangleNet.Data.Otri.Org () (at Assets/Libs/Triangle/Data/Otri.cs:327)<br />\nTriangleNet.Tools.BoundedVoronoi.ConstructCell (TriangleNet.Data.Vertex vertex) (at Assets/Libs/Triangle/Tools/BoundedVoronoi.cs:286)<br />\nTriangleNet.Tools.BoundedVoronoi.Generate () (at Assets/Libs/Triangle/Tools/BoundedVoronoi.cs:98)<br />\nTriangleNet.Tools.BoundedVoronoi..ctor (TriangleNet.Mesh mesh, Boolean includeBoundary) (at Assets/Libs/Triangle/Tools/BoundedVoronoi.cs:56)<br />\nTriangleNet.Tools.BoundedVoronoi..ctor (TriangleNet.Mesh mesh)<br />\n</blockquote>\n",
+    "PostedDate": "2014-05-19T09:40:33.787-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247057",
+    "ThreadId": "545823",
+    "Html": "@both:\r<br />\nMake sure you're using the latest <a href=\"https://triangle.codeplex.com/SourceControl/latest\" rel=\"nofollow\">source code</a>. And using the ConformingDelaunay option is always a good idea when working with Voronoi diagrams.\r<br />\n<br />\n@Gonzorob:\r<br />\nYou are adding incorrect segment indices to the geometry.<br />\n",
+    "PostedDate": "2014-05-19T10:36:44.87-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247061",
+    "ThreadId": "545823",
+    "Html": "Thats confusing , how are the indices incorrect? Perhaps I've been looking at it too long, but they appear to match the positions of the points...<br />\n",
+    "PostedDate": "2014-05-19T10:43:22.32-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247067",
+    "ThreadId": "545823",
+    "Html": "Again: I don't know how your geometry is defined, but here's my guess:<br />\n<br />\n<code>thisTile.poly.Edges</code> contains the edges of a closed contour of your polygon. This means (well, at least should mean) that there are exactly <code>n = thisTile.poly.Edges.Length</code> points making up the contour. You are adding <em>2n</em> points and segments.<br />\n<br />\nEDIT: not 2n segments but n segments with indices (0, 1) to (2n-1, 2n).<br />\n<br />\nEDIT 2:<br />\nYou can check if duplicate input vertices were discarded setting <code>Behavior.Verbose = true</code> and then look at <code>SimpleLog.Instance.Data</code>.<br />\n",
+    "PostedDate": "2014-05-19T11:08:27.207-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247076",
+    "ThreadId": "545823",
+    "Html": "@wo80: Thanks for the help. \r<br />\n<br />\nAs for my case setting the quality behaviour of the mesh solved my problem.<br />\n",
+    "PostedDate": "2014-05-19T11:19:30.993-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1247112",
+    "ThreadId": "545823",
+    "Html": "<strong>wo80 wrote:</strong><br />\n<blockquote>\nAgain: I don't know how your geometry is defined, but here's my guess:<br />\n<br />\n<code>thisTile.poly.Edges</code> contains the edges of a closed contour of your polygon. This means (well, at least should mean) that there are exactly <code>n = thisTile.poly.Edges.Length</code> points making up the contour. You are adding <em>2n</em> points and segments.<br />\n<br />\nEDIT: not 2n segments but n segments with indices (0, 1) to (2n-1, 2n).<br />\n<br />\nEDIT 2:<br />\nYou can check if duplicate input vertices were discarded setting <code>Behavior.Verbose = true</code> and then look at <code>SimpleLog.Instance.Data</code>.<br />\n</blockquote>\nOf course ! Thanks for your help (again!) <br />\n",
+    "PostedDate": "2014-05-19T12:06:53.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

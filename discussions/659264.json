@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1487598",
+    "ThreadId": "659264",
+    "Html": "I need to triangulate arbitrary XYZ values to render a surface in DirectX.  I noticed the Vertex and Point classes are 2D.  Will the algorithm will work if I add a z value or subclass Vertex?  It appeared that the algorithm doesn't create points, so I'm assuming that all of the input points are retained.<br />\n",
+    "PostedDate": "2016-11-08T09:55:05.26-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487605",
+    "ThreadId": "659264",
+    "Html": "Yes, as long as you don't use quality meshing, which could introduce new points. Something along the following lines:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">class</span> Vertex3 : Vertex\n{\n    <span style=\"color:Blue;\">public</span> Vertex3(<span style=\"color:Blue;\">double</span> x, <span style=\"color:Blue;\">double</span> y, <span style=\"color:Blue;\">double</span> z)\n        : <span style=\"color:Blue;\">base</span>(x, y)\n    {\n        <span style=\"color:Blue;\">this</span>.Z = z;\n    }\n\n    <span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">double</span> Z { <span style=\"color:Blue;\">get</span>; <span style=\"color:Blue;\">set</span>; }\n}\n\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">static</span> <span style=\"color:Blue;\">void</span> Test()\n{\n    <span style=\"color:Blue;\">var</span> points = <span style=\"color:Blue;\">new</span> List&lt;Vertex&gt;();\n\n    points.Add(<span style=\"color:Blue;\">new</span> Vertex3(0, 0, 0.0));\n    points.Add(<span style=\"color:Blue;\">new</span> Vertex3(0, 1, 0.1));\n    points.Add(<span style=\"color:Blue;\">new</span> Vertex3(1, 1, 0.2));\n    points.Add(<span style=\"color:Blue;\">new</span> Vertex3(1, 0, 0.3));\n    \n    <span style=\"color:Green;\">// Generate a default mesher.</span>\n    <span style=\"color:Blue;\">var</span> mesher = <span style=\"color:Blue;\">new</span> GenericMesher(<span style=\"color:Blue;\">new</span> Dwyer());\n\n    <span style=\"color:Green;\">// Generate mesh.</span>\n    <span style=\"color:Blue;\">var</span> mesh = mesher.Triangulate(points);\n\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> t <span style=\"color:Blue;\">in</span> mesh.Triangles)\n    {\n        <span style=\"color:Green;\">// Get the 3 vertices of the triangle.</span>\n        <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> i = 0; i &lt; 3; i++)\n        {\n            <span style=\"color:Blue;\">var</span> v = (Vertex3)t.GetVertex(i);\n\n            Console.WriteLine(v.Z);\n        }\n    }\n}\r\n</pre></div>Alternatively, the latest source code can be compiled with the <code>USE_Z</code> symbol. It will add a z-coordinate to the <a href=\"https://triangle.codeplex.com/SourceControl/latest#Triangle.NET/Triangle/Geometry/Point.cs\" rel=\"nofollow\">Point</a> class.<br />\n",
+    "PostedDate": "2016-11-08T15:15:06.497-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2016-11-09T07:23:15.663-08:00"
+  },
+  {
+    "Id": "1487633",
+    "ThreadId": "659264",
+    "Html": "Thank-you very much.<br />\n",
+    "PostedDate": "2016-11-09T07:23:42.9-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

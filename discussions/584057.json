@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1358855",
+    "ThreadId": "584057",
+    "Html": "Hi,\r<br />\n<br />\nwhen creating an InputGeometry in Beta3, I get different results (or sometimes none at all) depending on the order of Points and Segments. In my use case, this can happen because some Points and Edges are defined by the user upfront, while others might be added in the background later depending on other factors. Also, the user is free to add Points and Edges in any order and/or &quot;direction&quot; (e.g. edge from node 3 to 4 or from node 4 to 3).\r<br />\n<br />\nSince I could not find any requirements on the geometry definition in the doc, my question is what requirements there are. Do I have to sort the nodes and edges before adding them to the geometry so everything is in linear, ascending order? Does direction (CW/CCW) matter? Any other things I need to consider?\r<br />\n<br />\nAlso, are these requirements identical when I switch to Beta4?\r<br />\n<br />\nThanks for your help,\r<br />\nFitsch<br />\n",
+    "PostedDate": "2015-03-02T09:11:37.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1359246",
+    "ThreadId": "584057",
+    "Html": "You don't have to sort the points and orientation of the segments doesn't matter. Usually (I think in 99% of the cases reported here in the discussions), the input geometry is set up the wrong way. But I can't tell, until I see some code.\r<br />\n<br />\nAlso, have a look at <a href=\"http://www.cs.cmu.edu/~quake/triangle.trouble.html\" rel=\"nofollow\">http://www.cs.cmu.edu/~quake/triangle.trouble.html</a>.<br />\n",
+    "PostedDate": "2015-03-03T02:47:17.093-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1359285",
+    "ThreadId": "584057",
+    "Html": "Thank you... I was absolutely convinced that everything was correct but no - I'm also one of the 99%. I messed up the IDs of some vertices when subdividing one long edge into many small ones, but this was only visible when the order of the original start and end node were in the &quot;wrong&quot; order.\r<br />\n<br />\nEverything works as expected now, thank you very much. Also, I switched to Beta 4, very nice work!<br />\n",
+    "PostedDate": "2015-03-03T04:40:00.863-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

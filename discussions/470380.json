@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1126277",
+    "ThreadId": "470380",
+    "Html": "So basically, I need a way to associate extra data to each vertex of the final mesh (not just the coordinates). Is there a way to do this?\r<br />\n<br />\nIf not, is there some way I can reliably check if one point in the output triangles is the same as some other point that I used in the input (in order to make a dictionary for the extra data)?\r<br />\n<br />\nI've used the Poly2Tri library before where I could either extend their build in Point class and just fill it with the data I needed and then pass it to the triangulation algorithm. The output triangles contained the same points that were inputted so there were no problems there.<br />\n",
+    "PostedDate": "2013-11-18T15:31:13.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126404",
+    "ThreadId": "470380",
+    "Html": "There are a couple of ways to do this, while the one you propose is currently not possible. But I could add a method <em>InputGeometry.AddPoint(Vertex v)</em> so one could derive from <em>Vertex</em> and add data as needed.<br />\n<br />\nAt the moment, you could for example use <em>InputGeometry.AddPoint(double x, double y, int boundary)</em> and use the boundary mark as an index to an array holding your data. Or, if your data is real, use <em>InputGeometry.AddPoint(double x, double y, int boundary, double[] attribs)</em> and use the attribs array for your data.<br />\n",
+    "PostedDate": "2013-11-19T00:41:09.94-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1126436",
+    "ThreadId": "470380",
+    "Html": "Ok then. I'll use the index. It would be nice to have the other feature implemented though.<br />\n",
+    "PostedDate": "2013-11-19T02:31:37.083-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127292",
+    "ThreadId": "470380",
+    "Html": "It doesn't seem that the boundary method works. When I try it with the points (0,0), (100, 0), (100, 100), (0, 100) and assign them boundaries 0, 1, 2, 3, after triangulation the point (0, 0) has the boundary 1. I can't use it as an index if it gets changed.<br />\n",
+    "PostedDate": "2013-11-20T14:37:08.407-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127294",
+    "ThreadId": "470380",
+    "Html": "maybe <a href=\"http://www.cs.cmu.edu/~quake/triangle.markers.html\" rel=\"nofollow\">http://www.cs.cmu.edu/~quake/triangle.markers.html</a><br />\n",
+    "PostedDate": "2013-11-20T14:50:00.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127295",
+    "ThreadId": "470380",
+    "Html": "My current solution is (inputGeom.Points as List&lt;Vertex&gt;).Add(myVertexInstance) where myVertexInstanceis an instance of a subclass of Vertex that includes additional data. Then later I do (triangle.GetVertex(0) as MyVertexClass).Data.\r<br />\n<br />\nDoes this break for any input? As in, are the inputted vertices replaced by new ones with the same coordinates at any point? So far it seems to work.<br />\n",
+    "PostedDate": "2013-11-20T14:50:08.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1127298",
+    "ThreadId": "470380",
+    "Html": "No, the vertex instances get directly added to the mesh. But bypassing the InputGeometry.Add(...) methods is not a good idea, since the bounding box gets calculated there. The easiest way would be an additional method <em>InputGeometry.AddPoint(Vertex v)</em>, so I will add it.<br />\n<br />\nRegarding the boundary mark: Triangle will automatically set vertex marks form 0 to 1, if they are on a boundary segment (I missed that, sorry). You could start indexing from any k &gt; 1. That should work.<br />\n<br />\nEDIT: Thanks a5r for the link. It explains the problem using 0 or 1 for the vertex marker.<br />\n",
+    "PostedDate": "2013-11-20T15:05:25.433-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

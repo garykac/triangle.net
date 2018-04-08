@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1128311",
+    "ThreadId": "470951",
+    "Html": "I Use superior.poly test data, check Quality mesh,Minimum angle = 37,Maxinum area = 0.34.\r<br />\nRun the program,first press Triangulate ,press Refine again, program occur endless loop.<br />\n",
+    "PostedDate": "2013-11-23T21:59:44.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1128339",
+    "ThreadId": "470951",
+    "Html": "That's expected behavior. Refinement uses the default Triangle algorithm if an area constraint is set, which will most likely fail for minimum angles &gt;= 34 degrees. The extended algorithm from <a href=\"http://www.cise.ufl.edu/~ungor/aCute/index.html\" rel=\"nofollow\">aCute</a> (which allows larger minimum angles) is only used for initial triangulation and for refinement, if <strong>no</strong> area constraint is set.<br />\n<br />\nActually, the reason why I chose this behavior were problems with the aCute code, which should be resolved in recent versions. I'll have a look at it and maybe change the default refinement code to always use the aCute algorithm.<br />\n",
+    "PostedDate": "2013-11-24T02:14:58.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1128470",
+    "ThreadId": "470951",
+    "Html": "\r\n<div><font color=\"#000000\" size=\"2\" style=\"font-family:宋体\">\r\n<div>Thank you very much！</div>\r\n<div></div>\r\n<div></div>\r\n<div></div>\r\n</font></div>\r\n<div align=\"left\"><font size=\"2\" face=\"Verdana\">2013-11-25<br>\r\n-------------<br>\r\n<div id=\"OutSign\">fuzh\r\n<div id=\"OutSignEnd\"></div>\r\n</div>\r\n</font></div>\r\n<br>\r\n发件人:&quot;wo80&quot; &lt;[email removed]&gt;<br>\r\n发送时间:2013-11-24 18:15:00<br>\r\n主 题:Re: Endless loop [triangle:470951]<br>\r\n收件人:[email removed]<br>\r\n<br>\r\n<p>From: wo80</p>\r\n<div id=\"ThreadNotificationPostBody\">That's expected behavior. Refinement uses the default Triangle algorithm if an area constraint is set, which will most likely fail for minimim angles &gt; 34 degrees. The extended algorithm from\r\n<a href=\"http://www.cise.ufl.edu/~ungor/aCute/index.html\" rel=\"nofollow\">aCute</a> (which allows larger minimum angles) is only used for initial triangulation and for refinement, if\r\n<strong>no</strong> area constraint is set. <br>\r\n<br>\r\nActually, the reason why I chose this behavior were problems with the aCute code, which should be resolved in recent versions. I'll have a look at it and maybe change the default refinement code to always use the aCute algorithm.<br>\r\n</div>\r\n",
+    "PostedDate": "2013-11-24T16:20:08.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1128474",
+    "ThreadId": "470951",
+    "Html": "\r\n<div><font color=\"#000000\" size=\"2\" style=\"font-family:宋体\">\r\n<div>When remove <font color=\"#ff0000\"><font color=\"#0000ff\">queue.Enqueue(badtri)</font>\r\n</font><font color=\"#000000\">statement </font>from <font color=\"#0000ff\">EnforceQuality()</font> procedure in\r\n<font color=\"#0000ff\">Quality.cs</font> file, no endless loop occur. Reasonable?</div>\r\n<div></div>\r\n<div>Thank you</div>\r\n<div></div>\r\n</font></div>\r\n<div align=\"left\"><font size=\"2\" face=\"Verdana\">2013-11-25<br>\r\n-------------<br>\r\n<div id=\"OutSign\">fuzh\r\n<div id=\"OutSignEnd\"></div>\r\n</div>\r\n</font></div>\r\n<br>\r\n发件人:&quot;wo80&quot; &lt;[email removed]&gt;<br>\r\n发送时间:2013-11-24 18:15:00<br>\r\n主 题:Re: Endless loop [triangle:470951]<br>\r\n收件人:[email removed]<br>\r\n<br>\r\n<p>From: wo80</p>\r\n<div id=\"ThreadNotificationPostBody\">That's expected behavior. Refinement uses the default Triangle algorithm if an area constraint is set, which will most likely fail for minimim angles &gt; 34 degrees. The extended algorithm from\r\n<a href=\"http://www.cise.ufl.edu/~ungor/aCute/index.html\" rel=\"nofollow\">aCute</a> (which allows larger minimum angles) is only used for initial triangulation and for refinement, if\r\n<strong>no</strong> area constraint is set. <br>\r\n<br>\r\nActually, the reason why I chose this behavior were problems with the aCute code, which should be resolved in recent versions. I'll have a look at it and maybe change the default refinement code to always use the aCute algorithm.<br>\r\n</div>\r\n",
+    "PostedDate": "2013-11-24T16:38:48.213-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1128480",
+    "ThreadId": "470951",
+    "Html": "\r\n<div><font color=\"#000000\" size=\"2\" style=\"font-family:宋体\">\r\n<div>Sorry, I was wrong.</div>\r\n<div></div>\r\n<div></div>\r\n<div></div>\r\n</font></div>\r\n<div align=\"left\"><font size=\"2\" face=\"Verdana\">2013-11-25<br>\r\n-------------<br>\r\n<div id=\"OutSign\">fuzh\r\n<div id=\"OutSignEnd\"></div>\r\n</div>\r\n</font></div>\r\n<br>\r\n发件人:&quot;wo80&quot; &lt;[email removed]&gt;<br>\r\n发送时间:2013-11-24 18:15:00<br>\r\n主 题:Re: Endless loop [triangle:470951]<br>\r\n收件人:[email removed]<br>\r\n<br>\r\n<p>From: wo80</p>\r\n<div id=\"ThreadNotificationPostBody\">That's expected behavior. Refinement uses the default Triangle algorithm if an area constraint is set, which will most likely fail for minimim angles &gt; 34 degrees. The extended algorithm from\r\n<a href=\"http://www.cise.ufl.edu/~ungor/aCute/index.html\" rel=\"nofollow\">aCute</a> (which allows larger minimum angles) is only used for initial triangulation and for refinement, if\r\n<strong>no</strong> area constraint is set. <br>\r\n<br>\r\nActually, the reason why I chose this behavior were problems with the aCute code, which should be resolved in recent versions. I'll have a look at it and maybe change the default refinement code to always use the aCute algorithm.<br>\r\n</div>\r\n",
+    "PostedDate": "2013-11-24T17:23:18.62-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1128597",
+    "ThreadId": "470951",
+    "Html": "In <em>Quality.cs</em>, <em>SplitTriangle(BadTriangle badtri)</em> method, you can try removing the conditional, that's computing the Steiner point locations and just use the aCute code:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">//if (behavior.fixedArea || behavior.VarArea)</span>\n<span style=\"color:Green;\">//{</span>\n<span style=\"color:Green;\">//  newloc = Primitives.FindCircumcenter(borg, bdest, bapex, ref xi, ref eta, behavior.offconstant);</span>\n<span style=\"color:Green;\">//}</span>\n<span style=\"color:Green;\">//else</span>\n{\n    newloc = newLocation.FindLocation(borg, bdest, bapex, <span style=\"color:Blue;\">ref</span> xi, <span style=\"color:Blue;\">ref</span> eta, <span style=\"color:Blue;\">true</span>, badotri);\n}\r\n</pre></div><strong>WARNING</strong>: this is not tested. Let me know if it works.<br />\n",
+    "PostedDate": "2013-11-25T02:08:43.207-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1128606",
+    "ThreadId": "470951",
+    "Html": "\r\n<div><font color=\"#000000\" size=\"2\" style=\"font-family:宋体\">\r\n<div>It does work properly,Thank your help!</div>\r\n<div></div>\r\n<div></div>\r\n<div></div>\r\n</font></div>\r\n<div align=\"left\"><font size=\"2\" face=\"Verdana\">2013-11-25<br>\r\n-------------<br>\r\n<div id=\"OutSign\">fuzh\r\n<div id=\"OutSignEnd\"></div>\r\n</div>\r\n</font></div>\r\n<br>\r\n发件人:&quot;wo80&quot; &lt;[email removed]&gt;<br>\r\n发送时间:2013-11-25 18:08:53<br>\r\n主 题:Re: Endless loop [triangle:470951]<br>\r\n收件人:[email removed]<br>\r\n<br>\r\n<p>From: wo80</p>\r\n<div id=\"ThreadNotificationPostBody\">In <em>Quality.cs</em>, <em>SplitTriangle(BadTriangle badtri)</em> method, you can try removing the conditional, that's computing the Steiner point locations and just use the aCute code:<br>\r\n<div style=\"color:black; background-color:white\">\r\n<pre><span style=\"color:green\">//if (behavior.fixedArea || behavior.VarArea)</span>\r\n<span style=\"color:green\">//{</span>\r\n<span style=\"color:green\">//    newloc = Primitives.FindCircumcenter(borg, bdest, bapex, ref xi, ref eta, behavior.offconstant);</span>\r\n<span style=\"color:green\">//}</span>\r\n<span style=\"color:green\">//else</span>\r\n{\r\n    newloc = newLocation.FindLocation(borg, bdest, bapex, <span style=\"color:blue\">ref</span> xi, <span style=\"color:blue\">ref</span> eta, <span style=\"color:blue\">true</span>, badotri);\r\n}\r\n</pre>\r\n</div>\r\n<strong>WARNING</strong>: this is not tested. Let me know if it works.<br>\r\n</div>\r\n",
+    "PostedDate": "2013-11-25T02:36:08.503-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "858967",
+    "ThreadId": "362477",
+    "Html": "\r\n<p>I've tried the new version of Triangle.Net and found it very good. Currently I am trying to write an pre-processor for an FEM model and Triangle.Net is very suitable for my studies. I am considering to embed it into an GIS-based GUI, and if you are intereted\r\n in this, I think I can do some contributions on it. Here are some more funcitons that the current veison of Triangle.Net may need:</p>\r\n<p>(1) interpolation of scatter point values (e.g., water depth) to mesh nodes;</p>\r\n<p>(2) mesh edit (e.g., delete mesh element, refine an elelment, thin element remove);</p>\r\n<p>(3) mesh re-numbering and mesh smoothing.</p>\r\n<p>Thanks for your good job!</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n",
+    "PostedDate": "2012-07-08T19:00:23.62-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "859009",
+    "ThreadId": "362477",
+    "Html": "\r\n<p>Any contributions are welcome. Regarding point (3): I already got those working - but not very robust, so I decided not to put them in beta 2. Still I'd really like to see what you've done. Feel free to contact me via email (you should have received a codeplex\r\n mail notification about that).</p>\r\n",
+    "PostedDate": "2012-07-08T23:28:02.913-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

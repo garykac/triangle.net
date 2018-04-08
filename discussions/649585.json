@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1457943",
+    "ThreadId": "649585",
+    "Html": "Hi,\r<br />\n<br />\n<br />\nFirstly, I would like to congratulate you on an excellent port.\r<br />\n<br />\nI would like to know whether it is possible to input an existing TIN and then add holes (hide boundary) to a specified region on that TIN?\r<br />\n<br />\nThe existing triangles would need to be split by the boundary and then the points re-triangulated at/to the boundary.\r<br />\n<br />\n<br />\nRegards,\r<br />\n<br />\nBP<br />\n",
+    "PostedDate": "2016-01-04T17:43:01.383-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458754",
+    "ThreadId": "649585",
+    "Html": "That's not supported, sorry.<br />\n",
+    "PostedDate": "2016-01-11T06:08:48.767-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1458849",
+    "ThreadId": "649585",
+    "Html": "No worries. Thanks for your reply.<br />\n",
+    "PostedDate": "2016-01-11T18:38:40.28-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

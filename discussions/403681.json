@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "943566",
+    "ThreadId": "403681",
+    "Html": "\r\n<p>Is it possible to obtain quadrangle elements using triangle.net? For example by dividing triangle to 3 quadrangles?</p>\r\n",
+    "PostedDate": "2012-11-18T08:03:09.057-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "943818",
+    "ThreadId": "403681",
+    "Html": "\r\n<p>No, I haven't looked into that so far. It's definitely planned, but don't expect anything soon.</p>\r\n",
+    "PostedDate": "2012-11-19T01:55:44.243-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

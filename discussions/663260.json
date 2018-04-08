@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1497098",
+    "ThreadId": "663260",
+    "Html": "Hi,\r<br />\nI'm using the library with Unity.\r<br />\n<br />\nMade some fixes to solve Unity compiler errors. See commit - <a href=\"https://github.com/eppz/Triangle.NET/commit/667974f37b9e242e2675e50560c5135373edcde6\" rel=\"nofollow\">https://github.com/eppz/Triangle.NET/commit/667974f37b9e242e2675e50560c5135373edcde6</a> - at GitHub. You <strong>may add the patch to this repository</strong> as well.<br />\n",
+    "PostedDate": "2017-06-17T16:47:55.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

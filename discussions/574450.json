@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1330302",
+    "ThreadId": "574450",
+    "Html": "Kudos to all who contributed to this project. Its highly useable and very fast.\r<br />\n<br />\nIs there any plan to include a mesh simplification algorithm in the library ?<br />\n",
+    "PostedDate": "2014-12-09T12:12:11.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1330548",
+    "ThreadId": "574450",
+    "Html": "I didn't have a lot of time working on this project lately and there are no plans to include new features.\r<br />\n<br />\nCould you explain what you mean by mesh simplification. If it's about some operations like edge flipping/collapsing it shouldn't be hard to implement. Your best bet would be to use the latest source code (beta 4), turn the mesh into a DCEL and then operate on the half-edges.<br />\n",
+    "PostedDate": "2014-12-10T04:29:21.367-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

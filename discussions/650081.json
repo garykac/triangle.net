@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1459380",
+    "ThreadId": "650081",
+    "Html": "Hi,\r<br />\n<br />\nOnce again thanks a lot for the good work you’re doing with this library!\r<br />\n<br />\nI am trying to get a list of the elements limiting with a specific contour line.\r<br />\n<br />\nFor instance in your example “refining regions” I'd like to get a listing of the triangles which are limiting with the outer circumference.\r<br />\n<br />\nI’m still not completely familiar with the library. Is there any short cut to achieve this?<br />\n",
+    "PostedDate": "2016-01-15T02:02:19.14-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459420",
+    "ThreadId": "650081",
+    "Html": "Sure, take a look at <a href=\"https://triangle.codeplex.com/wikipage?title=Example%205\" rel=\"nofollow\">this example</a>.\r<br />\n<br />\nYou'll have to download the latest source code to get the <code>VertexCirculator</code> class.<br />\n",
+    "PostedDate": "2016-01-15T09:12:54.88-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1459868",
+    "ThreadId": "650081",
+    "Html": "Thank you for the example!\r<br />\n<br />\nI was able to define the boundary elements \r<br />\n<br />\nThe fact that you can get the elements adjacent to a segment is very useful <br />\n",
+    "PostedDate": "2016-01-20T00:02:59.793-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464041",
+    "ThreadId": "650081",
+    "Html": "i just need to plot contour graph using button (like you used triangulate and smooth)<br />\n",
+    "PostedDate": "2016-02-22T23:30:11.367-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464064",
+    "ThreadId": "650081",
+    "Html": "@rame2040:<br />\n<ol>\n<li>Why not open a <strong>new</strong> discussion for a <strong>new</strong> topic like contour plots?</li>\n<li>The UI is plain Windows Forms. If you want to add a button, do it in Visual Studio's Designer. If you don't know how to do that, get a book about Windows Forms (or find a tutorial online).</li>\n<li>There is a simple approach to plotting contours, see <a href=\"http://paulbourke.net/papers/conrec/\" rel=\"nofollow\">http://paulbourke.net/papers/conrec/</a>. It can be easily adapted for unstructured meshes.</li>\n</ol>\n",
+    "PostedDate": "2016-02-23T02:07:37.143-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

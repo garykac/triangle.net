@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1482635",
+    "ThreadId": "657605",
+    "Html": "Hey!\r<br />\nI'm trying to find a way to carve a polygon using hole, but it's not behaving as I would want it. Is there a way to do this? Currently I'm adding the carving polygon as a hole.\r<br />\nImages are more explanatory, so here goes:\r<br />\n<br />\nHow it triangulates it now:\r<br />\n<img src=\"http://www.acegikmo.com/files/forums/triangle/triangulationIssue.gif\" alt=\"Image\" />\r<br />\n<br />\nWhat I'm trying to achieve:\r<br />\n<img src=\"http://www.acegikmo.com/files/forums/triangle/triangulationIssue2.png\" alt=\"Image\" />\r<br />\n<br />\nAny help is super appreciated!\r<br />\n<br />\nThanks!\r<br />\n<br />\nAlso, thanks a bunch for this code so far, it has been working great for us :)<br />\n",
+    "PostedDate": "2016-09-01T09:29:36.973-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483287",
+    "ThreadId": "657605",
+    "Html": "Let <em>A</em> be the bigger square and <em>B</em> the smaller one. You want to compute the difference of the polygons, A \\ B. If <em>B</em> lies inside of <em>A</em>, this can be done with Triangle, since <em>B</em> can be treated as a hole.\r<br />\n<br />\nIn your second case, <em>B</em> obviously isn't a hole. The main problem is (taking the above graphic as an example), that <em>B</em> gets split into two parts, while only one part can be specified as a hole (either the top or the bottom). The other part is <em>protected</em> by the top segment of <em>A</em>.\r<br />\n<br />\nYou could do polygon clipping before triangulation (<a href=\"http://www.angusj.com/delphi/clipper.php\" rel=\"nofollow\">http://www.angusj.com/delphi/clipper.php</a>).<br />\n",
+    "PostedDate": "2016-09-09T06:24:14.777-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483356",
+    "ThreadId": "657605",
+    "Html": "I have updated the RegionIterator class, which might be another option for you.<br />\n<br />\nSee <a href=\"https://triangle.codeplex.com/wikipage?title=Example%207\" rel=\"nofollow\">Example 7 - Boolean operations on meshes</a><br />\n",
+    "PostedDate": "2016-09-10T10:05:19.003-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1483504",
+    "ThreadId": "657605",
+    "Html": "I ended up using Clipper in combination with Triangle, thanks a bunch for your response :)<br />\n",
+    "PostedDate": "2016-09-12T10:07:08.92-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

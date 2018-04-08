@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1026044",
+    "ThreadId": "439236",
+    "Html": "First of all great port and thanks for sharing your work. It's a really comprehensive library you made. Did you ever consider parallellism and or making portions thread safe ? What are your thoughts about this? <br />\n",
+    "PostedDate": "2013-04-05T05:48:32.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1026101",
+    "ThreadId": "439236",
+    "Html": "Thanks, finally someone voted ...<br />\n<br />\nNever considered, but obviously the library isn't thread safe:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">void</span> ParallelTest()\n{\n    <span style=\"color:Blue;\">var</span> task1 = System.Threading.Tasks.Task.Factory.StartNew(() =&gt;\n    {\n    <span style=\"color:Blue;\">var</span> generator = <span style=\"color:Blue;\">new</span> MeshExplorer.Generators.CircleWithHole();\n    <span style=\"color:Blue;\">var</span> geometry = generator.Generate(200, 5, 0);\n\n    <span style=\"color:Blue;\">try</span>\n    {\n        Mesh mesh = <span style=\"color:Blue;\">new</span> Mesh();\n        mesh.Behavior.MinAngle = 30;\n        mesh.Triangulate(geometry);\n        mesh.Refine(<span style=\"color:Blue;\">true</span>);\n        mesh.Refine(<span style=\"color:Blue;\">true</span>);\n        mesh.Smooth();\n        mesh.Refine(<span style=\"color:Blue;\">true</span>);\n        mesh.Smooth();\n    }\n    <span style=\"color:Blue;\">catch</span> (Exception)\n    {\n        <span style=\"color:Blue;\">throw</span>;\n    }\n    });\n\n    <span style=\"color:Blue;\">var</span> task2 = System.Threading.Tasks.Task.Factory.StartNew(() =&gt;\n    {\n    <span style=\"color:Blue;\">var</span> generator = <span style=\"color:Blue;\">new</span> MeshExplorer.Generators.CircleWithHole();\n    <span style=\"color:Blue;\">var</span> geometry = generator.Generate(200, 5, 0);\n\n    <span style=\"color:Blue;\">try</span>\n    {\n        Mesh mesh = <span style=\"color:Blue;\">new</span> Mesh();\n        mesh.Behavior.MinAngle = 30;\n        mesh.Triangulate(geometry);\n        mesh.Refine(<span style=\"color:Blue;\">true</span>);\n        mesh.Refine(<span style=\"color:Blue;\">true</span>);\n        mesh.Smooth();\n        mesh.Refine(<span style=\"color:Blue;\">true</span>);\n        mesh.Smooth();\n    }\n    <span style=\"color:Blue;\">catch</span> (Exception)\n    {\n        <span style=\"color:Blue;\">throw</span>;\n    }\n    });\n\n    <span style=\"color:Blue;\">try</span>\n    {\n    System.Threading.Tasks.Task.WaitAll(task1, task2);\n    }\n    <span style=\"color:Blue;\">catch</span> (AggregateException ae)\n    {\n    <span style=\"color:Blue;\">throw</span> ae.Flatten();\n    }\n}\r\n</pre></div>If I find some time, I'll look into the problem. There are same places where I use static variables, which surely cause trouble.<br />\n<br />\nNow, regarding parallelism: when starting the project I had a look into parallel mesh generation and refinemend, but since the meshes I work on are small (less than 50000 triangles), I never tried to implement.<br />\n<br />\nParallel mesh refinement is usually done by partitioning an initial mesh and then doing refinement on different cores. Partitioning is easily done with METIS and C# interop (got this working). But I didn't continue working on it and probably won't in the near future.<br />\n<br />\nA good starting point could be <a href=\"http://crtc.wm.edu/html_output/constrained_delaunay.htm\" rel=\"nofollow\">http://crtc.wm.edu/html_output/constrained_delaunay.htm</a><br />\n",
+    "PostedDate": "2013-04-05T07:00:49.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1026151",
+    "ThreadId": "439236",
+    "Html": "\r\n<div dir=\"ltr\">Ok, thanks for the reply. I will look into it myself as well. If I find something useful i will let you know. Again thanks for sharing this excellent port.\r\n<br>\r\n<br>\r\n<div>\r\n<div id=\"SkyDrivePlaceholder\"></div>\r\n<hr id=\"stopSpelling\">\r\n</div>\r\n</div>\r\n",
+    "PostedDate": "2013-04-05T08:11:50.01-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1026471",
+    "ThreadId": "439236",
+    "Html": "So, after a first look, I think thread-safety would involve a lot of locking all across the library. No easy task ...<br />\n",
+    "PostedDate": "2013-04-05T23:06:16.31-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1132053",
+    "ThreadId": "439236",
+    "Html": "Congrats, this is a great work here and so usefull.\r<br />\nParallelism is not only about partitioning the work of a single triangulation. I would like to run // triangulations of a bunch of cities that I retrieve as a whole collection of data. So adding thread-safety would be a very cool feature :)<br />\n",
+    "PostedDate": "2013-12-05T02:08:18.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1489927",
+    "ThreadId": "660166",
+    "Html": "Hi all,<br />\nI have an issue in generating mesh compliant with edge.<br />\nI have beta3 (can't switch to beta4 for many reasons).<br />\n<br />\nI prepare InputGeometry with 5 points, insert the corresponding 5 segments but I don't get the expected mesh.<br />\nFollowing a simple sketch.<br />\n<h1></h1>\n<pre><code> ____\n|   /\n|  /\n|  \\      figure\n|___\\\n\n ____\n|\\  /\n| \\/\n| /\\      mesh expected\n|/__\\\n\n ____\n|\\  /|\n| \\/ |\n| /\\ |    mesh obtained\n|/__\\|\n</code></pre>\n\nwhat am I missing?<br />\n<br />\nThanks in advance<br />\n",
+    "PostedDate": "2016-12-15T08:40:56.663-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489935",
+    "ThreadId": "660166",
+    "Html": "From what you have explained, everything should work as expected. Could you show me the code?<br />\n",
+    "PostedDate": "2016-12-15T10:01:35.327-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489957",
+    "ThreadId": "660166",
+    "Html": "Hi wo80,\r<br />\nhere is the simple code I'm using for testing:<br />\n<pre><code>cInputGeometry = new InputGeometry();\ncMesh = new Mesh();\n\ncInputGeometry.AddPoint(0, 0);\ncInputGeometry.AddPoint(10, 0);\ncInputGeometry.AddPoint(5, 5);\ncInputGeometry.AddPoint(10, 10);\ncInputGeometry.AddPoint(0, 10);\n\ncInputGeometry.AddSegment(0, 1, 1);\ncInputGeometry.AddSegment(1, 2, 1);\ncInputGeometry.AddSegment(2, 3, 1);\ncInputGeometry.AddSegment(3, 4, 1);\ncInputGeometry.AddSegment(4, 0, 1);\n\ncMesh.Triangulate(cInputGeometry);</code></pre>\n\nI've tried playing with segments orientation, mesh behaviour and other things but I can't solve the issue.\r<br />\nThanks for the support,<br />\n",
+    "PostedDate": "2016-12-16T00:18:20.007-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1489959",
+    "ThreadId": "660166",
+    "Html": "Hi wo80,\r<br />\nproblem solved, it was my colleague's mistake, he has modified the code for some debugging purposes and I was using his modified .dll; after restoring the code to its original version (Beta3) everything is ok.\r<br />\nSorry for having you wasting time and compliments for this good library.\r<br />\nRegards,<br />\n",
+    "PostedDate": "2016-12-16T01:18:05.087-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495747",
+    "ThreadId": "660166",
+    "Html": "Hello, I have a similar problem and I am not sure exactly how to solve it.<br />\nI use an InputGeometry to add points to, and then try to triangulate it with a mesh as in your example.<br />\nThe only difference is that I don't have segments, because (if i understnd this correctly) my input is not a polygon<br />\nbut just a collection of points.<br />\nThe triangulation is fine but i get some extra (and very large) triangles around the edges as shown in the picture.<br />\nIs there a way to fix this? Am i missing some option perhaps?<br />\nThanks in advance!<br />\n<br />\n<img src=\"https://www.dropbox.com/s/holmsmt105l0sb0/points.png?dl=0\" alt=\"Image\" /><br />\n<img src=\"https://www.dropbox.com/s/epd8zu9ikd8oq46/result.png?dl=0\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2017-04-24T08:08:56.307-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496092",
+    "ThreadId": "660166",
+    "Html": "Hi Humunculus,\r<br />\nunfortunately I cannot see the picture you uploaded, but if I understood correctly you have just a set of points and you want a triangulation for them.\r<br />\n<br />\nNow if you want a convex triangulation, you can:\r<br />\n+) use property Behavior.Convex, setting it to true (on the mesh you want to triangulate)\r<br />\n<br />\nIf you want a non-convex triangulation, you can (have to):\r<br />\n+) define all the segments of the border of your polygon via MyGeometry.AddSegment(PointIndex1, rPointIndex2, 0), where MyGeometry is the InputGeometry you are using for preparing the triangulation\r<br />\n+) use property Behavior.Convex, setting it to false (on the mesh you want to triangulate)\r<br />\n+) use MyMesh.Triangulate(MyGeometry), where MyMesh is the Mesh you are using.\r<br />\n<br />\nIf MyGeometry.AddSegment(PointIndex1, rPointIndex2, 0) doesn't work try with MyGeometry.AddSegment(PointIndex1, rPointIndex2, 1), I don't remember the correct choice.\r<br />\n<br />\nRegards,<br />\n",
+    "PostedDate": "2017-05-04T07:00:52.013-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

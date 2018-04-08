@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1133279",
+    "ThreadId": "472345",
+    "Html": "Hi,\r<br />\n<br />\nIs it OK to add segments to the input geometry that don't define closed regions?  See the .poly data below for an example.  Segments similar to segment &quot;4&quot; are what I am wondering about.\r<br />\n<br />\nThe background is that I have a particular finite element boundary condition I would like to apply to any vertex that falls on segment 4.  I would also like to increase the chances of getting a few Steiner points along that line as the mesh is refined.\r<br />\n<br />\nThank you as always.\r<br />\n<br />\n6 2 0 1\r<br />\n0 0 0 1\r<br />\n1 5 0 1\r<br />\n2 5 5 1\r<br />\n3 0 5 1\r<br />\n4 1 2 2\r<br />\n5 3 4 2\r<br />\n5 1\r<br />\n0 0 1 1\r<br />\n1 1 2 1\r<br />\n2 2 3 1\r<br />\n3 3 0 1\r<br />\n4 4 5 2\r<br />\n0<br />\n",
+    "PostedDate": "2013-12-09T12:26:00.543-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1133316",
+    "ThreadId": "472345",
+    "Html": "Yes, that's ok. If the segment is spilt during refinement, the new points/subsegments will be assigned the correct boundary mark 2, so it should be easy to identify them.\r<br />\n<br />\nWhat i usually do, is splitting the segments before meshing (i.e. adding them to the input geometry), so I have more control over the final mesh layout.<br />\n",
+    "PostedDate": "2013-12-09T13:35:22.157-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1133320",
+    "ThreadId": "472345",
+    "Html": "Thank you.<br />\n",
+    "PostedDate": "2013-12-09T13:52:03.24-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

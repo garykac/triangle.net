@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1497464",
+    "ThreadId": "663461",
+    "Html": "hello,\r<br />\n i'm trying to migrate from Jonathan Shewchuk's Triangle labriry tha was coded in c++,  the problem is that when i try  to trianglate some platforms i get this error  (Topological inconsistency after splitting a segment.) , when i tryed the same platforms on the old code it works just fine and i get my triangles , can some one help me plz <br />\n",
+    "PostedDate": "2017-07-21T08:28:58.9-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497465",
+    "ThreadId": "663461",
+    "Html": "Please post the input you're trying to triangulate, the command-line options of the C program and the code you are using with Triangle.NET.<br />\n",
+    "PostedDate": "2017-07-21T09:29:44.387-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497820",
+    "ThreadId": "663461",
+    "Html": "Hi, I am having the same issue. I tried to debug it and I found out that for some reason a triangle has been added that contains the same vertex twice. I can send you the input I am using. In which format do you want me to deliver it to you?<br />\n",
+    "PostedDate": "2017-08-24T02:10:59.82-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497821",
+    "ThreadId": "663461",
+    "Html": "Use the Triangle file format (.node or .poly) and post the contents here (if it's small) or upload the data to pastebin or some online storage like dropbox.<br />\n<br />\nYou can also use the <a href=\"https://www.codeplex.com/site/users/contact/wo80?OriginalUrl=https%3a%2f%2fwww.codeplex.com%2fsite%2fusers%2fview%2fwo80\" rel=\"nofollow\">contact form</a> to get my email address.<br />\n",
+    "PostedDate": "2017-08-24T03:44:47.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497882",
+    "ThreadId": "663461",
+    "Html": "wo80 helped me out and it turned out that my input polygon was incorrect. I added a contour twice to the polygon. (once as polygon and once as segments)\r<br />\n<br />\nSo Triangle.NET wasn't the issue for me.<br />\n",
+    "PostedDate": "2017-08-31T01:46:12.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1498121",
+    "ThreadId": "663461",
+    "Html": "Hi, I am having this issue too. I used the FileProcessor.Write() function for test my data with the Mesh Explorer Application and it works good. But when i am using my code and constructs the polygon with the same data and run input.Triangulate(), i have this issue.<br />\n",
+    "PostedDate": "2017-09-26T01:44:03.843-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

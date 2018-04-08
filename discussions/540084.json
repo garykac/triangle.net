@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1226460",
+    "ThreadId": "540084",
+    "Html": "Hi,\r<br />\n<br />\nI'm trying to do a warp affine transformation with source and destination triangle's points.\r<br />\n<br />\nTo find the triangles, I'm using the following code:<br />\n<pre><code>      InputGeometry sourceGeometry = new InputGeometry();\n      foreach (var sourcePoint in sourcePoints)\n      {\n        sourceGeometry.AddPoint(sourcePoint.X, sourcePoint.Y);\n      }\n\n      Mesh sourceMesh = new Mesh();\n      sourceMesh.Behavior.ConformingDelaunay = true;\n      sourceMesh.Triangulate(sourceGeometry);\n\n      var sourceTriangles = sourceMesh.Triangles;</code></pre>\n\nAnd the same code to find the destination triangles.\r<br />\n<br />\nTo do the affine transformation, I need to pass the points from the two nearest triangle for each triangle found.\r<br />\n<br />\nThe problem is that the triangles order returned by the mesh.Triangulate is not the same for source and destination points.\r<br />\n<br />\nIs there a way to set the returned order? Or maybe reorder the triangles?\r<br />\n<br />\nThanks,\r<br />\nBruno<br />\n",
+    "PostedDate": "2014-03-25T07:50:31.607-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1226496",
+    "ThreadId": "540084",
+    "Html": "Not sure what's your objective:<br />\n<ol>\n<li>You got a source pointset and triangulate it. You apply a transform to the pointset and triangulate again. Obviously, you'll get two meshes with very different topologies. No trivial mapping between the two topologies.</li>\n<li>\nMy guess what you'd like to do: triangulate your source pointset, make a copy of the mesh, transform the points(~) and compare the transformed mesh (which most likely will not be Delaunay) to the copy of the original triangulation.<br />\n</li>\n</ol>\n?<br />\n<br />\n~ <em>The coordinates of the</em> <code>TriangleNet.Geometry.Point</code> <em>class are readonly, so if my guess is right, you'll have to add setters to the X and Y properties.</em><br />\n",
+    "PostedDate": "2014-03-25T09:07:48.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1226532",
+    "ThreadId": "540084",
+    "Html": "Hi wo80,\r<br />\n<br />\nThanks for your answer..\r<br />\n<br />\nWhat I'd like to do is to transform a image using triangulation with source and destination points as base to find the triangles.\r<br />\n<br />\nFor example, I have two pointsets.\r<br />\n<br />\npoints found in the image (source):\r<br />\nx = 86;   y = 55\r<br />\nx = 85;   y = 817\r<br />\nx = 85;   y = 1585\r<br />\nx = 1184;   y = 55\r<br />\nx = 1183;   y = 822\r<br />\nx = 1184;   y = 1584\r<br />\n<br />\npoints where the found points should be (destination):\r<br />\nx = 88;   y = 59\r<br />\nx = 88;   y = 825\r<br />\nx = 88;   y = 1588\r<br />\nx = 1186;   y = 59\r<br />\nx = 1186;   y = 825\r<br />\nx = 1186;   y = 1588\r<br />\n<br />\nWith those pointsets, first I ran the mesh the find the source triangles only with the source points. Then I ran the mesh again to find the destination triangles.\r<br />\n<br />\nOops, just found my error here. I don't need to run the mesh twice. I just need to run the mesh with the source points.\r<br />\n<br />\nFor each triangle found, I have the points with an ID which is the position in the array. This position is the same for the destination array.\r<br />\n<br />\nSo, that's exactly what I needed!! ;-) Now I have the source and destination points to apply the affine transformation.\r<br />\n<br />\n<br />\n<br />\nThank you very much,\r<br />\nBruno<br />\n",
+    "PostedDate": "2014-03-25T10:15:08.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

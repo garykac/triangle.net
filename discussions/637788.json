@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1424859",
+    "ThreadId": "637788",
+    "Html": "Hi,<br />\nHow can i triangulate a simple polygon (simple polygon: polygon with no holes and cutting edges) with triangle.net and C# (I need the code). I was not able to find document about this...<br />\nAlso the dimension and quality of triangles is not important.<br />\nThank you.<br />\n",
+    "PostedDate": "2015-05-11T22:34:21.073-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1424899",
+    "ThreadId": "637788",
+    "Html": "If you want to do FE analysis, you should really care about mesh quality :-)<br />\n<br />\nThis should get you started:<br />\nEDIT: assuming you are using the latest code (beta 4, in the source code section, not yet published)<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">using</span> TriangleNet;\n<span style=\"color:Blue;\">using</span> TriangleNet.Geometry;\n<span style=\"color:Blue;\">using</span> TriangleNet.Meshing;\n\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">class</span> Test\n{\n    <span style=\"color:Blue;\">public</span> Mesh Triangulate(IPolygon polygon)\n    {\n        <span style=\"color:Blue;\">return</span> (Mesh)polygon.Triangulate();\n\n        <span style=\"color:Green;\">// Apply minimum angle constraint:</span>\n        <span style=\"color:Green;\">// return (Mesh)polygon.Triangulate(new QualityOptions() { MinimumAngle = 25 });</span>\n    }\n}\r\n</pre></div>EDIT 2:<br />\n<blockquote>\nAlso the dimension and quality of triangles is not important.<br />\n</blockquote>\nTriangle.NET is 2D only, so there's only one dimension to &quot;choose&quot;<br />\n",
+    "PostedDate": "2015-05-12T01:59:52.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-05-12T02:01:22.153-07:00"
+  }
+]

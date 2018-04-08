@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1311562",
+    "ThreadId": "569322",
+    "Html": "Hello,\r<br />\n<br />\nMy question is maybe naive but here it is :\r<br />\nHow compute the whole surface of the polygon ?\r<br />\n<br />\nHere is my code :<br />\n<pre><code>Public Function Compute_PolygonArea(ByVal Poly As List(Of Point)) As Double\n        \n        'Geometry construction\n        Dim Geometry As New TriangleNet.Geometry.InputGeometry\n        For i As Integer = 0 To Poly.Count - 1\n            Geometry.AddPoint(Poly(i).X, Poly(i).Y) 'Poly is created from the points of the boundary of a polygon\n        Next\n\n        'Mesh\n        Dim mesh As New Mesh\n        mesh.Triangulate(Geometry)\n\n        'Aera computation\n        Dim area As Double = 0\n        For Each tri In mesh.Triangles\n            area += tri.Area\n        Next\n\n        Return area\n        Exit Function\n    End Function</code></pre>\n\nThe goal of my work is to compute area.\r<br />\nThe problem is that tri.Area is equal to 0.\r<br />\n<br />\nI think I misunderstood something.\r<br />\n<br />\nNext, I will need to add holes (smaller polygon(s) defined by a list of point inside the polygon named poly and also defined by a list of points) but I have not seen many examples on how to do this and I must say that the InputGeometry documentation did not help me a lot. Is there any other documentation ? \r<br />\n<img src=\"http://s1.postimg.org/6hp6yk7tb/Capture.jpg\" alt=\"Image\" />\r<br />\nThank you very much for your help.<br />\n",
+    "PostedDate": "2014-10-08T07:17:21.757-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1311610",
+    "ThreadId": "569322",
+    "Html": "Documentation of the <code>ITriangle.Area</code> property may be a bit sparse here, but it says &quot;Triangle area constraint&quot;. This means that it is used as input, e.g. you have a mesh and want to refine a selected set of triangles, you can set the area constraint for those triangles and refine the mesh.<br />\n<br />\nYou will have to write the code by yourself, but it's fairly easy. This is the C# version:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Gray;\">///</span> <span style=\"color:Gray;\">&lt;summary&gt;</span>\n<span style=\"color:Gray;\">///</span><span style=\"color:Green;\"> Compute area of given triangle.</span>\n<span style=\"color:Gray;\">///</span> <span style=\"color:Gray;\">&lt;/summary&gt;</span>\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">double</span> GetTriangleArea(ITriangle tri)\n{\n    <span style=\"color:Blue;\">var</span> a = tri.GetVertex(0);\n    <span style=\"color:Blue;\">var</span> b = tri.GetVertex(1);\n    <span style=\"color:Blue;\">var</span> c = tri.GetVertex(2);\n\n    <span style=\"color:Blue;\">return</span> 0.5 * Math.Abs(a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y));\n}\r\n</pre></div>Could you explain what's unclear about the <a href=\"https://triangle.codeplex.com/wikipage?title=InputGeometry\" rel=\"nofollow\">InputGeometry</a> documentation?<br />\n<br />\nRegarding your code above: You will have to add segments using the <code>AddSegment</code> method and <code>AddHole</code> for the holes. It's the way the original Triangle code works and it's straightforward ...<br />\n",
+    "PostedDate": "2014-10-08T09:37:36.087-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-10-08T11:44:15.043-07:00"
+  },
+  {
+    "Id": "1311653",
+    "ThreadId": "569322",
+    "Html": "Thanks for your help.\r<br />\n<br />\nI will first try by myself to understand how everything works (segment, marker, ...).\r<br />\n<br />\nThanks again.<br />\n",
+    "PostedDate": "2014-10-08T11:43:57.917-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1432129",
+    "ThreadId": "640538",
+    "Html": "Hey there,\r<br />\nI would like to create a adjacency matrix out of the delauney mesh.\r<br />\nFor that I need to know all connected neighbors from each vertex.\r<br />\nIs there a method for that or what would be the best approach doing that?\r<br />\n<br />\nThanks in advance!\r<br />\n<br />\nGeoGecco<br />\n",
+    "PostedDate": "2015-06-27T05:19:42.25-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1432131",
+    "ThreadId": "640538",
+    "Html": "Just use the <code>AdjacencyMatrix</code> class in the <code>TriangleNet.Tools</code> namespace. I use it for the Cuthill-McKee renumbering.<br />\n",
+    "PostedDate": "2015-06-27T05:52:57.527-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1432132",
+    "ThreadId": "640538",
+    "Html": "okay great, I did this now: AdjacencyMatrix A = new AdjacencyMatrix(mesh);\r<br />\nHow do I get the actual matrix to calculate with. I would like to calculate the laplacian matrix or even set the weights of the adjacency in relation to the vertex distances.\r<br />\nFor Matrix calculation I use MathNet Numerics<br />\n",
+    "PostedDate": "2015-06-27T06:06:36.78-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1432139",
+    "ThreadId": "640538",
+    "Html": "<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">void</span> MeshAdjacency(Mesh mesh)\n{\n    <span style=\"color:Blue;\">var</span> a = <span style=\"color:Blue;\">new</span> TriangleNet.Tools.AdjacencyMatrix(mesh);\n\n    <span style=\"color:Blue;\">var</span> vertices = mesh.Vertices.ToArray();\n\n    <span style=\"color:Blue;\">var</span> ap = a.AdjacencyRow; <span style=\"color:Green;\">// Row pointers</span>\n    <span style=\"color:Blue;\">var</span> ai = a.Adjacency; <span style=\"color:Green;\">// Adjacency indices</span>\n\n    <span style=\"color:Blue;\">int</span> n = vertices.Length;\n\n    <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> i = 0; i &lt; n; i++)\n    {\n        <span style=\"color:Blue;\">var</span> v0 = vertices[i]; <span style=\"color:Green;\">// Vertex i</span>\n\n        Console.Write(<span style=\"color:#A31515;\">&quot;Vertex {0} is adjacent to:&quot;</span>, v0.ID);\n\n        <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> j = ap[i]; j &lt; ap[i + 1]; j++)\n        {\n            <span style=\"color:Blue;\">var</span> v1 = vertices[ai[j - 1]];\n\n            Console.Write(<span style=\"color:#A31515;\">&quot; {0}&quot;</span>, v1.ID);\n        }\n\n        Console.WriteLine();\n    }\n}\r\n</pre></div>Be aware, that any vertex is considered adjacent to itself.\r<br />\n<br />\nIf you are doing finite element analysis, you should consider assembling the matrix element-wise, and not by looping over the nodes.<br />\n",
+    "PostedDate": "2015-06-27T06:59:02.693-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-06-27T07:03:22.25-07:00"
+  },
+  {
+    "Id": "1432140",
+    "ThreadId": "640538",
+    "Html": "yeah I noticed that in the AdjacencyMatrix class.\r<br />\nThanks alot and great work!<br />\n",
+    "PostedDate": "2015-06-27T07:03:56.303-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1432187",
+    "ThreadId": "640538",
+    "Html": "well, maybe I have one further question =)\r<br />\nHave you ever used the Math.Net Numerics Library for Matrix calculations?\r<br />\n<br />\nI now have the Adjacency Matrix wich is like 5100x5100 in size and the calculation of the eigenvectors takes centuries...\r<br />\nI already tried defining the matrix as a sparse matrix but it still keeps hours to compute them.\r<br />\nWhen I use the same procedure in matlab I get the answer within seconds.\r<br />\n<br />\nAny suggetions on big matrices?<br />\n",
+    "PostedDate": "2015-06-28T00:51:07.347-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1432191",
+    "ThreadId": "640538",
+    "Html": "That's because MathNet doesn't implement sparse eigensolvers. I think throwing an exception would be the right thing to do, but MathNet just falls back to the dense algorithm (silently, so the user just wonders why it takes hours ...)<br />\n <br />\nI'm not aware of any sparse eigensolvers for .Net, but I've successfully used ARPACK before (building a native DLL and then PInvoke into the native code). I also started to work on a port of <a href=\"http://bitbucket.org/joseroman/blopex\" rel=\"nofollow\">LOBPCG</a>, but it's not finished yet.<br />\n<br />\nIf you are interested, please contact me via <a href=\"https://www.codeplex.com/site/users/contact/wo80?OriginalUrl=https%3a%2f%2fwww.codeplex.com%2fsite%2fusers%2fview%2fwo80\" rel=\"nofollow\">Codeplex</a> (to get your email address).<br />\n",
+    "PostedDate": "2015-06-28T01:46:36.72-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

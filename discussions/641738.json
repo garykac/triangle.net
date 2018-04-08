@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1435526",
+    "ThreadId": "641738",
+    "Html": "Hi, <br />\n<br />\nI profiled code under memory profiler (after adopting it to my needs) and want to share some of my findings:<br />\n<ul>\n<li>RobustPredicates.cs:InCircleAdapt allocates a lot of double arrays every time is called. I guess this is port from C where array is allocated on stack, but in .NET array is reference type and allocated on heap. I would suggest to change the code (see below one of solutions)</li>\n<li>Triangle, BadTriangle, Segments produce high memory traffic (a lot of allocations on heap) </li>\n<li>\nMesh object contains a lot of collections inside, so it's construction causes memory traffic<br />\n</li>\n</ul>\nI fixed these issues by introducing object pool. <br />\n<br />\nHere some additional findings:<br />\n<ul>\n<li>Vertex has hash field which has the same meaning as id. So, type contains one additional integer field which leads to additional 8 bytes per object (or more depending on memory model/alignment)</li>\n<li>\nVertex and Point types are primitive by their nature, but in app they are reference types which means that additional memory will be allocated  (sync block and type pointer). Which is critical if you're using collections of such types.<br />\n</li>\n</ul>\nAnyway, thanks for the library. <br />\n",
+    "PostedDate": "2015-07-22T06:33:03.17-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1435687",
+    "ThreadId": "641738",
+    "Html": "RobustPredicates: yes, actually I think this class should be more like a service (IRobustPredicates interface), so each mesh object has it's own instance (and the user could switch to a custom implementation).\r<br />\n<br />\nI'm not an expert at memory profiling (to say the least). Would you consider sharing your code?<br />\n",
+    "PostedDate": "2015-07-23T06:09:26.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1435697",
+    "ThreadId": "641738",
+    "Html": "I don't think that this class needs to be interface. It should be internal: I guess no one is going to provide different implementation of it.  Personally, I prefer to keep public API interface as small as possible and hide details of implementation (internal classes). Personally, I don't like specific interfaces with one implementation which most likely not to be implemented different way. <br />\n<br />\nIf you want to improve your knowledge in memory profiling topic, you can start with this nice book: <a href=\"http://www.writinghighperf.net\" rel=\"nofollow\">http://www.writinghighperf.net</a> (one of chapters is available here: <a href=\"http://www.codeproject.com/Articles/812678/Performance-Considerations-of-Class-Design-and-Gen\" rel=\"nofollow\">http://www.codeproject.com/Articles/812678/Performance-Considerations-of-Class-Design-and-Gen</a>)<br />\n<br />\nYou may try to use jetBreans dotMemory profiler - it has user friendly GUI and full trial version (for 5 days).<br />\n<br />\nI'm not memory profiling expert, but I tried to use library in my project (<a href=\"https://www.youtube.com/watch?v=cQ_FmhjC12s\" rel=\"nofollow\">https://www.youtube.com/watch?v=cQ_FmhjC12s</a>) and it has unsatisfactory performance for my needs. Is not because of data structures (e.g. which hashtable implementation to choose), but mostly because of unneeded memory allocations.<br />\n<br />\nI cannot share whole code cause I've completely removed/replaced things which are not needed for the project (and it is not public yet). However, I created gist with example of my changes related to RobustPredicates class: <a href=\"https://gist.github.com/ibuiluk/bd3dad7ef24b2cca274b\" rel=\"nofollow\">https://gist.github.com/ibuiluk/bd3dad7ef24b2cca274b</a><br />\n<br />\nGeneral idea is to allocate all arrays from object pool and return them to pool once they are not used in that context anymore. Of course, object pool should be thread safe. You may try to use lock-free data structure to prevent locking, but implementation depends on the certain application. In my implementation is static class which I don't like, but it's ok for me so far.<br />\n",
+    "PostedDate": "2015-07-23T07:00:02.247-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1449106",
+    "ThreadId": "641738",
+    "Html": "Hi! Awesome library! Great Work!\r<br />\n<br />\nBut again, the problem with the performance and memory traffic, when using parallel triangulation in multiple threads.\r<br />\nDue to the large amount of object creation, GC begins to block the execution of all threads, about 300-500ms.\r<br />\nIt would be cool, in the next update to see the object pool, for frequently created objects.\r<br />\n<br />\nThank you!<br />\n",
+    "PostedDate": "2015-10-19T21:16:43.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1454701",
+    "ThreadId": "641738",
+    "Html": "Regarding the predicates:<br />\nCan someone confirm that the latest changes improve the situation?<br />\n<br />\nRegarding making the predicates a service:<br />\nI agree that keeping the public API simple is a good thing. I hope the way I implemented it (making it optional to create your own instance and injecting it in the constructor) is a good compromise. BTW: there are at least two other implementations I found: <a href=\"http://www.ceometric.com/products/g.html\" rel=\"nofollow\">ceometric.com</a> and <a href=\"https://github.com/govert/RobustGeometry.NET\" rel=\"nofollow\">RobustGeometry.NET</a>.<br />\n<br />\nRegarding <em>Vertex has hash field which has the same meaning as id</em>: that's not true. Vertex ids might be changed by the user, but the hash is fixed (index to the dictionary).<br />\n<br />\nRegarding <em>Vertex and Point types are primitive by their nature</em>: that's true for the Point, but not so much for Vertex, which is part of the topology.<br />\n<br />\nNow the important stuff, regarding the collections in the Mesh class:<br />\nI guess you are referring to the dictionaries allocating additional KeyValuePair's? I have replaced the triangles dictionary with an array based structure that retains the allocated triangles between runs. Here are some performance results (single threaded, creating a mesh with approx. 80000 triangles, repeating 10 times, average runtime):<br />\n<br />\n300ms (old version using dictionary)<br />\n260ms (using new datastructure, not re-using the pool)<br />\n170ms (using new datastructure and re-using the pool)<br />\n<br />\nI will upload the code next week and I'd be glad if someone would test it and do some memory benchmarks.<br />\n",
+    "PostedDate": "2015-12-05T04:56:48.02-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1455516",
+    "ThreadId": "641738",
+    "Html": "Here's an example using the new triangle pool: <a href=\"https://triangle.codeplex.com/wikipage?title=Parallel%20mesh%20processing\" rel=\"nofollow\">Parallel mesh processing</a>\r<br />\n<br />\nSome remarks:<br />\n<ul>\n<li>at the moment only triangles are implemented, but the same could be easily done for vertices and segments</li>\n<li>it's not threadsafe, so each thread has to use it's own pool (see the example code)</li>\n</ul>\n",
+    "PostedDate": "2015-12-10T16:49:27.6-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1482467",
+    "ThreadId": "657555",
+    "Html": "Hi, great library!<br />\n<br />\nI'm using <code>Voronoi</code> class, and have a further question whether a particular feature is implemented or not.<br />\n<br />\nI have this shape:<br />\n<img src=\"http://eppz.eu/public/voronoi/1.png\" alt=\"Image\" /><br />\n<br />\nAnd tesselate just fine with <code>BoundedVoronoi</code>:<br />\n<img src=\"http://eppz.eu/public/voronoi/2.png\" alt=\"Image\" /><br />\n<br />\nBut I want to skip boundary vertices from Voronoi graph, so I turned off <code>includeBoundary</code> upon creation:<br />\n<img src=\"http://eppz.eu/public/voronoi/3.png\" alt=\"Image\" /><br />\n<br />\nBut I'd like something like this:<br />\n<img src=\"http://eppz.eu/public/voronoi/5.png\" alt=\"Image\" /><br />\n<h2>My question is whether this result can be achieved using <code>Voronoi</code> classes?</h2>\nI could create this result involving numerous step by clipping the &quot;boundaryless&quot; graph...<br />\n<img src=\"http://eppz.eu/public/voronoi/4.png\" alt=\"Image\" /><br />\n...with the original shape, but this method would probably have tons of computing overhead.<br />\n",
+    "PostedDate": "2016-08-30T19:07:07.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482538",
+    "ThreadId": "657555",
+    "Html": "Anyway, I'll go on with <a href=\"http://www.angusj.com/delphi/clipper.php\" rel=\"nofollow\">Clipper</a>.<br />\n",
+    "PostedDate": "2016-08-31T13:12:22.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

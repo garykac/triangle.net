@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1260888",
+    "ThreadId": "550005",
+    "Html": "Hello, \r<br />\n<br />\nMy current project uses the VoronoiRegion class quite a lot. (to get neighbour tiles, edge points etc). I noticed this is no longer used in the latest source. Is the new Face class a direct replacement, or does the new system work completely differently? \r<br />\n<br />\nA bit cautious about upgrading, especially if it's still WIP :)\r<br />\n<br />\nThanks \r<br />\n<br />\nRob<br />\n",
+    "PostedDate": "2014-06-29T08:20:37.85-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1260914",
+    "ThreadId": "550005",
+    "Html": "The new code isn't finished yet, so you should stick with the old code, now located in the <code>TriangleNet.Voronoi.Legacy</code> namespace.<br />\n<br />\nThe <code>Face</code> class will be the replacement for <code>VoronoiRegion</code>, but things work quite differently:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">// Old Voronoi code</span>\n<span style=\"color:Blue;\">var</span> voronoi1 = <span style=\"color:Blue;\">new</span> SimpleVoronoi(mesh);\n\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> region <span style=\"color:Blue;\">in</span> voronoi1.Regions)\n{\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> vertex <span style=\"color:Blue;\">in</span> region.Vertices)\n    {\n        <span style=\"color:Green;\">// Traverse vertices and corresponding neighbors.</span>\n        <span style=\"color:Blue;\">var</span> neighbor = region.GetNeighbor(vertex);\n\n        <span style=\"color:Green;\">// Neighbor corresponding to last vertex is null for unbounded cells.</span>\n    }\n}\n\n<span style=\"color:Green;\">// New Voronoi code</span>\n<span style=\"color:Blue;\">var</span> voronoi2 = <span style=\"color:Blue;\">new</span> StandardVoronoi(mesh);\n\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> face <span style=\"color:Blue;\">in</span> voronoi2.Faces)\n{\n    <span style=\"color:Green;\">// Get half-edge connected to face.</span>\n    <span style=\"color:Blue;\">var</span> edge = face.Edge;\n\n    <span style=\"color:Green;\">// Get the origin of first edge.</span>\n    <span style=\"color:Blue;\">var</span> first = edge.Origin.ID;\n\n    <span style=\"color:Blue;\">do</span>\n    {\n        <span style=\"color:Green;\">// Traverse edges and corresponding neighbors.</span>\n        <span style=\"color:Blue;\">if</span> (edge.Twin != <span style=\"color:Blue;\">null</span>)\n        {\n            <span style=\"color:Green;\">// Get neighbor across current edge.</span>\n            <span style=\"color:Blue;\">var</span> neighbor = edge.Twin.Face;\n        }\n\n        edge = edge.Next;\n    }\n    <span style=\"color:Blue;\">while</span> (edge.Origin.ID != first);\n}\r\n</pre></div>If things work out well, the code for standard and bounded Voronoi diagrams will be a lot cleaner, and using DCEL as the common data structure will simplify accessing the Voronoi mesh a lot.<br />\n<br />\nEDIT: if you are using the <code>Voronoi</code> class (which is now called <code>SimpleVoronoi</code>) and NOT <code>BoundedVoronoi</code>, feel free to play around with the new <code>StandardVoronoi</code> class. The code should be stable and also a bit faster.<br />\n",
+    "PostedDate": "2014-06-29T11:04:08.97-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1261463",
+    "ThreadId": "550005",
+    "Html": "Very helpful! thank you!<br />\n",
+    "PostedDate": "2014-07-01T02:04:05.343-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273885",
+    "ThreadId": "550005",
+    "Html": "It seems edge.Next is returning null. Could this be a bug where the last edge isn't given the first.Origin?\r<br />\n<br />\nReverted to a copy and paste of the above code for testing<br />\n<pre><code>        TriangleNet.Geometry.Polygon poly = new TriangleNet.Geometry.Polygon(currentVornoiPoints.Count);\n        \n        foreach (Vector2 v2Point in currentVornoiPoints) {\n            poly.Add(new TriangleNet.Geometry.Vertex(v2Point.x, v2Point.y));\n        }\n\n        TriangleNet.Meshing.GenericMesher mesher = new TriangleNet.Meshing.GenericMesher();\n        TriangleNet.Meshing.IMesh mesh = mesher.Triangulate(poly);\n        TriangleNet.Mesh vMesh = mesh as TriangleNet.Mesh;\n\n        // New V code *test*\n\n        TriangleNet.Voronoi.StandardVoronoi v = new TriangleNet.Voronoi.StandardVoronoi(vMesh);\n\n        foreach (var face in v.Faces) {\n            // Get half-edge connected to face.\n            var edge = face.Edge;\n\n            // Get the origin of first edge.\n            var first = edge.Origin.ID;\n\n            do {\n                // Traverse edges and corresponding neighbors.\n                if (edge.Twin != null) {\n                    // Get neighbor across current edge.\n                    var neighbor = edge.Twin.Face;\n                }\n\n                edge = edge.Next;\n            } while (edge.Origin.ID != first);\n        }\n</code></pre>\n\n",
+    "PostedDate": "2014-07-18T03:27:22.64-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273926",
+    "ThreadId": "550005",
+    "Html": "This should only happen if the cell is open, ie. <code>face.Bounded == false</code>. Surely needs some documentation, but it makes sense:<br />\n<br />\nThe code above will traverse all edges of the DCEL face counterclockwise. If the face is unbounded there are exactly two (half-)infinite edges. In this case, <code>edge = face.Edge</code> will be the first infinite edge. <code>edge.Origin</code> is an <em>infinite</em> vertex, i.e. offically not part of the diagram. <code>edge.Twin.Origin</code> is the starting point of the infinite egde, so the <em>infinite</em> vertex is needed to know its direction.<br />\nIf you reach the last infinite edge of the cell, <code>edge.Next</code> will be null. <code>edge.Origin</code> is the starting point of the infinite egde and <code>edge.Twin.Origin</code> is again an <em>infinite</em> vertex, lying in the direction of the infinite edge.<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/s/tq50g20zh04d494/dcel-x-01.png\" alt=\"DCEL\" /><br />\n<br />\nThere are two possible ways to go:<br />\n<ol>\n<li>Add a check <code>while (edge != null &amp;&amp; edge.Origin.ID != first)</code> for unbounded cells.</li>\n<li>\nUse the bounded Voronoi diagram. Just add all your points into a manually added bounding box.<br />\n</li>\n</ol>\nThat's probably the last thing to do before publishing Beta 4: adding the option to intersect the standard Voronoi diagram with a bounding box, so all cells get closed.<br />\n<br />\nPS: I think DCELs are quite awesome, so once you get your head around them, the insertion of a new cell won't be too hard ... it's all about careful bookkeeping of the edge pointers.<br />\n",
+    "PostedDate": "2014-07-18T05:10:53.903-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273948",
+    "ThreadId": "550005",
+    "Html": "Ahhh... that would be why. The infinite vertex thing has always thrown me  a little. If I was creating a new cell from a point inside an existing cell with infinite edges do I need to do anything clever with the bisector calculations ? \r<br />\n<br />\nPS: Agreed, after reading the idiots guide to DCEL's (<a href=\"http://www.cs.iastate.edu/~cs518/handouts/doubly-connected-edge%20list.pps\" rel=\"nofollow\">http://www.cs.iastate.edu/~cs518/handouts/doubly-connected-edge%20list.pps</a>) it all made sense  :)<br />\n",
+    "PostedDate": "2014-07-18T06:11:56.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

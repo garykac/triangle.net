@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1133053",
+    "ThreadId": "472260",
+    "Html": "Hello,\r<br />\n<br />\nI would like to help me if you have patience.\r<br />\nI really like this library.\r<br />\n<br />\nWhat I wanted to do.\r<br />\nI have a list of points lat, lng and h.\r<br />\n<br />\nI would like to import this item\r<br />\nto make triangles\r<br />\nand at the end - rendering,\r<br />\n<br />\nIs this possible?\r<br />\n<br />\n<br />\nthanks in advance<br />\n",
+    "PostedDate": "2013-12-09T01:26:32.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1133085",
+    "ThreadId": "472260",
+    "Html": "Depending on how you'd like to render your data, you can either choose to triangulate the spherical coordinates (lat, lng), or convert to cartesian coordinates first.<br />\n<br />\nIn Triangle.NET, any point has two coordinates (called x, y, but this of course doesn't mean that they have to be interpreted as cartesian) and probably some attributes. To triangulate your data, first create an InputGeometry and then a Mesh:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">int</span> n = pts.Length;\n\n<span style=\"color:Blue;\">var</span> geometry = <span style=\"color:Blue;\">new</span> InputGeometry(n);\n<span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> i = 0; i &lt; n; i++)\n{\n    geometry.AddPoint(pts[i].lat, pts[i].lng, 0, pts[i].h);\n}\n\n<span style=\"color:Blue;\">var</span> mesh = <span style=\"color:Blue;\">new</span> Mesh();\nmesh.Triangulate(geometry);\n\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> t <span style=\"color:Blue;\">in</span> mesh.Triangles)\n{\n    <span style=\"color:Blue;\">int</span> k = 0; <span style=\"color:Green;\">// k = 0, 1 or 2 for the three triangle vertices</span>\n    \n    <span style=\"color:Blue;\">var</span> v = t.GetVertex(k);\n    \n    <span style=\"color:Blue;\">double</span> lat =  v.X;\n    <span style=\"color:Blue;\">double</span> lng =  v.Y;\n    <span style=\"color:Blue;\">double</span> h =  v.Attributes[0];\n}\r\n</pre></div>",
+    "PostedDate": "2013-12-09T03:36:15.803-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1133113",
+    "ThreadId": "472260",
+    "Html": "Thanks for quick replay\r<br />\n<br />\nIts works<br />\n",
+    "PostedDate": "2013-12-09T05:09:38.897-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1133130",
+    "ThreadId": "472260",
+    "Html": "which is a type of &quot;base&quot;\r<br />\nwhich class?\r<br />\nwhich object?\r<br />\n<br />\nHexiSphereSegment.transform.parent = base.transform;\r<br />\n<br />\nI get an error\r<br />\n<br />\nSystem.Windows.Forms.Form' does not contain a definition for 'transform\r<br />\n<br />\n<br />\ni use part of code from discusion &quot;How do I create a voronoi polygon?&quot;\r<br />\n<br />\nthis part\r<br />\n<br />\nUnityEngine.Mesh uMesh = new UnityEngine.Mesh();<br />\n<pre><code>        GameObject HexiSphereSegment = new GameObject();\n\n        HexiSphereSegment.transform.parent = base.transform;\n        HexiSphereSegment.transform.localPosition = Vector3.zero;\n        HexiSphereSegment.transform.rotation = base.transform.rotation;\n\n        HexiSphereSegment.AddComponent&lt;MeshRenderer&gt;();\n        MeshFilter filter = HexiSphereSegment.AddComponent&lt;MeshFilter&gt;();\n        HexiSphereSegment.renderer.material= base.renderer.material;\n\n\n        HexiSphereSegment.name = &quot;Forward&quot;;\n    Vector2[] _uv2D = new Vector2[voronoiVertices.Count];\n\n    for(int x = 0; x &lt; voronoiVertices.Count; x++){\n        _uv2D[x] = new Vector2(voronoiVertices[x].x, voronoiVertices[x].y);\n    }\n\n    uMesh.hideFlags = HideFlags.DontSave;\n    uMesh.vertices = voronoiVertices.ToArray();\n        uMesh.uv = _uv2D;\n        uMesh.triangles =  triangles.ToArray();\n    uMesh.RecalculateNormals();\n        uMesh.RecalculateBounds();\n        filter.mesh = uMesh;</code></pre>\n\n",
+    "PostedDate": "2013-12-09T05:58:07.317-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1133275",
+    "ThreadId": "472260",
+    "Html": "That's Unity3D stuff. Since I don't use Unity, I can't give you any advice here.<br />\n",
+    "PostedDate": "2013-12-09T12:19:02.447-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

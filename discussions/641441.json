@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1434581",
+    "ThreadId": "641441",
+    "Html": "Hi,\r<br />\n<br />\nFirst of all; great work on this project! I really like the work you have done, and really hope you will extend the mesher to take into consideration quadratic elements, and over time volume elements.\r<br />\n<br />\nMy question to you:\r<br />\nI have a mesh that I will like to smooth with the SimpleSmoother class (beta 4). But I have some points on the mesh that I will like to keep at their original position. Is this possible in the current version? If not; do you have any thoughts on an approach I can use to solve this problem?\r<br />\n<br />\nThank you for the anware in advance.\r<br />\n<br />\nBest regards\r<br />\nIsdas<br />\n",
+    "PostedDate": "2015-07-16T01:26:04.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1434631",
+    "ThreadId": "641441",
+    "Html": "Any point with a boundary mark &gt; 0 should be fixed (though the name suggests it, it doesn't have to be part of a boundary). See the following .poly file:<br />\n<pre><code>6 2 0 1\n0  1 1  1\n1 -1 1  1\n2 -1 0  1\n3  1 0  1\n4 -0.5 0.6 2 # This point will be fixed\n5  0.5 0.2 0 # This point is free to move\n4 1\n0 0 1 1\n1 1 2 1\n2 2 3 1\n3 3 0 1\n0</code></pre>\n\n",
+    "PostedDate": "2015-07-16T08:28:19.5-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2015-07-20T01:35:03.933-07:00"
+  }
+]

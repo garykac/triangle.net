@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1490361",
+    "ThreadId": "660369",
+    "Html": "Hi all,\r<br />\nusing beta3, I'm generating a mesh for my non-convex figure but I'm facing an issue; many extra-small triangles are generated and they are a problem for me (FEM analysis is my final purpose).\r<br />\n<br />\nI'm setting the properties of class Behaviour inside the mesh (MyMesh.Behavior.Quality = true; MyMesh.Behavior.MinAngle = 35; MyMesh.Behavior.MaxAngle = 91;), but even with wider constraints those triangles are still generated. Please note that just a small portion of them are extra-small, leading to an unhomogeneous mesh.\r<br />\n<br />\nIs there a way to avoid extra-small triangles? Is it possible to set a &quot;minArea&quot; constraint on triangles?<br />\n",
+    "PostedDate": "2016-12-28T06:37:06.4-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1490397",
+    "ThreadId": "660369",
+    "Html": "This is not possible at the moment. Quality meshing is implemented in an &quot;inclusive&quot; way: a triangle is refined, if <em>any</em> quality constraint is violated. What you are looking for is a way to exclude a triangle from further refinement.\r<br />\n<br />\nThis is a nice idea and I might include it in the latest source. For beta 3, you'd need to edit the <code>TestTriangle</code> method in the <code>Quality</code> class and abort the test before the triangle is added to the &quot;bad triangle&quot; queue.\r<br />\n<br />\nSome more thoughts:<br />\n<ul>\n<li>loosen the quality constraints</li>\n<li>bound the number of steiner points</li>\n<li>make sure that your input doesn't contain small features</li>\n</ul>\n",
+    "PostedDate": "2016-12-29T03:27:01.763-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

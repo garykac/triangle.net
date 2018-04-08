@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1425149",
+    "ThreadId": "637877",
+    "Html": "Hello!\r<br />\n<br />\nI'm trying to solve a simple Laplase equation for my university study. I've created a tool for setting geometry and added an import in *.poly format. Then I've used Triangle.NET for calculating a mesh. It looks like this so far:\r<br />\n<br />\n--geometry \r<br />\n<br />\n<img src=\"https://dl-web.dropbox.com/get/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/2015-04-30%2014-52-09%20%D0%9A%D0%BE%D0%BD%D1%82%D1%83%D1%80.png?_subject_uid=18872697&amp;w=AAC6r_INMfE5t3NSrmtVJ78htgW-N5dyy8JewvfXoX8SsA\" alt=\"Image\" />\r<br />\n<br />\n--mesh\r<br />\n<br />\n<img src=\"https://dl-web.dropbox.com/get/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/2015-04-30%2014-52-16%20%D0%9A%D0%BE%D0%BD%D1%82%D1%83%D1%80.png?_subject_uid=18872697&amp;w=AACWcPM8CkQoIoOzOz_uZT0EPC93_sQh-SiSsdJ5NcY67g\" alt=\"Image\" />\r<br />\n<br />\nNow I need to set boundary conditions. Simply I should be able to select all points on the some geometry edge and calculate boundary equation in it. So there is the question - how to select all points that belongs to the one particular edge?<br />\n",
+    "PostedDate": "2015-05-13T04:26:36.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1425198",
+    "ThreadId": "637877",
+    "Html": "First, you should use boundary markers in your input geometry (at least if you have to apply multiple boundary conditions). Any segment of the mesh has a <code>Boundary</code> property, so you can easily identify different boundary parts.<br />\n<br />\nTo access the boundary information you have two choices:<br />\n<ol>\n<li>\nSegment based:<br />\nYou can use the <code>mesh.Segments</code> property and loop over all the segments. You can use the <code>GetVertex(i)</code> method to get the segment endpoints and <code>GetTriangle(i)</code> to get the triangle(s) the segment belongs to.<br />\n</li>\n<li>\nTriangle based (preferred)<br />\nSince you usually assemble the system matrix by looping over the elements (<code>mesh.Triangles</code> property), you can call <code>GetSegment(i)</code> [i=0,1,2] for each triangle. If it returns null, the triangle side is not on the boundary. If it is, it returns a segment and you can look at its boundary marker to find the boundary condition you want to apply. Then use <code>GetVertex(i)</code> to get the vertices and do the actual integration.<br />\n</li>\n</ol>\nYou can use the <code>vertex.ID</code> property for indexing your matrix entries. If don't use any custom numbering, you can call <code>mesh.Renumber()</code>, which will ensure that vertex ids are numbered linearly from 0 to N-1 (assuming the final mesh has N vertices).<br />\n",
+    "PostedDate": "2015-05-13T07:19:01.197-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1425359",
+    "ThreadId": "637877",
+    "Html": "Thanks a lot. I'll try do that and report.<br />\n",
+    "PostedDate": "2015-05-14T01:42:55.223-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1427648",
+    "ThreadId": "637877",
+    "Html": "Hi, I've managed the boundary markers. Now I can determine multiple boundary conditions for my region.\r<br />\nIs there any neat .Net library for solving Laplace equation numerically? I have an old Fortran library (which I'm going to use), but I want to maintain the .Net lib to my project.<br />\n",
+    "PostedDate": "2015-05-26T07:38:22.36-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1427808",
+    "ThreadId": "637877",
+    "Html": "If you want to solve the Laplace equation using the Finite Element method, there are 4 steps:\r<br />\n<br />\n1) Discretize the domain (done by Triangle.NET)\r<br />\n2) Assemble the system matrix\r<br />\n3) Solve the linear system (use some math library like MathNet or CSparse.NET)\r<br />\n4) Check the solution, visualize the results (you can use Triangle.NETs RenderManager for basic visualization)\r<br />\n<br />\nSo the only thing you need to do, is to code the assembling routine. It's a great learning experience, so I suggest you have a go.\r<br />\n<br />\nHere's a screenshot from a test app I wrote a while ago. It solves the laplace equation for a simple potential problem:\r<br />\n<br />\n  -laplace(u)=0, u=0 on the outer boundary, u=-1 and u=1 on the slits\r<br />\n<br />\nIt's less than 200 lines of code.\r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/s/0mt9d7xmfs9h3mi/laplace.png\" alt=\"laplace\" /><br />\n",
+    "PostedDate": "2015-05-27T09:11:03.513-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1427936",
+    "ThreadId": "637877",
+    "Html": "Thank you! Can you please give an advise how to assemble the system matrix?<br />\n",
+    "PostedDate": "2015-05-28T07:34:35.717-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1428009",
+    "ThreadId": "637877",
+    "Html": "So, is your university study about <em>learning</em> to solve PDEs numerically, or do you just need some tool to get the job done. If it's the latter, why did you choose C#/.NET? You could use some software package like Matlab.<br />\n",
+    "PostedDate": "2015-05-29T05:30:17.38-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

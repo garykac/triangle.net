@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1465227",
+    "ThreadId": "651971",
+    "Html": "is that surface depth analysis possible in triangle.net? suggest me algorithm if it is.<br />\n",
+    "PostedDate": "2016-03-02T01:32:58.847-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1465242",
+    "ThreadId": "651971",
+    "Html": "It's not particularly helpful if you are opening all these discussions with just one line of text.<br />\n<ol>\n<li>Give more details about what you actually want. What is <em>surface depth analysis</em>?</li>\n<li>I already said that contour plotting will not be part of Triangle.NET. Did you have a look at CONREC? It's really easy to adapt the algorithm to triangle meshes.</li>\n<li>The DISCUSSIONS section is not about <em>requesting</em> something, it's about <em>discussing</em>!</li>\n</ol>\n",
+    "PostedDate": "2016-03-02T03:13:00.04-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1465370",
+    "ThreadId": "651971",
+    "Html": "constructs the surface plot by connecting neighboring matrix elements to form a mesh of quadrilaterals.<br />\nDisplaying both connecting lines and faces of the surface in colors.<br />\nis that possible like ocean map with different surface color  or oceanic wave movement etc.<br />\n",
+    "PostedDate": "2016-03-02T19:51:37.253-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1465392",
+    "ThreadId": "651971",
+    "Html": "Rendering capabilities of Triangle.NET are very limited. Using the Triangle.Rendering assembly, you can render the following images:<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/s/ejoyaqdip35o6w2/contour-plot-01.png?dl=0\" alt=\"contour-plot-01.png\" /><br />\n<a href=\"https://dl.dropboxusercontent.com/s/ejoyaqdip35o6w2/contour-plot-01.png?dl=0\" rel=\"nofollow\">Dropbox: contour-plot-01.png</a><br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/s/m9m5qucieqe53mf/contour-plot-02.png?dl=0\" alt=\"contour-plot-02.png\" /><br />\n<a href=\"https://dl.dropboxusercontent.com/s/m9m5qucieqe53mf/contour-plot-02.png?dl=0\" rel=\"nofollow\">Dropbox: contour-plot-02.png</a><br />\n<br />\nThis is done using GDI, so it's very slow. If you want to render high quality images (or 3D), you should use OpenGL.<br />\n<br />\nThe contours in the second image were computed using CONREC.<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">// The region to plot.</span>\n<span style=\"color:Blue;\">var</span> region = <span style=\"color:Blue;\">new</span> Rectangle(-1.4, -1.4, 2.8, 2.8);\n\n<span style=\"color:Green;\">// Generate mesh.</span>\n<span style=\"color:Blue;\">var</span> mesh = (Mesh)GenericMesher.StructuredMesh(region, 36, 36);\n\n<span style=\"color:Green;\">// Render mesh.</span>\nrenderManager.Set(mesh, <span style=\"color:Blue;\">true</span>);\n\n<span style=\"color:Green;\">// The function to render.</span>\nFunc&lt;<span style=\"color:Blue;\">double</span>, <span style=\"color:Blue;\">double</span>, <span style=\"color:Blue;\">double</span>&gt; f = (x, y) =&gt; Math.Sin(2 * x) * Math.Cos(2 * y);\n\n<span style=\"color:Blue;\">var</span> values = <span style=\"color:Blue;\">new</span> <span style=\"color:Blue;\">float</span>[mesh.Vertices.Count];\n\n<span style=\"color:Green;\">// Ensure linear numbering of nodes.</span>\nmesh.Renumber();\n\n<span style=\"color:Blue;\">float</span> value, min, max;\n\n<span style=\"color:Green;\">// Compute function values for each node.</span>\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> v <span style=\"color:Blue;\">in</span> mesh.Vertices)\n{\n    values[v.ID] = value = (<span style=\"color:Blue;\">float</span>)f(v.X, v.Y);\n\n    min = Math.Min(min, value);\n    max = Math.Max(max, value);\n}\n\n<span style=\"color:Green;\">// Render function.</span>\nrenderManager.Context.ColorManager.ColorMap = ColorMap.Jet(256);\nrenderManager.Update(values);\n\n<span style=\"color:Green;\">// Compute 10 contour levels using CONREC.</span>\n<span style=\"color:Blue;\">var</span> data = ContourGenerator.Contour(mesh, values, 10);\n\n<span style=\"color:Green;\">// Render contours.</span>\nrenderManager.Set(data.Points, data.Edges, <span style=\"color:Blue;\">false</span>);\r\n</pre></div>",
+    "PostedDate": "2016-03-03T02:49:36.227-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1465787",
+    "ThreadId": "651971",
+    "Html": "<strong>wo80 wrote:</strong>\r<br />\nThank you for providing me an idea . <br />\n",
+    "PostedDate": "2016-03-06T20:09:10.457-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

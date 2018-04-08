@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1006866",
+    "ThreadId": "434529",
+    "Html": "I'm sorry for not finding answer for this question, but i couldn't find how to triangulate objects considering bounds (cuts) of one.\r<br />\n<img src=\"http://s13.postimage.org/7xn2rvnpj/image.jpg\" alt=\"Image\" />.\r<br />\nThank you<br />\n",
+    "PostedDate": "2013-02-26T03:59:13.39-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006885",
+    "ThreadId": "434529",
+    "Html": "If you want to include the convex hull of the geometry (probably what you mean by bounds?), then use<br />\n<pre><code>mesh.Behavior.Convex = true;</code></pre>\n\nwhich should do the trick (make sure to use the latest changeset, not the Beta 3 dll).<br />\n",
+    "PostedDate": "2013-02-26T04:37:18.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006893",
+    "ThreadId": "434529",
+    "Html": "Im sorry again, but where can i find the latest changeset? I found only beta 3 version on this source.<br />\n",
+    "PostedDate": "2013-02-26T04:47:54.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006898",
+    "ThreadId": "434529",
+    "Html": "-<br />\n",
+    "PostedDate": "2013-02-26T04:54:06.91-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006906",
+    "ThreadId": "434529",
+    "Html": "Go to the &quot;Source Code&quot; tab on the top and then click &quot;Download&quot;. You will have to compile the project yourself.<br />\n<br />\nIf you want to use the Beta 3 dll, the syntax is<br />\n<pre><code>mesh.SetOption(Options.Convex, true);</code></pre>\n\n",
+    "PostedDate": "2013-02-26T05:14:10.49-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006911",
+    "ThreadId": "434529",
+    "Html": "<strong>wo80 wrote:</strong><br />\n<blockquote>\nGo to the &quot;Source Code&quot; tab on the top and then click &quot;Download&quot;. You will have to compile the project yourself.<br />\n<br />\nIf you want to use the Beta 3 dll, the syntax is<br />\n<pre><code>mesh.SetOption(Options.Convex, true);</code></pre>\n\n</blockquote>\nI used this code but result is the same. Function Triangulate() doesnt consider holes and bounds.\r<br />\n<br />\n mesh.behavior.Quality = true;\r<br />\n mesh.behavior.MinAngle = min_tr;\r<br />\n  mesh.behavior.MaxArea = tr_shag;\r<br />\n  mesh.behavior.Convex = true;\r<br />\nmesh.Triangulate(geometry);\r<br />\nmesh.behavior.Convex = true;\r<br />\n<br />\n<img src=\"http://s1.postimage.org/kkyguiwr3/tr2.jpg\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2013-02-26T05:25:58.353-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006943",
+    "ThreadId": "434529",
+    "Html": "Ok, now I see what you are trying to do. The &quot;convex&quot; option is exactly what you DON'T want to use.\r<br />\n<br />\nI think your input geometry isn't setup correctly. Maybe you are skipping the segments completely? Did you have a look at the <a href=\"http://triangle.codeplex.com/wikipage?title=InputGeometry\" rel=\"nofollow\">documentation</a>.\r<br />\n<br />\nIf you can't solve the issue, please show the code where you setup the geometry.<br />\n",
+    "PostedDate": "2013-02-26T06:33:33.893-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006955",
+    "ThreadId": "434529",
+    "Html": "Yes, I skipped segments. I read the documentation, but didnt understand next items:\r<br />\n1) why are segments need?\r<br />\n2) why arguments of function has integer type, not double? (mesh.AddSegment(int p0,int p1).<br />\n",
+    "PostedDate": "2013-02-26T06:52:04.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1006965",
+    "ThreadId": "434529",
+    "Html": "It's alright. I understood how i should use it. Thank you very much<br />\n",
+    "PostedDate": "2013-02-26T07:08:25.16-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206505",
+    "ThreadId": "434529",
+    "Html": "Hello Volchik, can you explain how you succeed to manage your problem ? \r<br />\nI have a problem similar to yours, I only have a list of point and I create a geometry with it but the triangulation close my &quot;mesh&quot;.\r<br />\n<br />\nThanks for your help<br />\n",
+    "PostedDate": "2014-02-10T12:44:18.747-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206728",
+    "ThreadId": "434529",
+    "Html": "Hi, rxra. You should do next:\r<br />\n1) Make points list - var geometry = new InputGeometry(pointlist_track.Count);\r<br />\n2) Add all points of the body:\r<br />\nfor (int i = 0; i &lt; pointlist_track.Count - 1; ++i)\r<br />\n{<br />\n<pre><code>  geometry.AddPoint(pointlist[i].X, pointlist[i].Y); </code></pre>\n\n}\r<br />\n3) Add segments(faces, edges of body)<br />\n<pre><code> geometry.AddSegment(i1, i2), where i1 and i2 are the numbers of points. Every point in geometry has a number.</code></pre>\n\n4) For adding holes you should use geometry.AddHole(point.X, point.Y).\r<br />\n<br />\nBe carefull adding segments and holes. If something will be wrong, you will get an error message.\r<br />\nSorry for my english.<br />\n",
+    "PostedDate": "2014-02-11T03:15:56.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1206994",
+    "ThreadId": "434529",
+    "Html": "hi,\r<br />\n<br />\nthanks for the answer .... in fact I found the solution ... just a mistake will building the segments .... forgot to close the &quot;path&quot;.\r<br />\nthanks again.<br />\n",
+    "PostedDate": "2014-02-11T13:33:44.593-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

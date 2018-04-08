@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1055907",
+    "ThreadId": "446828",
+    "Html": "I would like to search a mesh for a triangle that contains a given point (or has an edge/vertex on the point).<br />\n<br />\nDo I need to write my own routine to traverse the mesh or is there an existing method?<br />\n<br />\nDoes TriangleNet.Mesh.Locate do this?  I see it is internal and not public.<br />\n<br />\nThanks...<br />\n",
+    "PostedDate": "2013-06-12T08:40:30.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1055918",
+    "ThreadId": "446828",
+    "Html": "The Locate routine is designed for convex triangulations only. So if your mesh has holes or concave boundary parts, the code might fail.\r<br />\n<br />\nGenerally, if you have a lot of queries to the same mesh, I would recommend you build a spatial index for that mesh. I have used the <a href=\"http://sourceforge.net/projects/quadtreesim/\" rel=\"nofollow\">Quadtree Simulator</a> project before, which worked very well. Queries are then O(log n).<br />\n",
+    "PostedDate": "2013-06-12T08:56:55.097-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1056105",
+    "ThreadId": "446828",
+    "Html": "Thank you.\r<br />\n<br />\nI have it working using the C# implementation of a quadtree I found here: <a href=\"http://www.codeproject.com/Articles/30535/A-Simple-QuadTree-Implementation-in-C\" rel=\"nofollow\">http://www.codeproject.com/Articles/30535/A-Simple-QuadTree-Implementation-in-C</a>\r<br />\n<br />\nThanks for the advice and Thanks for the excellent Triangle.NET.<br />\n",
+    "PostedDate": "2013-06-12T15:33:55.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

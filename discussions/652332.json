@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "1466218",
+    "ThreadId": "652332",
+    "Html": "<pre><code>        TriangleNet.Geometry.InputGeometry geometry = TriangleNet.IO.FileReader.ReadPolyFile(&quot;..\\\\..\\\\..\\\\Data\\\\superior.poly&quot;);\n\n</code></pre>\n\nIn this line instead of getting only one poly file i need to choose multiple choice (selection of different poly file)\r<br />\n<br />\nI tried with ofd.filename no error but it throws exception<br />\n<pre><code>    private bool Open(string p)\n    {\n        throw new NotImplementedException();\n    }\n\n</code></pre>\n\ncan you help me out please.\r<br />\n<br />\n<br />\n<br />\ncode:\r<br />\nusing System;\r<br />\nusing System.Collections.Generic;\r<br />\nusing System.ComponentModel;\r<br />\nusing System.Data;\r<br />\nusing System.Drawing;\r<br />\nusing System.Linq;\r<br />\nusing System.Text;\r<br />\nusing System.Windows.Forms;\r<br />\nusing TriangleNet;\r<br />\nusing DanTest.Properties;\r<br />\n<br />\nnamespace DanTest\r<br />\n{<br />\n<pre><code>public partial class Form1 : Form\n{\n    Settings settings;\n    RectangleF boundary;\n    TriangleNet.Tools.QuadTree quadTree;\n\n    public Form1()\n    {\n        InitializeComponent();\n    }\n\n    private void Form1_Load(object sender, EventArgs e)\n    {\n     //   oldClientSize = this.ClientSize;\n\n        settings = new Settings();\n\n      //  renderManager = new RenderManager();\n      //    renderManager.CreateDefaultControl();\n    }\n    private void button1_Click(object sender, EventArgs e)\n    {\n\n        List&lt;PointF&gt; lstPoints;\n        TriangleNet.Mesh mesh;\n        Random random = new Random();\n\n        TriangleNet.Geometry.InputGeometry geometry = TriangleNet.IO.FileReader.ReadPolyFile(&quot;..\\\\..\\\\..\\\\Data\\\\superior.poly&quot;);\n\n        // add random z values so the interpolation works\n        foreach (TriangleNet.Geometry.Point vertex in geometry.Points)\n            vertex.Z = random.Next(100);\n\n        mesh = new TriangleNet.Mesh();\n\n        mesh.Triangulate(geometry);\n\n        // get geometry boundary so we can do conversions between geometry space and picturebox1 space\n        boundary = new RectangleF((float)geometry.Bounds.Xmin, (float)geometry.Bounds.Ymin, (float)geometry.Bounds.Width, (float)geometry.Bounds.Height);\n\n        pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);\n\n        // draw geometry on bitmap for picturebox1 to display\n        using (Graphics g = Graphics.FromImage((Bitmap)pictureBox1.Image))\n        {\n            foreach (TriangleNet.Data.Triangle triangle in mesh.Triangles)\n            {\n                lstPoints = new List&lt;PointF&gt;();\n\n                foreach (TriangleNet.Data.Vertex vertex in triangle.Vertices)\n                    lstPoints.Add(PointFromVertex(vertex));\n\n                g.FillPolygon(Brushes.Brown, lstPoints.ToArray());\n                g.DrawPolygon(Pens.Red, lstPoints.ToArray());\n            }\n        }\n\n        quadTree = new TriangleNet.Tools.QuadTree(mesh.Triangles);\n    }\n\n    // convert vertex to picturebox space\n    private PointF PointFromVertex(TriangleNet.Data.Vertex vertex)\n    {\n        double x, y;\n\n        x = vertex.X;\n        y = vertex.Y;\n\n        x = ((x - boundary.Left) / boundary.Width) * pictureBox1.Width;\n        y = ((boundary.Bottom - y) / boundary.Height) * pictureBox1.Height;\n\n        return new PointF((float)x, (float)y);\n    }\n\n    private void pictureBox1_MouseMove(object sender, MouseEventArgs e)\n    {\n        double dblZ = double.NaN;\n        double x, y;\n        TriangleNet.Data.Triangle triangle;\n\n        if (quadTree == null)\n            return;\n\n        // convert picturebox1 mouse point to geometry space\n        x = ((float)e.X / (float)pictureBox1.Width) * boundary.Width + boundary.Left;\n        y = -1f * (((float)e.Y / (float)pictureBox1.Height) * boundary.Height - boundary.Bottom);\n\n        // erase previous highlights\n        pictureBox1.Invalidate();\n        pictureBox1.Refresh();\n\n        triangle = (TriangleNet.Data.Triangle)quadTree.Query(x, y);\n\n        if (triangle != null)\n        {\n            dblZ = triangle.ComputeZ(x, y);\n\n            // converts triangle points to picturebox1 space so we can highlight the current triangle\n            PointF[] points = new PointF[3];\n            for (int i = 0; i &lt; triangle.Vertices.Length; i++)\n                points[i] = PointFromVertex(triangle.Vertices[i]);\n\n            Graphics g = pictureBox1.CreateGraphics();\n\n            g.FillPolygon(Brushes.Cyan, points);\n        }\n\n        lblLocation.Text = &quot;X:&quot; + x.ToString(&quot;0.000&quot;) + &quot; Y: &quot; + y.ToString(&quot;0.000&quot;) + &quot; Z: &quot; + dblZ.ToString(&quot;0.0&quot;);\n    }\n\n    private void button2_Click(object sender, EventArgs e)\n    {\n        String Chosen_File =&quot;&quot;;\n\n        OpenFileDialog ofd = new OpenFileDialog();\n\n        ofd.Filter = &quot;PNG Images|*.png|JPEG Images|*.jpeg&quot; ;\n        ofd.FilterIndex = settings.OfdFilterIndex;\n        ofd.InitialDirectory = settings.OfdDirectory;\n        ofd.FileName = &quot;&quot;;\n\n\n        if (ofd.ShowDialog() == DialogResult.OK)\n        {\n            if (Open(ofd.FileName))\n            {\n                // Update folder settings\n                settings.OfdFilterIndex = ofd.FilterIndex;\n                settings.OfdDirectory = System.IO.Path.GetDirectoryName(ofd.FileName);\n                Chosen_File = ofd.FileName;\n                pictureBox1.Image = Image.FromFile(Chosen_File);\n            }\n        }\n\n\n\n\n\n    }\n\n    private bool Open(string p)\n    {\n        throw new NotImplementedException();\n    }\n}</code></pre>\n\n}<br />\n",
+    "PostedDate": "2016-03-09T03:54:56.377-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466424",
+    "ThreadId": "652332",
+    "Html": "So, basically you are asking me how to open a file. This has nothing to do with Triangle.NET and nothing to do with &quot;dantest patch file&quot;.<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">void</span> OpenWithDialog()\n{\n    <span style=\"color:Blue;\">var</span> ofd = <span style=\"color:Blue;\">new</span> OpenFileDialog();\n\n    ofd.Filter = <span style=\"color:#A31515;\">&quot;Triangle polygon file|*.poly&quot;</span>;\n\n    <span style=\"color:Blue;\">if</span> (ofd.ShowDialog() == DialogResult.OK)\n    {\n        OpenPolyFile(ofd.FileName);\n    }\n}\n\n<span style=\"color:Blue;\">void</span> OpenPolyFile(<span style=\"color:Blue;\">string</span> file)\n{\n    <span style=\"color:Blue;\">var</span> geometry = TriangleNet.IO.FileReader.ReadPolyFile(file);\n    <span style=\"color:Green;\">// ...</span>\n}\r\n</pre></div>",
+    "PostedDate": "2016-03-10T10:50:18.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466474",
+    "ThreadId": "652332",
+    "Html": "<pre><code>  private void button1_Click(object sender, EventArgs e)\n        {\n            var ofd = new OpenFileDialog();\n\n            ofd.Filter = &quot;Triangle polygon file|*.poly&quot;;\n\n            if (ofd.ShowDialog() == DialogResult.OK)\n            {\n                OpenPolyFile(ofd.FileName);\n\n                var geometry = TriangleNet.IO.FileReader.ReadPolyFile(file);\n            \n                boundary = new RectangleF((float)geometry.Bounds.Xmin, (float)geometry.Bounds.Ymin, (float)geometry.Bounds.Width, (float)geometry.Bounds.Height);\n                pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);\n\n            }</code></pre>\n\nArgument null exception was handeled is the runtime error iam getting\r<br />\nand then\r<br />\n  g.FillPolygon(Brushes.Brown, lstPoints.ToArray());\r<br />\n<br />\nin this line of  &quot;fillpolygon&quot; code instead of filling single color i need to use multicolor .\r<br />\n<br />\nIn dantest with that z value can we plot lines connecting those z pts.\r<br />\n<br />\ncan you help me out to with the change in code of dantest please. i am not moving in this concept further .<br />\n",
+    "PostedDate": "2016-03-10T21:18:24.053-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1466519",
+    "ThreadId": "652332",
+    "Html": "<ol>\n<li>Why did you choose to use Dan's patch as a basis for your work. Triangle.NET comes with a test application (Mesh Explorer) that shows how to work with the library and how to render meshes properly.</li>\n<li>You should use the <strong>latest source code</strong> (unreleased Beta 4).</li>\n<li>You seem to be missing some basic understanding of C# and graphics programming with .NET.</li>\n<li>You are trying my patience.</li>\n</ol>\n",
+    "PostedDate": "2016-03-11T05:01:59.073-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468889",
+    "ThreadId": "652332",
+    "Html": "Hi can you help me out to read the geometry of a poly file . i.e in a button click event iam trying to get the geometries of poly file which is selected . i was able to get to mesh of the poly file .<br />\n",
+    "PostedDate": "2016-04-04T04:50:27.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1468927",
+    "ThreadId": "652332",
+    "Html": "Come on, that's exactly what I wrote in my first answer above. Just put the <code>OpenWithDialog</code> method in the event handler:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">private</span> <span style=\"color:Blue;\">void</span> button1_Click(<span style=\"color:Blue;\">object</span> sender, EventArgs e)\n{\n    OpenWithDialog();\n}\r\n</pre></div>",
+    "PostedDate": "2016-04-04T07:48:50.723-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469024",
+    "ThreadId": "652332",
+    "Html": "I know , i got it when you first explained to me, but now i dont need this. what i need is that only points to be visible like boundary and the vertex points of superior or any poly file. In triangle.net source code when we click open file which shows a message box that import mesh or only geometry(yes or no), where when we click no button it just plot the points of that poly file.I went through the code but i dont get it<br />\n",
+    "PostedDate": "2016-04-04T22:51:01.163-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1469042",
+    "ThreadId": "652332",
+    "Html": "How to import only the geometry of the poly file .<br />\n",
+    "PostedDate": "2016-04-05T02:59:10.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1288236",
+    "ThreadId": "560650",
+    "Html": "Anyone knows how to create a mixed quadrilateral and triangle mesh?  Basically I want to create a quadrilateral mesh, however, if there is not equal vertexes on the opposite sides, then a few triangle cells are allowed. \r<br />\n<br />\nThanks.\r<br />\n<br />\nVictor<br />\n",
+    "PostedDate": "2014-08-08T15:01:17.23-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1288612",
+    "ThreadId": "560650",
+    "Html": "There is currently no way to do this with Triangle.NET.<br />\n<br />\nThe latest code contains a triangle mesh to DCEL conversion method. DCELs are a very flexible data structure, which could be used to represent mixed meshes, so that may be a good starting point.<br />\n<br />\nEDIT: Related discussions:<br />\n<a href=\"https://triangle.codeplex.com/discussions/446775\" rel=\"nofollow\">question about future plans quadrilateral mesh generation</a><br />\n<a href=\"https://triangle.codeplex.com/discussions/403681\" rel=\"nofollow\">Quadrangle elements</a><br />\n",
+    "PostedDate": "2014-08-10T03:27:50.683-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

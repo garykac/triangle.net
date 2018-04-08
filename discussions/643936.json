@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1441094",
+    "ThreadId": "643936",
+    "Html": "Hi there,\r<br />\nFirst of all, I am very graceful for your project. It helps me a lot because nearly I am trying to use Delunay Triangulation to implement interest management in cooperative virtual environment. I need to get the adjecent triangles (not just neighbor)  for each triangle within a certain &quot;reachable&quot; distance from its center. Now, I have implemented a Breadth-First traversal algorithm for the intent and get indexs of some triangles that may be adjecent. However, I am not sure if the traversal result is effective. I want to use some different colors to sign the adjecent triangles  so that the traversal result can be intuitive displayed.\r<br />\nSo, Could you tell me how to set the color of some triangles given index? Is there any readily available methods that the project provides ?any suggestions are welcome.<br />\n",
+    "PostedDate": "2015-08-19T18:35:59.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441109",
+    "ThreadId": "643936",
+    "Html": "You could use the render manager form the TriangleNet.Rendering namespace:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">// Make sure triangle indices are numbered linearly.</span>\nmesh.Renumber();\n\n<span style=\"color:Green;\">// Create a mesh partition.</span>\n<span style=\"color:Blue;\">var</span> partition = <span style=\"color:Blue;\">new</span> <span style=\"color:Blue;\">int</span>[mesh.Triangles.Count];\n\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> t <span style=\"color:Blue;\">in</span> mesh.Triangles)\n{\n    <span style=\"color:Green;\">// Set the color index.</span>\n    partition[t.ID] = IsNeighbor(t) ? 1 : 0;\n}\n\n<span style=\"color:Green;\">// Define the colors.</span>\n<span style=\"color:Blue;\">var</span> colors = <span style=\"color:Blue;\">new</span> Dictionary&lt;<span style=\"color:Blue;\">int</span>, Color&gt;();\n    \ncolors[0] = Color.Transparent;\ncolors[1] = Color.FromArgb(80, 0, 255, 0);\n    \nrenderManager.Context.ColorManager.ColorDictionary = colors;\n\n<span style=\"color:Green;\">// Update the render manager to use the partition.</span>\nrenderManager.Update(partition);\r\n</pre></div>",
+    "PostedDate": "2015-08-20T00:06:17.987-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441250",
+    "ThreadId": "643936",
+    "Html": "Hi,I am sorry. I can't find the attribute “Contex” of &quot;RenderManage&quot;. Are they the new features of the beta4?  How can I use them in beta3? thanks<br />\n",
+    "PostedDate": "2015-08-21T04:10:48.393-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441251",
+    "ThreadId": "643936",
+    "Html": "Yes, it's beta4. The rendering stuff was rewritten completely, so I recommend switching to the new version if you want to use the new features.<br />\n",
+    "PostedDate": "2015-08-21T05:50:04.3-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

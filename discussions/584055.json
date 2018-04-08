@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1358849",
+    "ThreadId": "584055",
+    "Html": "Hi,\r<br />\n<br />\nfirst of all great work and great library, thank you so much for saving me many headaches :)\r<br />\nI've been using Beta3 for some time now because this is what is offered in the download section. If I download the source code however, I get quite a different library. Is this the Beta 4 version that is announced in the documentation? Or is it an &quot;intermediate&quot; version that might have some issues and Beta4 is not released yet? Also, is the work on Triangle still ongoing?\r<br />\n<br />\nCheers<br />\n",
+    "PostedDate": "2015-03-02T08:57:10.873-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1359241",
+    "ThreadId": "584055",
+    "Html": "<em>Is this the Beta 4 version that is announced in the documentation?</em>\r<br />\nYes.\r<br />\n<br />\n<em>Or is it an &quot;intermediate&quot; version that might have some issues and Beta4 is not released yet?</em>\r<br />\nIt's not released yet, but there shouldn't be any major <a href=\"https://triangle.codeplex.com/workitem/list/basic\" rel=\"nofollow\">issues</a>.\r<br />\n<br />\n<em>Also, is the work on Triangle still ongoing?</em>\r<br />\nNot at the moment, but the project is not dead.\r<br />\n<br />\nThe triangulation part in Beta 4 should be just as stable as in Beta 3, it's only the interface that changed. The Voronoi code was completely rewritten, but should be stable and much more accessible, due to the introduction of DCELs.\r<br />\n<br />\nSo my recommendation: use the latest code!<br />\n",
+    "PostedDate": "2015-03-03T02:35:46.653-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

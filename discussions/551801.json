@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1273464",
+    "ThreadId": "551801",
+    "Html": "Hello,\r<br />\n<br />\nIs there a correct /optimised method to add/remove points to a generated voronoi on the fly? \r<br />\n<br />\nI'm generating points via noise on a 100x100 grid which is moved around. As the points are updated so is the mesh / voronoi diagram \r<br />\n<br />\nFor example, here is the grid in the center\r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/u/5041720/Screenshot%202014-07-17%2011.28.19.png\" alt=\"Image\" /> \r<br />\n<br />\n<br />\nHere, I've moved it to the right:\r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/u/5041720/Screenshot%202014-07-17%2011.28.55.png\" alt=\"Image\" />\r<br />\n<br />\nCurrently I'm just triangulating all the points then creating a new voronoi diagram. Obviously, this is really expensive as every update includes a load of unnecessary calculations. This : <a href=\"https://code.google.com/p/javascript-voronoi/\" rel=\"nofollow\">https://code.google.com/p/javascript-voronoi/</a> has done something similar in javascript - I think it's a bespoke algorithm.. \r<br />\n<br />\nAny feedback greatly appreciated \r<br />\n<br />\nThanks\r<br />\n<br />\nR<br />\n",
+    "PostedDate": "2014-07-17T03:49:23.033-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273488",
+    "ThreadId": "551801",
+    "Html": "I have no plans to add this, but it should be straightforward to do. There are actually only two things to take care of:<br />\n<ol>\n<li>Use an efficient spatial index (like a Quadtree) to find the Voronoi cell that contains the new vertex (should be O(log n))</li>\n<li>\nUpdate all affected cells (should be O(k), k the number of affected cells, usually O(1)). If you google &quot;incremental Voronoi&quot; you'll find details, for example in <a href=\"http://students.info.uaic.ro/~emilian.necula/vor2.pdf\" rel=\"nofollow\">http://students.info.uaic.ro/~emilian.necula/vor2.pdf</a><br />\n</li>\n</ol>\nThe javascript code seems to do exactly that, using a winged edge datastructure instead of DCEL.\r<br />\n<br />\nBTW: the new Voronoi code should be safe to use by now and I'd be glad if someone would test it :-)<br />\n",
+    "PostedDate": "2014-07-17T04:59:30.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1273511",
+    "ThreadId": "551801",
+    "Html": "The first bit sounds easy, the second a little more challenging ! will give it a go :) \r<br />\n<br />\nThe link makes sense, however math formula is a little over my head - are there any Triangle functions that'd make my life a bit easier? (eg: getting affected cells, calculating new boundaries etc) \r<br />\n<br />\n<br />\n<br />\n<br />\nPS: I'm testing it the code now :) Had to make a few small changes to get it working. Will dig out my notes later - the one I remember off the top of my head was line 125 of Rectangle.cs being changed to:<br />\n<pre><code>   public void Expand(IEnumerable&lt;Vertex&gt; points)\n        {\n            foreach (var p in points)\n            {\n                Expand(p);\n            }\n        }</code></pre>\n\n.. If i remember correctly, it was still using the older Points class. <br />\n",
+    "PostedDate": "2014-07-17T05:55:53.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1274219",
+    "ThreadId": "551801",
+    "Html": "I've made some slides for the bounded case: <a href=\"http://wo80.bplaced.net/projects/voronoi/\" rel=\"nofollow\">http://wo80.bplaced.net/projects/voronoi/</a><br />\n<br />\nNo guarantees for completeness, though - only a starting point.<br />\n<br />\nFrom the other discussion:<br />\n<blockquote>\nIf I was creating a new cell from a point inside an existing cell with infinite edges do I need to do anything clever with the bisector calculations ?<br />\n</blockquote>\nYes, the handling of unbounded cells will be different. And there are at least two cases to consider seperately:<br />\nDoes the new vertex lie inside or outside the convex hull of the old generators?<br />\n",
+    "PostedDate": "2014-07-19T05:27:03.63-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1274242",
+    "ThreadId": "551801",
+    "Html": "Thank you! Incredibly helpful :)\r<br />\n<br />\nAs the grid is moving, it's most likely that the new vertex will be outside the convex hull of the old generators.<br />\n",
+    "PostedDate": "2014-07-19T08:00:57.65-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

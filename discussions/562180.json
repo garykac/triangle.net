@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1293648",
+    "ThreadId": "562180",
+    "Html": "Is there a way to output globe cell and vertex information?  For example, I want to create a mesh for the channel and another coarse meshes for the floodplains.  They will share some of the edges.  How do I combine all the information together?  Thanks.\r<br />\n<br />\nVictor<br />\n",
+    "PostedDate": "2014-08-26T12:02:10.673-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1293671",
+    "ThreadId": "562180",
+    "Html": "So you basically have two finite element meshes, geometrically disjoint, except for a part of the boundary?<br />\n<br />\nTriangle.NET won't help you joining them into one mesh, but it shouldn't be too hard to do. You will have to write your own mesh class storing the merged mesh information. The only tricky part is to keep track of the shared boundary. Just assign a unique boundary mark. Then it's just a matter of matching the right vertices.<br />\n<br />\nAs an alternative, you could assign new id's to the mesh elements (this is currently not possible since the ID properties are not writable) and then do something like:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">void</span> Join(Mesh mesh1, Mesh mesh2)\n{\n    mesh1.Renumber();\n\n    <span style=\"color:Blue;\">int</span> nv = mesh1.Vertices.Count;\n    <span style=\"color:Blue;\">int</span> ne = mesh1.Triangles.Count;\n\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> v <span style=\"color:Blue;\">in</span> mesh2.Vertices)\n    {\n        <span style=\"color:Blue;\">if</span> (<span style=\"color:#A31515;\">&quot;v not on shared boundary&quot;</span>)\n        {\n            v.ID = nv++;\n        }\n        <span style=\"color:Blue;\">else</span>\n        {\n            v.ID = <span style=\"color:#A31515;\">&quot;id of matching vertex in mesh1&quot;</span>;\n        }\n    }\n\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> e <span style=\"color:Blue;\">in</span> mesh2.Triangles)\n    {\n        e.ID = ne++;\n    }\n}\r\n</pre></div>This way, assembling the system could be done as usual (just a matter of setting up the right DoFs for the meshes).<br />\n<br />\nLet me know if this sounds interesting to you. Making the ID properties writable is planned for beta4 anyway ...<br />\n",
+    "PostedDate": "2014-08-26T13:21:19.76-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1293737",
+    "ThreadId": "562180",
+    "Html": "That is great.  If you can make the ID properties writable, it should very straight forward for me to calculate the globe IDs as you suggested.  Victor<br />\n",
+    "PostedDate": "2014-08-26T15:42:16.397-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

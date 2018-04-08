@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1464315",
+    "ThreadId": "651700",
+    "Html": "Any one suggest how to include contour plotting in triangle.net<br />\n",
+    "PostedDate": "2016-02-23T20:05:09.237-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1464406",
+    "ThreadId": "651700",
+    "Html": "So, you got a mesh and discrete function values associated to each node?<br />\n<br />\n1) You need a routine that computes the requested contour levels.<br />\n2) You probably want to display the contour lines as an overlay.<br />\n<br />\nBoth is not implemented in Triangle.NET. 2) is planned, 1) will definitely not be part of Triangle.NET.<br />\n<br />\nDid you have a look at CONREC (<a href=\"http://paulbourke.net/papers/conrec/\" rel=\"nofollow\">http://paulbourke.net/papers/conrec/</a>)? Here's what you do:<br />\n<pre><code>foreach triangle\n   foreach edge of triangle\n      foreach requested contour level\n         let a = edge endpoint 1\n         let b = edge endpoint 2\n         if (a.z &lt;= level &lt;= b.z) or (b.z &lt;= level &lt;= a.z)\n            report contour level segment</code></pre>\n\nThere are a couple of cases you will have to distinguish. Have a look at the CONREC page (and the code) for details.<br />\n<br />\nThe contour level segments will be reported in no specific order. If you need the levels to be connected, you'll have to post-process the segments.<br />\n",
+    "PostedDate": "2016-02-24T05:51:25.167-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

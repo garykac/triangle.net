@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1497908",
+    "ThreadId": "663698",
+    "Html": "Hello!<br />\n<br />\nI was wondering if there's an easy way (without major code changes) to highlight (change its color, for example) a specific point or edge within the mesh. I'm trying to achieve this whenever the user selects a point or edge from a list in my app.<br />\n<br />\nThanks in advance!<br />\n",
+    "PostedDate": "2017-09-01T12:49:59.497-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497910",
+    "ThreadId": "663698",
+    "Html": "There's no support for rendering selected mesh objects.<br />\n<br />\nThe whole rendering stuff isn't too well thought out. But still it should be fairly easy to implement: add a &quot;selected objects&quot; manager to IRenderContext and add a layer to the LayerRenderer, that draws the selection on top of the other layers.<br />\n<br />\nThough you'd have to find clever way to do this effeciently (redrawing only the parts of the mesh that change during selection and deselection).<br />\n<br />\n<strong>EDIT</strong>: or write your own IRenderer (taking the LayerRenderer implementation as a reference) and inject it to the RenderManager.<br />\n<br />\n<strong>EDIT 2</strong>: thinking about it, the IRenderer Render() method should be virtual, so one could directly derive from LayerRenderer and override.<br />\n",
+    "PostedDate": "2017-09-01T14:02:09.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

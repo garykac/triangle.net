@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1462880",
+    "ThreadId": "651181",
+    "Html": "I'm curious how much work it takes for this to run in Unity? When I import it, I'm getting some compile errors that seem to be around casting issues like passing a method a list of Vertexs when its expecting Points, etc. Thanks.<br />\n",
+    "PostedDate": "2016-02-11T09:40:46.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462989",
+    "ThreadId": "651181",
+    "Html": "I am getting a pair of errors too with Beta4, one of which I think I solved manually. I have then commented out the other one, and hope for the best until I find a solution; in the meantime I have no more errors. I remember Beta3 working just fine instead.<br />\n",
+    "PostedDate": "2016-02-12T07:41:34.403-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463020",
+    "ThreadId": "651181",
+    "Html": "I'm not familiar with Unity. Please be more specific about the errors you get! Do they relate to Triangle.NET code or to the interface you are using to get the data to/from Unity?<br />\n",
+    "PostedDate": "2016-02-12T12:13:06.29-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463050",
+    "ThreadId": "651181",
+    "Html": "I get compiler errors when I import the Triangle.net library. At first glance it looks like casting issues. Unity uses an older version of mono, so it might be the issue.<br />\n",
+    "PostedDate": "2016-02-12T23:14:41.7-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463137",
+    "ThreadId": "651181",
+    "Html": "It's purely because Unity is stuck with a hybrid Mono 2.0 / .NET 3.x - millions of developers held back until Unity spends $$$ on licensing something newer, or works with MS to get around the licensing issues.\r<br />\n<br />\nIn the meantime, you need to do this:\r<br />\n<br />\n<a href=\"http://stackoverflow.com/questions/1817300/convert-listderivedclass-to-listbaseclass\" rel=\"nofollow\">http://stackoverflow.com/questions/1817300/convert-listderivedclass-to-listbaseclass</a>\r<br />\n<br />\nAnd you need to do this:\r<br />\n<br />\n<a href=\"http://stackoverflow.com/questions/6535492/c-sharp-3-5-partial-class-string-isnullorwhitespace\" rel=\"nofollow\">http://stackoverflow.com/questions/6535492/c-sharp-3-5-partial-class-string-isnullorwhitespace</a>\r<br />\n<br />\n...and then it builds fine in Unity.\r<br />\n<br />\nNB: created this account simply to share, since Google is full of people saying &quot;I found two things I had to change to make it work in Unity&quot; and being too selfish to share them. This is a throwaway account. Codeplex is a massive waste of my time.<br />\n",
+    "PostedDate": "2016-02-14T06:07:42.463-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1463326",
+    "ThreadId": "651181",
+    "Html": "Thank you!<br />\n",
+    "PostedDate": "2016-02-15T19:58:29.183-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1071819",
+    "ThreadId": "450933",
+    "Html": "I using the triangle.NET to creating new discussion triangle .i want to get the every triangle three point .but i no ideal.<br />\n",
+    "PostedDate": "2013-07-23T08:13:55.573-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1072022",
+    "ThreadId": "450933",
+    "Html": "Did you have a look at the documentation (<a href=\"https://triangle.codeplex.com/wikipage?title=Topology\" rel=\"nofollow\">Mesh Topololy</a>)?<br />\n",
+    "PostedDate": "2013-07-23T17:08:32.667-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

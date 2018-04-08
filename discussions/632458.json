@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1417158",
+    "ThreadId": "632458",
+    "Html": "Hi,\r<br />\nIs it possible to feed new points to an already triangulated pointset such that only some edges are flipped instead of re-triangulate the whole new pointset? Regards, Adrian <br />\n",
+    "PostedDate": "2015-04-23T10:06:27.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1417165",
+    "ThreadId": "632458",
+    "Html": "Well, there's an internal method of the <code>Mesh</code> class, with the following signature:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\nInsertVertexResult InsertVertex(Vertex newvertex, <span style=\"color:Blue;\">ref</span> Otri searchtri, <span style=\"color:Blue;\">ref</span> Osub splitseg,\n            <span style=\"color:Blue;\">bool</span> segmentflaws, <span style=\"color:Blue;\">bool</span> triflaws)\r\n</pre></div>Take a look at the source code comments to see how it works. I have no intent to make it public, but feel free to mess around with it.<br />\n<br />\nA compromise could be to add a protected method, something like<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">protected</span> <span style=\"color:Blue;\">bool</span> InsertVertex(Vertex vertex, Triangle tri = <span style=\"color:Blue;\">null</span>)\n{\n    <span style=\"color:Green;\">// call internal InsertVertex</span>\n    <span style=\"color:Green;\">// return true if vertex was inserted successfully</span>\n}\r\n</pre></div>So, if needed, one could derive from <code>Mesh</code> and call the protected method ...<br />\n",
+    "PostedDate": "2015-04-23T10:58:11.953-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1417173",
+    "ThreadId": "632458",
+    "Html": "Ok, thanks. I will try it out.<br />\n",
+    "PostedDate": "2015-04-23T11:49:51.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

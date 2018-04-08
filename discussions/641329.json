@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1434278",
+    "ThreadId": "641329",
+    "Html": "Hi,\r<br />\n<br />\nIs it possible to initialize the triangulator using a Polygon, points and <em>triangles</em> connecting points?\r<br />\n<br />\nI mean a partially triangulated domain?\r<br />\n<br />\nThanks,\r<br />\n<br />\nAlberto<br />\n",
+    "PostedDate": "2015-07-14T03:30:19.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1434627",
+    "ThreadId": "641329",
+    "Html": "No. But you could get the polygon boundary of the not triangulated part, triangulate that polygon, and then work with the two meshes (or try to merge them into one).<br />\n",
+    "PostedDate": "2015-07-16T08:14:12.297-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1434716",
+    "ThreadId": "641329",
+    "Html": "Ok, thanks!<br />\n",
+    "PostedDate": "2015-07-16T23:39:26.597-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

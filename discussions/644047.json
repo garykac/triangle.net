@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "1441398",
+    "ThreadId": "644047",
+    "Html": "I'm trying to use Triangle.NET lib to mesh a planar area starting from points that already have an ID. \r<br />\nIs it possible to force the IDs of the given vertices used to build a Polygon?\r<br />\nIt will be very important for what I'm doing; actually I have to renumber the vertices and the triangles created, because their numbering starts from 0 and, as said, I cannot set the ID for the original vertices of the Polygon.\r<br />\n<br />\nThanks,\r<br />\nGiovanni<br />\n",
+    "PostedDate": "2015-08-22T10:11:46.793-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441535",
+    "ThreadId": "644047",
+    "Html": "At the moment, vertex ids get overwritten in the Mesh.TransferNodes method. I opened a workitem <a href=\"https://triangle.codeplex.com/workitem/10987\" rel=\"nofollow\">here</a>. A fix should be available soon.<br />\n",
+    "PostedDate": "2015-08-23T16:26:51.743-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441622",
+    "ThreadId": "644047",
+    "Html": "Please download the latest source code and let me know if this solves the issue.<br />\n",
+    "PostedDate": "2015-08-24T02:31:01.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441713",
+    "ThreadId": "644047",
+    "Html": "Thanks for your help. I tried the new code but I get a  'System.Collections.Generic.KeyNotFoundException' at line 225 of &quot;Triangle\\Meshing\\ConstraintMesher.cs&quot; when I call &quot;Triangulate&quot;.<br />\nThe line is:<br />\nendpoint1 = mesh.vertices[end1];<br />\n<br />\nand end1 = 0. This is just because mesh.vertices is a dictionary where keys are the vertex.IDs, while seg.P0 is compiled in Polygon.AddCountour with a simple for (int i = 0; i &lt; count; i++) cycle.<br />\n<br />\nAnyway, I see that the mesh skip the ID = 0, it is very useful, I'll wait for your updade of code (I tried to change it by myself, but I don't know how to write the correct input.segments).<br />\n<br />\nThanks,<br />\nGiovanni<br />\n",
+    "PostedDate": "2015-08-24T11:35:01.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1441971",
+    "ThreadId": "644047",
+    "Html": "I've updated the code. Seems to work now:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">static</span> <span style=\"color:Blue;\">void</span> TestFixedIds()\n{\n    <span style=\"color:Blue;\">var</span> poly = <span style=\"color:Blue;\">new</span> Polygon(5);\n\n    <span style=\"color:Blue;\">var</span> c = <span style=\"color:Blue;\">new</span> Vertex[5]\n    {\n        <span style=\"color:Blue;\">new</span> Vertex(0.3, 0.0) { ID = 5 },\n        <span style=\"color:Blue;\">new</span> Vertex(1.1, 0.2) { ID = 6 },\n        <span style=\"color:Blue;\">new</span> Vertex(1.0, 1.1) { ID = 2 },\n        <span style=\"color:Blue;\">new</span> Vertex(0.3, 0.9) { ID = 3 },\n        <span style=\"color:Blue;\">new</span> Vertex(0.0, 0.1) { ID = 9 }\n    };\n\n    poly.AddContour(c, 1);\n\n    <span style=\"color:Blue;\">var</span> ok = PolygonValidator.IsConsistent(poly);\n\n    Console.WriteLine(ok);\n\n    <span style=\"color:Blue;\">var</span> options = <span style=\"color:Blue;\">new</span> ConstraintOptions() { ConformingDelaunay = <span style=\"color:Blue;\">true</span> };\n    <span style=\"color:Blue;\">var</span> quality = <span style=\"color:Blue;\">new</span> QualityOptions() { MinimumAngle = 20.0 };\n\n    <span style=\"color:Blue;\">var</span> mesh = (Mesh)poly.Triangulate(options, quality);\n\n    <span style=\"color:Blue;\">var</span> delaunay = MeshValidator.IsDelaunay(mesh);\n    <span style=\"color:Blue;\">var</span> consistent = MeshValidator.IsConsistent(mesh);\n\n    Console.WriteLine(<span style=\"color:#A31515;\">&quot;{0} {1}&quot;</span>, delaunay, consistent);\n}\r\n</pre></div>",
+    "PostedDate": "2015-08-26T04:28:45.897-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442028",
+    "ThreadId": "644047",
+    "Html": "Thanks, now I can triangulate and refine the mesh keeping the vertices IDs.\r<br />\n<br />\nCan the Renumber function be used focing the ID = 0 to be excluded too?\r<br />\n<br />\nThanks,\r<br />\nGiovanni<br />\n",
+    "PostedDate": "2015-08-26T10:10:15.51-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442118",
+    "ThreadId": "644047",
+    "Html": "You mean linear numbering from 1 to N? You could use an extension method:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">static</span> <span style=\"color:Blue;\">void</span> Renumber(<span style=\"color:Blue;\">this</span> Mesh mesh, <span style=\"color:Blue;\">int</span> offset)\n{\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> node <span style=\"color:Blue;\">in</span> mesh.Vertices)\n    {\n        node.ID = offset++;\n    }\n}\r\n</pre></div>",
+    "PostedDate": "2015-08-27T05:02:21.803-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442134",
+    "ThreadId": "644047",
+    "Html": "No, I mean using a renumbering method, like:<br />\n<pre><code>mesh.Renumber(NodeNumbering.CuthillMcKee)</code></pre>\n\nI was asking if it is possible to start the renumbering from 1 (for both nodes and triangles) instead that from 0.<br />\n",
+    "PostedDate": "2015-08-27T06:32:25.927-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442149",
+    "ThreadId": "644047",
+    "Html": "Well, no. But you can call the built-in routines and then increment all ids.<br />\n",
+    "PostedDate": "2015-08-27T07:56:15.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

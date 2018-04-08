@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1248425",
+    "ThreadId": "546236",
+    "Html": "Was running into issues with mesh generation around the corners. Everything seemed fine: \r<br />\n<img src=\"https://dl.dropboxusercontent.com/u/5041720/iso.jpg\" alt=\"Image\" />\r<br />\n<br />\nHowever, it looks like BoundedVoronoi is creating additional verts for the regions on the edge.\r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/u/5041720/per.jpg\" alt=\"Image\" />\r<br />\n<br />\nTo test I'm filling a poly shape with 300 random points. Is this intended behaviour? \r<br />\n<br />\nRob\r<br />\n<br />\n<br />\nCode:<br />\n<pre><code>    int totalPointsInternal = (inputPoly.Edges.Length*2);\n\n    float totalPoints = 300;\n    float totalArea = inputPoly.CalcArea();\n\n    // for the initial triangle creation \n    // we use these trangles to put random points inside polygon.\n    TriangleNet.Geometry.InputGeometry  subGeometryInternal = new TriangleNet.Geometry.InputGeometry(totalPointsInternal);\n\n    // random points\n    TriangleNet.Geometry.InputGeometry  internalPointsGeometry = new TriangleNet.Geometry.InputGeometry(totalPointsInternal+(int) totalPoints);\n\n\n    for (int i =0; i &lt;inputPoly.Edges.Length ; i++){\n        if (i!= inputPoly.Edges.Length-1){\n            if ( i==0){\n\n                subGeometryInternal.AddPoint(inputPoly.Edges[i].Point0.x,inputPoly.Edges[i].Point0.y);\n                subGeometryInternal.AddPoint(inputPoly.Edges[i].Point1.x,inputPoly.Edges[i].Point1.y);\n                subGeometryInternal.AddSegment(i,(i+1));\n\n                internalPointsGeometry.AddPoint(inputPoly.Edges[i].Point0.x,inputPoly.Edges[i].Point0.y);\n                internalPointsGeometry.AddPoint(inputPoly.Edges[i].Point1.x,inputPoly.Edges[i].Point1.y);\n                internalPointsGeometry.AddSegment(i,(i+1));\n            }\n            else{\n\n                subGeometryInternal.AddPoint(inputPoly.Edges[i].Point1.x,inputPoly.Edges[i].Point1.y);\n                subGeometryInternal.AddSegment(i,(i+1));\n\n                internalPointsGeometry.AddPoint(inputPoly.Edges[i].Point1.x,inputPoly.Edges[i].Point1.y);\n                internalPointsGeometry.AddSegment(i,(i+1));\n            }\n        }\n        else{\n            subGeometryInternal.AddSegment(i,0);\n\n            internalPointsGeometry.AddSegment(i,0);\n\n        }\n    }\n\n    TriangleNet.Mesh meshInternal = new TriangleNet.Mesh();\n    meshInternal.Triangulate(subGeometryInternal);\n    meshInternal.Behavior.ConformingDelaunay = true; \n    meshInternal.Behavior.Quality = true; \n\n\n    foreach (var triangle in meshInternal.Triangles){\n        Debug.Log (triangle.vertices.Length + &quot; &quot; + triangle.P0 + &quot; &quot; + triangle.P1 + &quot;  &quot; + triangle.P2);\n\n        Vector2 p0 = new Vector2 ((float)  meshInternal.vertices[triangle.P0].x,(float) meshInternal.vertices[triangle.P0].y);\n        Vector2 p1 = new Vector2 ((float) meshInternal.vertices[triangle.P1].x,(float) meshInternal.vertices[triangle.P1].y);\n        Vector2 p2 = new Vector2 ((float) meshInternal.vertices[triangle.P2].x,(float) meshInternal.vertices[triangle.P2].y);\n\n        Triangle2 tri = new Triangle2(p0,p1,p2);\n        float area = (float) tri.CalcArea();\n        int percentageOfPoints = Mathf.FloorToInt ((area/totalArea)*totalPoints);\n        for (int i=0; i &lt;percentageOfPoints; i ++){\n            Vector2 randomPoint = RandomPointInTriangle(p0,p1,p2);\n            internalPointsGeometry.AddPoint(randomPoint.x,randomPoint.y);\n        }\n\n    }\n\n    TriangleNet.Mesh meshInternalIncludingInternalPoints = new TriangleNet.Mesh();\n    meshInternalIncludingInternalPoints.Triangulate(internalPointsGeometry);\n    meshInternalIncludingInternalPoints.Behavior.ConformingDelaunay = true; \n    TriangleNet.Tools.BoundedVoronoi returnVoronoi = new TriangleNet.Tools.BoundedVoronoi (meshInternalIncludingInternalPoints);\n    DrawBoundedVoronoi(returnVoronoi);</code></pre>\n\n",
+    "PostedDate": "2014-05-22T07:42:48.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248593",
+    "ThreadId": "546236",
+    "Html": "<blockquote>\nHowever, it looks like BoundedVoronoi is creating additional verts for the regions on the edge. <br />\n[...] Is this intended behaviour?<br />\n</blockquote>\nWhat do you mean by <em>additional verts</em>? What's the second image supposed to show me?<br />\n",
+    "PostedDate": "2014-05-22T13:49:47.183-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248615",
+    "ThreadId": "546236",
+    "Html": "Sorry, should have highlighted it better - the corners in second image show long thin lines stretching to the middle of the region edge. (the light green and light brown). Each one of these edge regions has a couple of additional verts. Make more sense? <br />\n",
+    "PostedDate": "2014-05-22T14:30:44.083-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1248819",
+    "ThreadId": "546236",
+    "Html": "If anyone else runs into this problem, a very quick hack to fix is to comment out :<br />\n<blockquote>\nregions.Add(region);<br />\n</blockquote>\nFrom the ConstructBoundaryCell function within BoundedVoronoi. \r<br />\n<br />\nThe corner regions will be missing (as well as one or two mid-edge) - however it stops the peculiar &quot;V&quot; shapes which play hell with region to mesh conversion. Below is the result\r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/u/5041720/corners.jpg\" alt=\"Image\" />\r<br />\n<br />\nIf there's a more elegant solution, would be great to hear it - however I think I've taken up enough of your time :) <br />\n",
+    "PostedDate": "2014-05-23T04:18:25.517-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249224",
+    "ThreadId": "546236",
+    "Html": "Well, I see what you mean, but I can't reproduce the problem.<br />\n<br />\nMaybe there's something wrong with your geometry:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\nVector2 randomPoint = RandomPointInTriangle(p0,p1,p2);\ninternalPointsGeometry.AddPoint(randomPoint.x,randomPoint.y);\r\n</pre></div>Are you sure that no points are created that lie on an existing segment?<br />\n<br />\nYou could also check for degenerate triangles:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">const</span> <span style=\"color:Blue;\">double</span> eps = 1e-16;\n<span style=\"color:Blue;\">float</span> area = (<span style=\"color:Blue;\">float</span>) tri.CalcArea();\n<span style=\"color:Blue;\">if</span> (area &lt; eps) <span style=\"color:Blue;\">throw</span> <span style=\"color:Blue;\">new</span> Exception(<span style=\"color:#A31515;\">&quot;degenerate triangle&quot;</span>);\r\n</pre></div>",
+    "PostedDate": "2014-05-24T10:19:56.45-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249397",
+    "ThreadId": "546236",
+    "Html": "I've added a check to ensure no random points are on the triangle line or outside of it. So that rules that out :( good idea though!<br />\n<br />\nThe math lib I'm using has a good check for degenerate triangles - no triangles were flagged. Then I worked out that when the BoundaryCell region is triangulated no triangles would be degenerated (obviously!).. So I sadly can't capture the dud points. <br />\n<br />\nFor the region created by ConstructBoundaryCell I've gone through each vert and put a yellow line:<br />\n<img src=\"http://s15.postimg.org/lc7u0j4vv/regionverts.jpg\" alt=\"Image\" /> <br />\n<br />\nIt looks like it's (correctly) filling in the corners to give a uniform shape to the BoundedVoronoi. Rather than create (n) small regions for each corner it makes one large region (with points mid-way along each edge)... which, actually, seems like a very sensible way of doing things. Just not ideal for what I'm trying to do, which is pretty obscure :)<br />\n<br />\nI'm thinking it might be easier to not include BoundaryCell then go through each corner, find surrounding verts, then manually create mini corner regions. <br />\n",
+    "PostedDate": "2014-05-25T11:09:05.653-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1249587",
+    "ThreadId": "546236",
+    "Html": "I still don't get it. If those additional vertices are created by the BoundedVoronoi code, it's obviously an error. But I've never encountered those strange &quot;V&quot; shapes. Could you dump all the geometry data and upload it somewhere so I can have a look at it?<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n <span style=\"color:Green;\">// Create .ele and .poly files</span>\nTriangleNet.IO.FileWriter.Write(meshInternalIncludingInternalPoints, <span style=\"color:#A31515;\">&quot;test.ele&quot;</span>);\n\n<span style=\"color:Blue;\">using</span> (<span style=\"color:Blue;\">var</span> voro = <span style=\"color:Blue;\">new</span> StreamWriter(<span style=\"color:#A31515;\">&quot;test.voro&quot;</span>))\n{\n    voro.WriteLine(returnVoronoi.Regions.Count);\n\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> region <span style=\"color:Blue;\">in</span> returnVoronoi.Regions)\n    {\n        voro.WriteLine(<span style=\"color:#A31515;\">&quot;{0} {1} {2} {3}&quot;</span>, region.Vertices.Count, region.ID,\n            region.Generator.X, region.Generator.Y);\n\n        <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> p <span style=\"color:Blue;\">in</span> region.Vertices)\n        {\n            voro.WriteLine(<span style=\"color:#A31515;\">&quot;{0} {1} {2}&quot;</span>, p.ID, p.X, p.Y);\n        }\n    }\n}\r\n</pre></div>",
+    "PostedDate": "2014-05-26T04:29:41.54-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

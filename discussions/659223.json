@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1487476",
+    "ThreadId": "659223",
+    "Html": "Good library! And I have some advice here.<br />\n<ol>\n<li>Make Triangle.NET Objects/APIs suitable for GPU rendering instead of the CPU methods in the demos/examples.</li>\n<li>Add a obj exporter. (Obj is a text-based 3D model file format.)</li>\n<li>Move the project to GitHub! <a href=\"http://stackoverflow.com/questions/79165/how-to-migrate-svn-repository-with-history-to-a-new-git-repository\" rel=\"nofollow\">It's easy!</a>.</li>\n<li>\nKeep the focus on the core functions. The demo is cool but I think there are more things left to do with the core Objects (<code>Vertex</code>, <code>Polygon</code>, ...) and APIs. <br />\nFor example, <code>class</code> shouldn't be used for small object. I should say <code>class</code> is abused in Triangle.NET. More infomation on that <a href=\"http://stackoverflow.com/questions/521298/when-to-use-struct?noredirect=1&amp;lq=1\" rel=\"nofollow\">here</a>.\n</li>\n<li>What's the advantage compared to <a href=\"https://github.com/MaulingMonkey/poly2tri-cs\" rel=\"nofollow\">poly2tri-cs</a>? Show the tests and profile statics in a documentation page please.</li>\n</ol>\n",
+    "PostedDate": "2016-11-07T00:51:37.877-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487608",
+    "ThreadId": "659223",
+    "Html": "<ol>\n<li>I think it would be fairly difficult to rewrite the classes to match vertex or index buffers for GPU. That should be kept separate (the <code>TriangleNet.Rendering</code> project already contains some buffer helpers, which I use with OpenGL).</li>\n<li>Nope. There are just so many different file formats. And Triangle isn't meant for 3D anyway.</li>\n<li>Not at the moment (though I do prefer GitHub, too).</li>\n<li>I'm aware of the issue (see <a href=\"https://triangle.codeplex.com/discussions/641738\" rel=\"nofollow\">https://triangle.codeplex.com/discussions/641738</a>), but that would probably mean rewriting major parts of the library, which I can't do right now.</li>\n<li>Well, the differences should be pretty obvious. Never did any benchmarks, though.</li>\n</ol>\n",
+    "PostedDate": "2016-11-08T15:58:05.143-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

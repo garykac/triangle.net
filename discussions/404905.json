@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "948392",
+    "ThreadId": "404905",
+    "Html": "\r\n<p>Hallo,</p>\r\n<p>is there a way to get the Boundary information from the three edges of a Triangle ?</p>\r\n<p>i will hide the edges not lie on the boundary -- glEdgeFlag</p>\r\n",
+    "PostedDate": "2012-11-28T07:45:11.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948569",
+    "ThreadId": "404905",
+    "Html": "\r\n<p>I will add a method to the ITriangle interface</p>\r\n<pre><span style=\"color:blue\">public</span> Segment GetSegment(<span style=\"color:blue\">int</span> index)</pre>\r\n<p>so you will be able to check if the triangle has a boundary/constrained edge.</p>\r\n<p>If it's just for rendering the geometry outline: have you considered using the mesh.Segments collection and GL_LINES.</p>\r\n",
+    "PostedDate": "2012-11-28T12:15:36.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "948894",
+    "ThreadId": "404905",
+    "Html": "\r\n<p>hallo,</p>\r\n<p>this will be very nice.</p>\r\n<pre><span style=\"color:blue\">public</span> Segment GetSegment(<span style=\"color:blue\">int</span> index)<br><br>index is index of Edge ??<br>Segment is != null if Edge is on the boundary or ?? </pre>\r\n<p>&nbsp;</p>\r\n<p>http://img201.imageshack.us/img201/2385/bildschirmfoto46.png</p>\r\n<p>http://img829.imageshack.us/img829/4853/bildschirmfoto47d.png</p>\r\n<p>it should looks like geomview without the lines in planes - the outerbounds black and the inner in filled red.</p>\r\n<p>If it's just for rendering the geometry outline: have you considered using the mesh.Segments collection and GL_LINES.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;&nbsp;&nbsp; glPolygonMode(GL_FRONT, GL_FILL); <br>\r\n&nbsp;&nbsp;&nbsp; glPolygonMode(GL_BACK, GL_FILL); <br>\r\n&nbsp;&nbsp;&nbsp; glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, gray); <br>\r\n&nbsp;&nbsp;&nbsp; glMaterialfv(GL_FRONT, GL_SPECULAR, black); <br>\r\n&nbsp;&nbsp;&nbsp; glMaterialf(GL_FRONT, GL_SHININESS, 0.0); <br>\r\n&nbsp;&nbsp;&nbsp; glEnable(GL_LIGHTING); <br>\r\n&nbsp;&nbsp;&nbsp; glEnable(GL_LIGHT0); <br>\r\n&nbsp;&nbsp;&nbsp; glEnable(GL_POLYGON_OFFSET_FILL); <br>\r\n&nbsp;&nbsp;&nbsp; glPolygonOffset(1.0, 1.0);<br>\r\n&nbsp;&nbsp;&nbsp; glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, red);</p>\r\n<p>&nbsp;&nbsp;&nbsp; for(ii=1;ii&lt;=iGLAnz;ii&#43;&#43;) {</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; glCallList(ii); <br>\r\n&nbsp;&nbsp;&nbsp; } <br>\r\n&nbsp;&nbsp;&nbsp; glDisable(GL_POLYGON_OFFSET_FILL); <br>\r\n<br>\r\n&nbsp;&nbsp;&nbsp; glDisable(GL_LIGHTING); <br>\r\n&nbsp;&nbsp;&nbsp; glDisable(GL_LIGHT0); <br>\r\n&nbsp;&nbsp;&nbsp; glColor3f (0.0, 0.0, 0.0); <br>\r\n&nbsp;&nbsp;&nbsp; glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);</p>\r\n<p><br>\r\n&nbsp;&nbsp;&nbsp; for(ii=1;ii&lt;=iGLAnz;ii&#43;&#43;) { <br>\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; glCallList(ii); <br>\r\n&nbsp;&nbsp;&nbsp; } <br>\r\n&nbsp;&nbsp;&nbsp; glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);</p>\r\n",
+    "PostedDate": "2012-11-29T03:32:47.1-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949049",
+    "ThreadId": "404905",
+    "Html": "\r\n<p>The updated source code is now online. Take a look at the <a href=\"http://triangle.codeplex.com/wikipage?title=Topology\">\r\nTopology</a> page to see how the ITriangle data can be used. I've also created a small app which might help you:\r\n<del>Triangle Explorer</del>.</p>\r\n",
+    "PostedDate": "2012-11-29T07:37:50.21-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "949055",
+    "ThreadId": "404905",
+    "Html": "\r\n<p>you are the best !!!!!!!!!!!!</p>\r\n",
+    "PostedDate": "2012-11-29T07:45:40.343-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

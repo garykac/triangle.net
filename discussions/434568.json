@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1007032",
+    "ThreadId": "434568",
+    "Html": "Using the latest changeset i have detected bug in Otri.cs file next function:<br />\n<pre><code>    /// &lt;summary&gt;\n    /// Origin [org(abc) -&gt; a]\n    /// &lt;/summary&gt;\n    public Vertex Org()\n    {\n        return triangle.vertices[plus1Mod3[orient]];\n    }\n</code></pre>\n\nafter calling mesh.Smooth() gets NullReferenceException, cause triangle is null.\r<br />\nPlease, help me. How can i circumvent this bug?<br />\n",
+    "PostedDate": "2013-02-26T08:59:38.96-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007474",
+    "ThreadId": "434568",
+    "Html": "Could you save your mesh before smoothing and send it to [ <em>deleted</em> ]<br />\n<br />\nIf you are using the Mesh Explorer app, just use the save option from the menu. Otherwise do<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\nTriangleFormat format = <span style=\"color:Blue;\">new</span> TriangleFormat();\nformat.Write(mesh, filename);\r\n</pre></div>Send both <em>.poly and </em>.ele files.<br />\n",
+    "PostedDate": "2013-02-27T01:56:20.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007759",
+    "ThreadId": "434568",
+    "Html": "Thanks for the mails. Triangle.NET has some built in checks for duplicate input vertices. To enable logging, you could do<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\nBehavior.Verbose = <span style=\"color:Blue;\">true</span>;\n\nmesh.Triangulate(...);\n\n<span style=\"color:Blue;\">var</span> log = SimpleLog.Instance.Data;\n<span style=\"color:Green;\">// log will now contain warnings if duplicate vertices were found</span>\r\n</pre></div>It's also a good idea to check the mesh for errors:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">bool</span> isConsistent, isDelaunay;\nmesh.Check(<span style=\"color:Blue;\">out</span> isConsistent, <span style=\"color:Blue;\">out</span> isDelaunay);\r\n</pre></div>If any errors are found, the log will contain further information.<br />\n<br />\nThe exception is thrown in the BoundedVoronoi class. Since the duplicate vertex is not connected to any triangle, there's no way building a Voronoi cell for it.<br />\n",
+    "PostedDate": "2013-02-27T10:23:47.12-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007766",
+    "ThreadId": "434568",
+    "Html": "Dear Wo80,<br />\nFirst of all, let me express my very sincere and cordial thanks for sharing your work, and also your updates and prompt responses. I recently found you, and I really appreciate it. A quick question: I assume that it is possible to have an array of the triangles (maybe a new class) where we can have each triangles centroid, area, and maybe some properties like rendering fillcolor that can later be associated with a specific state for that triangle when used in another application. <br />\nJust wanted to know if it is already there and I am overlooking it, or if not, your suggestion for the most efficient way to doing that (using your existing Trinagle, and Rendering programs). I am familiar with c# (and programming) so, feel free to have a short answer. I do not want to waste your time.<br />\n<br />\nThank you again for the good work!<br />\n<br />\nBy teh way, forgive me for not starting a new thread.<br />\n",
+    "PostedDate": "2013-02-27T10:34:08.507-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007780",
+    "ThreadId": "434568",
+    "Html": "@esmaeily<br />\nNothing built in, but should be pretty straight forward to implement. Just loop over the mesh.Triangles collection and store the values you need (triangle coordinates, area, centroid, color ...).<br />\n<br />\nEDIT: triangle area is calculated in <a href=\"http://triangle.codeplex.com/SourceControl/changeset/view/71934#1429068\" rel=\"nofollow\">QualityMeasure.cs</a><br />\n",
+    "PostedDate": "2013-02-27T10:58:36.953-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1007814",
+    "ThreadId": "434568",
+    "Html": "Dear Wo80,\r<br />\nFirst of all, let me express my very sincere and cordial thanks for sharing your work, and also your updates and prompt responses. I recently found you, and I really appreciate it. A quick question: I assume that it is possible to have an array of the triangles (maybe a new class) where we can have each triangles centroid, area, and maybe some properties like rendering fillcolor that can later be associated with a specific state for that triangle when used in another application. \r<br />\nJust wanted to know if it is already there and I am overlooking it, or if not, your suggestion for the most efficient way to doing that (using your existing Trinagle, and Rendering programs). I am familiar with c# (and programming) so, feel free to have a short answer. I do not want to waste your time.\r<br />\n<br />\nThank you again for the good work!<br />\n",
+    "PostedDate": "2013-02-27T12:11:33.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

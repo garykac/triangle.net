@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1495611",
+    "ThreadId": "662611",
+    "Html": "This is an awesome library, thanks for doing it!\r<br />\n<br />\nI have been struggling to solve the below problem for some time now and hope someone is still watching this board.\r<br />\n<br />\nSometimes the input points to my mesh are arranged in a near-perfect grid.  Unfortunately in these cases, since the grid is not <em>exactly</em> perfect, the mesh ends up with some long narrow triangles (so narrow they look like lines) along the edges.  Is there a way to eliminate or prevent these?  I know I can use contours, but the input points come from an outside source and the layout is unknown to me ahead of time.\r<br />\n<br />\nI am using beta 4 and code like below to generate the mesh:<br />\n<pre><code>// nodes are the input coordinates\nvar poly = new Polygon(nodes.Count());\nforeach (var n in nodes)\n{\n    poly.Add(new Vertex(n.X, n.Y, 1));\n}\n\nvar options = new ConstraintOptions { SegmentSplitting = 1, ConformingDelaunay = true, Convex = false };\nvar mesh = (Mesh)poly.Triangulate(options);</code></pre>\n\nThanks for any help and for a great library!\r<br />\n<br />\nMike<br />\n",
+    "PostedDate": "2017-04-19T13:01:04.09-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495739",
+    "ThreadId": "662611",
+    "Html": "There was a similar discussion not too long ago, see <a href=\"https://triangle.codeplex.com/discussions/659270#post1487743\" rel=\"nofollow\">here</a>.\r<br />\n<br />\nBasically, there's no way avoiding those thin triangles on the boundary and Triangle.NET won't eliminate them automatically. So it's up to you to find <em>invalid</em> triangles in a post-processing step and then remove them.\r<br />\n<br />\nSince you don't have any constraints in your input, setting the <code>ConstraintOptions</code> will have no effect.<br />\n",
+    "PostedDate": "2017-04-24T01:50:50.59-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495740",
+    "ThreadId": "662611",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://triangle.codeplex.com/workitem/11169\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2017-04-24T01:53:23.06-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495839",
+    "ThreadId": "662611",
+    "Html": "Thanks for the reply!\r<br />\n<br />\n<em>&quot;...it's up to you to find invalid triangles in a post-processing step and then remove them&quot;</em>\r<br />\n<br />\nAh, thanks for confirming.  I did try this approach at one point, but I wasn't able to figure out the correct way to remove a triangle from the mesh.  Could I trouble you to point me in the right direction by any chance?\r<br />\n<br />\nAlso, thanks for explaining why changing the <code>ConstraintOptions</code> never seemed to do anything :)\r<br />\n<br />\nMike<br />\n",
+    "PostedDate": "2017-04-26T10:49:13.6-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496206",
+    "ThreadId": "662611",
+    "Html": "I usually just ignore <em>invalid</em> triangles (setting the <code>triangle.Label</code> of any <em>invalid</em> triangle to some value I can recongnize).\r<br />\n<br />\nTriangle.NET does not support deleting triangles from the mesh directly, but there are a couple of options:<br />\n<ul>\n<li>Create a copy of the mesh, that does not contain the unwanted triangles.</li>\n<li>Convert the mesh to a DCEL (using <code>TriangleNet.Meshing.Converter.ToDCEL(Mesh mesh)</code>). All properties of the DCEL datastructure are writable, so you can modify the mesh any way you want.</li>\n<li>Add your own <code>DeleteTriangle(tri)</code> method to the <code>Mesh</code> class using <code>otri.Dissolve()</code>. See <code>TriangleNet.Meshing.ConstraintMesher.Plague()</code>, your code would be a subset of this method.</li>\n</ul>\n",
+    "PostedDate": "2017-05-08T07:46:18.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2017-05-16T07:17:04.48-07:00"
+  },
+  {
+    "Id": "1496223",
+    "ThreadId": "662611",
+    "Html": "I've updated the source code and written a short example: <a href=\"https://triangle.codeplex.com/wikipage?title=Example%2010\" rel=\"nofollow\">Example 10 - Troubleshooting 1</a><br />\n",
+    "PostedDate": "2017-05-09T03:16:45.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496502",
+    "ThreadId": "662611",
+    "Html": "This is awesome, thank you so much for the reply.  I followed your third suggestion and added a method to the Mesh class to remove a list of triangles.  It is basically the second phase of <code>TriangleNet.Meshing.ConstraintMesher.Plague()</code> since the invalid triangles are already identified.  This was exactly the nudge I needed.\r<br />\n<br />\nThanks again!\r<br />\n<br />\nMike<br />\n",
+    "PostedDate": "2017-05-16T06:27:24.257-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

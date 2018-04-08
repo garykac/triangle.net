@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1484961",
+    "ThreadId": "658364",
+    "Html": "hi,\r<br />\n<br />\nI have made most of triangle.net's functionality available to vvvv users, please see here: <a href=\"https://vvvv.org/contribution/triangle\" rel=\"nofollow\">https://vvvv.org/contribution/triangle</a>\r<br />\n<br />\nso first of all, thanks for your great work on this!!\r<br />\n<br />\nnow, I'm trying to realize shape deformations which rely on a triangulated cage around a triangulated object. I can give both as a contour to triangle, but then it's not possible to distinguish them afterwards (afaik?), unless I do eg a point in polygon test; the author of the deformation library uses the original triangle to first triangulate the object, then refines this mesh while also adding the points defining the cage, which apparently gives him the original triangulated object first and the triangulated surrounding cage afterwards in the output, hence they are easy to distinguish.\r<br />\n<br />\nIs something like this possible with triangle.net? I have tried several things but to no avail, any tip would be much appreciated,\r<br />\n<br />\nthanks<br />\n",
+    "PostedDate": "2016-09-29T10:38:52.407-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1484970",
+    "ThreadId": "658364",
+    "Html": "You can use regions to identify triangles inside a contour (either by adding region pointers to the polygon (see <a href=\"https://triangle.codeplex.com/wikipage?title=Example%204\" rel=\"nofollow\">Example 4</a>) or by using a region iterator with the mesh (see <a href=\"https://triangle.codeplex.com/wikipage?title=Example%207\" rel=\"nofollow\">Example 7</a>)).<br />\n",
+    "PostedDate": "2016-09-29T13:57:54.427-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1485004",
+    "ThreadId": "658364",
+    "Html": "thanks for the quick reply, I'll try that!<br />\n",
+    "PostedDate": "2016-09-30T03:56:55.117-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

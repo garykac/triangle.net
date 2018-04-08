@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1487454",
+    "ThreadId": "659216",
+    "Html": "For example,<br />\n<img src=\"http://i.imgur.com/UYGkMtW.png\" alt=\"winding\" /><br />\nThe picture shows the winding order of the vertexes.<br />\nAn anticlockwise winding path means the region in it is a hole.<br />\n<br />\nNow I want to get a mesh like below.<br />\n<img src=\"http://i.imgur.com/87VrVqb.png\" alt=\"Imgur\" /><br />\n<br />\nHow to achieve that with Triangle.NET? Maybe, for every hole I can generate a point inside it and use <code>Polygon.Add(Contour contour, Point hole)</code> to generate the polygon. But I think there should some better way to do the job.<br />\n",
+    "PostedDate": "2016-11-06T07:49:45.97-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487455",
+    "ThreadId": "659216",
+    "Html": "Oh.. I just found <code>Polygon.Add(Contour contour, bool hole = false)</code>. This method should work. I'm trying that in my project.<br />\n",
+    "PostedDate": "2016-11-06T07:59:25.293-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1490515",
+    "ThreadId": "660429",
+    "Html": "Hi,<br />\n<br />\nWhen I triangulate mesh it looks fine and when I follow the latest tutorial for mesh refinement I get not an error but strange behavior on outline of polygon. It become distorted.<br />\n<br />\nHow to fix this issue so that polygons will always remain as original?<br />\nWhen I create holes I do not get this issue, only with polygon that are inside other polygons.<br />\n<br />\n<a href=\"https://1drv.ms/i/s!AnwaB50XU22ehZJyZ8bb5EbGUsPqiA\" rel=\"nofollow\">https://1drv.ms/i/s!AnwaB50XU22ehZJyZ8bb5EbGUsPqiA</a><br />\n<img src=\"https://1drv.ms/i/s!AnwaB50XU22ehZJyZ8bb5EbGUsPqiA\" alt=\"Image\" /><br />\n<br />\n<br />\nBest,<br />\nPetras<br />\n",
+    "PostedDate": "2017-01-01T17:43:29.66-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1490524",
+    "ThreadId": "660429",
+    "Html": "I guess you are smoothing the mesh? Make sure that vertices that should not move (usually the input vertices of the polygon) have a non-zero label.<br />\n<br />\nEDIT: the segments themself should probably have a non-zero label, too. This way, if a segment gets split, the new vertex will inherit its label from the segment.<br />\n",
+    "PostedDate": "2017-01-02T01:24:44.32-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

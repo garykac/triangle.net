@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "1442734",
+    "ThreadId": "644448",
+    "Html": "i'm looking to split the mesh in different regions. i want to have different mesh density and also I'd like to assigned different properties to the elements .\r<br />\n<br />\ni tried addRegion(x,y) but i get a bigger region than i need.\r<br />\n<br />\nis it possible? how can i achieve this?\r<br />\n<br />\nthank you<br />\n",
+    "PostedDate": "2015-09-01T13:02:39.39-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442787",
+    "ThreadId": "644448",
+    "Html": "Are all regions protected by segments?<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">// Example: 2 boxes inside a rectangle</span>\n\n<span style=\"color:Blue;\">var</span> geometry = <span style=\"color:Blue;\">new</span> InputGeometry(12);\n\n<span style=\"color:Green;\">// Outer box:</span>\ngeometry.AddPoint(0.0, 0.0, 1);\ngeometry.AddPoint(5.0, 0.0, 1);\ngeometry.AddPoint(5.0, 3.0, 1);\ngeometry.AddPoint(0.0, 3.0, 1);\n\ngeometry.AddSegment(0, 1, 1);\ngeometry.AddSegment(1, 2, 1);\ngeometry.AddSegment(2, 3, 1);\ngeometry.AddSegment(3, 0, 1);\n\n<span style=\"color:Green;\">// Left inner box:</span>\ngeometry.AddPoint(1.0, 1.0, 2);\ngeometry.AddPoint(2.0, 1.0, 2);\ngeometry.AddPoint(2.0, 2.0, 2);\ngeometry.AddPoint(1.0, 2.0, 2);\n\ngeometry.AddSegment(4, 5, 2);\ngeometry.AddSegment(5, 6, 2);\ngeometry.AddSegment(6, 7, 2);\ngeometry.AddSegment(7, 4, 2);\n\n<span style=\"color:Green;\">// Right inner box:</span>\ngeometry.AddPoint(3.0, 1.0, 3);\ngeometry.AddPoint(4.0, 1.0, 3);\ngeometry.AddPoint(4.0, 2.0, 3);\ngeometry.AddPoint(3.0, 2.0, 3);\n\ngeometry.AddSegment( 8,  9, 3);\ngeometry.AddSegment( 9, 10, 3);\ngeometry.AddSegment(10, 11, 3);\ngeometry.AddSegment(11,  8, 3);\n\n<span style=\"color:Green;\">// Add regions:</span>\ngeometry.AddRegion(0.5, 1.5, 1); <span style=\"color:Green;\">// Outer box</span>\ngeometry.AddRegion(1.5, 1.5, 2); <span style=\"color:Green;\">// Left box</span>\ngeometry.AddRegion(3.5, 1.5, 3); <span style=\"color:Green;\">// Right box</span>\r\n</pre></div>",
+    "PostedDate": "2015-09-02T02:02:20.357-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1442893",
+    "ThreadId": "644448",
+    "Html": "Thank you very much for your prompt reply. Your help is much appreciated. BTW - awesome tool.\r<br />\n<br />\ncan a triangle belong to more than 1 region?\r<br />\n<br />\ncan I split the mesh into partitions  and then each partition into regions having each triangle belonging to one partition/region? if so how can I create partitions?\r<br />\n<br />\nthanks a bunch<br />\n",
+    "PostedDate": "2015-09-02T13:25:31.477-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443146",
+    "ThreadId": "644448",
+    "Html": "A triangle can belong to exactly one region.\r<br />\n<br />\nTriangle.NET won't help you to partition the mesh. I suggest you take a look at <a href=\"http://glaros.dtc.umn.edu/gkhome/views/metis\" rel=\"nofollow\">METIS</a>.<br />\n",
+    "PostedDate": "2015-09-04T01:55:24.553-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443187",
+    "ThreadId": "644448",
+    "Html": "that helps.  i'm using Mesh Explorer to learn about this tool. i've split a surface in multiple regions and I assigned them colors for an easy/quick check.\r<br />\nif i go back and forth between &quot;Refine&quot; and &quot;Smooth&quot; the colors are not consistent. Any suggestions?\r<br />\n<br />\nthank you very much  <br />\n",
+    "PostedDate": "2015-09-04T05:41:34.61-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443315",
+    "ThreadId": "644448",
+    "Html": "The colors shouldn't change as long as the region value doesn't change. I've never had this kind of issue...\r<br />\n<br />\nThe colors get set in the <code>MeshRenderer.Core.ColorManager.MakeRegionMap()</code> method, so you might want to see if it works as expected.<br />\n",
+    "PostedDate": "2015-09-05T16:28:42.893-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1083739",
+    "ThreadId": "454242",
+    "Html": "i want to create geometry manually and add  holes inside then triangulate <br />\n",
+    "PostedDate": "2013-08-22T10:00:48.88-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083751",
+    "ThreadId": "454242",
+    "Html": "Have a look at the <a href=\"https://triangle.codeplex.com/wikipage?title=InputGeometry\" rel=\"nofollow\">InputGeometry</a> documentation and let me know if there's anything unclear.<br />\n",
+    "PostedDate": "2013-08-22T10:15:08.957-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1083761",
+    "ThreadId": "454242",
+    "Html": "thank you i'll check it now  <br />\n",
+    "PostedDate": "2013-08-22T10:36:08.863-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

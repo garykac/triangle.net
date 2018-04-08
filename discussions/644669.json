@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1443439",
+    "ThreadId": "644669",
+    "Html": "Hi,\r<br />\n<br />\nAgain; thank you for the great work on this project. It is really fun to see something this complex ported so easily and made so user friendly.\r<br />\n<br />\nI am wondering what the plan for the project is. It would have been great to have for instance quadrilateral elements as well as triangles.\r<br />\n<br />\nI've seen that you have made a quadratic element class in the documentation, but as far as I can understand this only uses the existing triangle mesh to generate quadratic elements. Is it then possible to get a structured grid?\r<br />\n<br />\nBest regards\r<br />\nIsdas<br />\n",
+    "PostedDate": "2015-09-07T05:17:39.04-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1443900",
+    "ThreadId": "644669",
+    "Html": "I started implementing a quadmesh conversion based on <a href=\"https://bitbucket.org/fathomteam/meshkit\" rel=\"nofollow\">MeshKit</a> a while back, but didn't finish. The algorithms are described in <a href=\"https://duckduckgo.com/?q=Jaal%3A+Engineering+a+high+quality+all+quadrilateral+mesh+generator\" rel=\"nofollow\">Jaal: Engineering a high quality all-quadrilateral mesh generator</a>. MeshKit is LGPL licensed, so it won't be a part of Triangle.NET.<br />\n<br />\nI don't think I'll work on this anytime in the near future, but feel free to take the code as a starting point:<br />\n<a href=\"http://wo80.bplaced.net/dl.php?p=QuadMesh-2015-09-10.zip\" rel=\"nofollow\">QuadMesh-2015-09-10.zip</a><br />\n<br />\nRelated discussion: <a href=\"https://triangle.codeplex.com/discussions/446775\" rel=\"nofollow\">Question about future plans quadrilateral mesh generation</a><br />\n<br />\nI made the quadratic elements example to show how to work with the mesh topology information. It's not supposed to be used in production and in Beta 4 you would possibly use the <code>Otri</code> struct directly.<br />\n<br />\nBy structured gird you mean dividing the (quadratic) element into its corresponding 4 triangles? That's not supported by Triangle.NET, but shouldn't be too hard to implement.<br />\n<br />\nAnyways. If you decide to work on these subjects, feel free to come back here. Any contribution will be welcome ...<br />\n",
+    "PostedDate": "2015-09-10T05:55:43.457-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1495915",
+    "ThreadId": "644669",
+    "Html": "Is there any news about quadmesh?  Isdas pointed out that there is a quadratic element class in triangle.net, can you point me to an example as how to use it.\r<br />\n<br />\nBest Regards.\r<br />\n<br />\nVictor<br />\n",
+    "PostedDate": "2017-04-28T14:41:13.213-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

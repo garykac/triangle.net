@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1497094",
+    "ThreadId": "663257",
+    "Html": "Hi,<br />\ngreat library!<br />\n<br />\nI just forked the project to GitHub (preserving commit history using git-svn) at <a href=\"https://github.com/eppz/Triangle.NET\" rel=\"nofollow\">https://github.com/eppz/Triangle.NET</a>.<br />\nHope you don't mind, I attributed author(s).<br />\n<br />\nMy question is that if you could <strong>export the Documentation Wiki</strong> (to be part of the repository somehow, or export it as markdown files and images, or anything). I'd love to have those as well.<br />\n<br />\nBonus question would be if you could pick a commit I could tag as &quot;beta 3&quot;, as I tagged the topmost as beta 4.<br />\n<br />\nBest would be if you would maintain the main repository at GitHub, so I could technically fork it, and reference into my projects from there.<br />\n",
+    "PostedDate": "2017-06-16T23:00:34.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497095",
+    "ThreadId": "663257",
+    "Html": "Actually I found the commit at\r<br />\n<a href=\"https://triangle.codeplex.com/SourceControl/changeset/73189\" rel=\"nofollow\">https://triangle.codeplex.com/SourceControl/changeset/73189</a>\r<br />\n<br />\nSo I could setup the tags accordingly\r<br />\n<a href=\"https://github.com/eppz/Triangle.NET/tree/beta_4\" rel=\"nofollow\">https://github.com/eppz/Triangle.NET/tree/beta_4</a>\r<br />\n<a href=\"https://github.com/eppz/Triangle.NET/tree/beta_3\" rel=\"nofollow\">https://github.com/eppz/Triangle.NET/tree/beta_3</a>\r<br />\n<br />\nNow the only thing would be the <strong>Documentation to migrate</strong>.<br />\n",
+    "PostedDate": "2017-06-16T23:50:40.193-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

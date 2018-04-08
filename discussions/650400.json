@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1460367",
+    "ThreadId": "650400",
+    "Html": "Hello and thank you very much for this awesome implementation.\r<br />\n<br />\nI'm successfully using Triangle.NET 3.0 in Unity, but I guess I'm missing something. I need to create a concave polygon by knowing only the ordered list of contour vertices.\r<br />\nCurrently I add the vertices (points) into an InputGeometry, then I generate a Mesh from the InputGeometry using the Triangulate function. The mesh gets created, but obviously it's convex.\r<br />\nHope you can help me with this question. Thanks a lot! :)<br />\n",
+    "PostedDate": "2016-01-23T14:22:58.27-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1460429",
+    "ThreadId": "650400",
+    "Html": "You also need to add the corresponding segments (using <code>inputGeometry.AddSegment(...)</code>), see <a href=\"https://triangle.codeplex.com/wikipage?title=InputGeometry\" rel=\"nofollow\">InputGeometry</a> docs.\r<br />\n<br />\nYou should consider using the latest source code (unreleased beta 4).<br />\n",
+    "PostedDate": "2016-01-24T06:06:43.59-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1462260",
+    "ThreadId": "650400",
+    "Html": "Thanks for your reply. Sorry for taking this long but I haven't yet had the chance to get back working on that particular project.\r<br />\n<br />\nTo better explain what I am trying to achieve, take a look at these two images. This is my current situation, where I generated a simple road network using some custom scripts and road data. There are a lot of overlapping triangles, but the overall road outline looks decent for my purpose.\r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/u/34085865/Immagini%20al%20volo/RoadBefore.png\" alt=\"Image\" />\r<br />\n<br />\n<br />\nMy plan is to add all the road borders to Triangle.NET, and let it generate a mesh similar to the one in this picture (I approximated some polygons while editing the image, sorry):\r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/u/34085865/Immagini%20al%20volo/RoadAfter.png\" alt=\"Image\" />\r<br />\n<br />\n<br />\nHow much of this is doable using Triangle.NET only? Thanks again for your time. :)<br />\n",
+    "PostedDate": "2016-02-06T05:42:30.117-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

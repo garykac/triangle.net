@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1497915",
+    "ThreadId": "663701",
+    "Html": "I'm sure this has been asked before but I cant seem to find it, so thank you so much in advance. \r<br />\n<br />\nIf I want to draw all the triangles myself, I can easily loop though each one and draw all three sides.<br />\n\r<br />\nHowever, I'm obviously redrawing lines twice since a single line could belong to two triangles.  Is there a list  that is just a list of the triangle lines but not repeated?  Or a easy/fast bit of code for this?\r<br />\n<br />\nThanks in advance, and this is a great piece of code. You work and effort and MUCH appreciated!<br />\n",
+    "PostedDate": "2017-09-02T12:31:19.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1497916",
+    "ThreadId": "663701",
+    "Html": "Take a look at<br />\n<ul>\n<li>the public <a href=\"http://triangle.codeplex.com/SourceControl/latest#Triangle.NET/Triangle/Meshing/Iterators/EdgeIterator.cs\" rel=\"nofollow\">TriangleNet.Meshing.Iterators.EdgeIterator</a> class, which returns Edge objects (containing vertex indices only), or</li>\n<li>the private static <a href=\"http://triangle.codeplex.com/SourceControl/latest#Triangle.NET/Triangle.Rendering/Text/EdgeIterator.cs\" rel=\"nofollow\">TriangleNet.Rendering.Text.EdgeIterator</a> class, returning Segment objects (including the vertices)</li>\n</ul>\n",
+    "PostedDate": "2017-09-02T12:51:58.1-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

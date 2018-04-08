@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1482052",
+    "ThreadId": "657412",
+    "Html": "Hello.\r<br />\n<br />\nAccording to description of this Library, it has Delaunay triangulations. However, most of examples and questions about this lib is drawing 3d meshes and diagrams. I need only result of calculation.\r<br />\n<br />\nI have three points with their own X and Y coordinates and I need to calculate coordinates of fourth point. I have three distances which tells me how far fourth point is located from each of them.\r<br />\n<br />\nIs it possible to pass coordinates and distances and retrieve new point by using this library? <br />\n",
+    "PostedDate": "2016-08-25T00:54:00.453-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1482102",
+    "ThreadId": "657412",
+    "Html": "Where does this problem come from? It sounds like a middle school homework and I'm afraid Triangle.NET won't help you here.<br />\n<br />\nGeometrically, you are searching for a common intersection of 3 circles, which, in general, you can't expect to exist.<br />\n",
+    "PostedDate": "2016-08-25T13:03:24.103-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

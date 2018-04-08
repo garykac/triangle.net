@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1078848",
+    "ThreadId": "452974",
+    "Html": "Hi,\r<br />\n<br />\nI saw there is already a question about boundary edges, but I couldn't make it to work.\r<br />\n<br />\nI need to get all boundary edges (since triangulation may add points to the original edges I can't use the original input data)\r<br />\n<br />\nI'm trying this:<br />\n<pre><code>foreach (var t in mesh.Triangles)\n{\n    var s = t.GetSegment(0);\n    System.Diagnostics.Debug.WriteLine(String.Format(&quot;Boundary: {0}&quot;, s.Boundary));\n\n    s = t.GetSegment(1);\n    System.Diagnostics.Debug.WriteLine(String.Format(&quot;Boundary: {0}&quot;, s.Boundary));\n\n    s = t.GetSegment(2);\n    System.Diagnostics.Debug.WriteLine(String.Format(&quot;Boundary: {0}&quot;, s.Boundary));\n}</code></pre>\n\nBut the GetSegment is always returning null. What am I doing wrong?\r<br />\n<br />\nAlso, what are the possible values for the Boundary property?\r<br />\n<br />\nThank you and best regards,\r<br />\nRodrigo Basniak<br />\n",
+    "PostedDate": "2013-08-09T11:55:14.273-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1078851",
+    "ThreadId": "452974",
+    "Html": "I feel stupid now. Didn't read the topology page carefuly. GetSEgment will only return a value if the segment IS on the boundary.\r<br />\n<br />\nThanks for this library, very well done!!<br />\n",
+    "PostedDate": "2013-08-09T12:06:50.317-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1079060",
+    "ThreadId": "452974",
+    "Html": "If you want to get the boundary edges only, I suggest you use the <code>mesh.Segments</code> property.\r<br />\n<br />\nWhen building the input geometry, you can add a boundary mark to a segment, <code>geometry.AddSegment(int p0, int p1, int boundary)</code>. This mark will be the value of the segments <code>Boundary</code> property, so you can easily distinguish between different boundary parts in your application.<br />\n",
+    "PostedDate": "2013-08-10T06:50:34.827-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

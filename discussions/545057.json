@@ -1,0 +1,114 @@
+[
+  {
+    "Id": "1244243",
+    "ThreadId": "545057",
+    "Html": "Hello,\r<br />\n<br />\nIs there an easy way to find a voronoi regions neighbouring regions? I'm going to need this data later on for A* pathing. \r<br />\n<br />\nThe way I'm currently doing it is incredibly hacky (2x for loops of all regions checking for shared verts)... there must be an easier way.<br />\n\r<br />\nAny help greatly appreciated \r<br />\n<br />\nRob<br />\n",
+    "PostedDate": "2014-05-12T01:15:25.737-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244257",
+    "ThreadId": "545057",
+    "Html": "At the moment, there's no easy way to do this. You should probably convert the whole diagram to a more standard data structure, like a DCEL (this is actually on my todo list).<br />\n<br />\nFeel free to post some code, and I will have a look at it.<br />\n<br />\nAnd be aware that there's an open issue regarding the <em>Bounded</em> Voronoi diagram.<br />\n",
+    "PostedDate": "2014-05-12T01:59:05.417-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244263",
+    "ThreadId": "545057",
+    "Html": "I imagine DCEL would give the performance boost I need - looks pretty complex though ! :S\r<br />\n<br />\nDoesn't the Voronoi calculation have to take into account neighbouring points in order to form its regions? If so, wouldn't there be a way of snagging the points at that level? \r<br />\n<br />\nThis is being done in Unity (each region is a tile for the game). I'm currently converting the region points into a convex Polygon then, for each region, checking for overlap with other polygons. The Math lib I'm using is pretty quick ... but the whole thing is still a hack - works though ! <br />\n<pre><code>IEnumerator GetConnections()\n{\n    int counter = 0;\n    for (int a = 0; a &lt; tiles.Count; a++)\n\n    {\n        // Hack to ease the load... \n        counter++;\n        if (counter % 500 == 0 )\n        {\n            yield return null;\n        }\n        for (int b = 0; b &lt; tiles.Count; b ++)\n        {\n            bool join = Intersection.TestConvexPolygon2ConvexPolygon2(tiles[a].poly, tiles[b].poly);\n            if (join == true)\n            {\n                tiles[a].AddNeighbour(tiles[b]);\n            }\n        }\n    }\n}</code></pre>\n\n",
+    "PostedDate": "2014-05-12T02:13:08.767-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244287",
+    "ThreadId": "545057",
+    "Html": "<blockquote>\nDoesn't the Voronoi calculation have to take into account neighbouring points in order to form its regions? If so, wouldn't there be a way of snagging the points at that level?<br />\n</blockquote>\nSure. Just have a look at Voronoi.cs, Line 162:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">// Go counterclockwise until we reach the border or the initial triangle.</span>\n<span style=\"color:Blue;\">while</span> (f_next.triangle != Mesh.dummytri)\n{\n    <span style=\"color:Green;\">// Add circumcenter of current triangle</span>\n    vpoints.Add(points[f.triangle.id]);\n\n    <span style=\"color:Green;\">// [...]</span>\n\n    f_next.Copy(<span style=\"color:Blue;\">ref</span> f);\n    f_next.OnextSelf();\n}\r\n</pre></div>The ID of vertex <em>f.Apex()</em> is actually the ID of the neighbouring Voronoi cell (across the edge <em>points[f.triangle.id]</em> -&gt; <em>points[f_next.triangle.id]</em>). This information could easily be stored in a Dictionary&lt;int, VoronoiRegion&gt; (the bounded Voronoi case could be quite a bit more complex, though).<br />\n",
+    "PostedDate": "2014-05-12T03:32:30.353-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244289",
+    "ThreadId": "545057",
+    "Html": "This discussion has been copied to a work item. Click <a href=\"https://triangle.codeplex.com/workitem/10615\" rel=\"nofollow\">here</a> to go to the work item and continue the discussion.<br />\n",
+    "PostedDate": "2014-05-12T03:38:16.58-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244322",
+    "ThreadId": "545057",
+    "Html": "That seems straight forward enough - I'll give it a whirl :) \r<br />\n<br />\nRegarding the open issue with the Bounded Voronoi diagram, could that be the reason why some generated region verts (usually in the .Y axis) are way off?\r<br />\n<br />\nThis is an extreme example where I'm subdividing voronoi regions into smaller regions. A bit of a mess... \r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/u/5041720/Untitled-2.png\" alt=\"Image\" /><br />\n",
+    "PostedDate": "2014-05-12T05:17:48.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244340",
+    "ThreadId": "545057",
+    "Html": "You suggestion worked perfectly. I did a final check to see if the region had been previously culled (I got rid of regions that were too big, usually on the outder edges of the land generation. Looks a bit like this \r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/u/5041720/Untitled-3.png\" alt=\"Image\" />\r<br />\n<br />\n<br />\nThank you for all your help :) <br />\n",
+    "PostedDate": "2014-05-12T06:14:38.483-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244475",
+    "ThreadId": "545057",
+    "Html": "I have added the neighbor information to the (standard) Voronoi diagram, so you can now do something like<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> region <span style=\"color:Blue;\">in</span> voronoi.Regions)\n{\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> vertex <span style=\"color:Blue;\">in</span> region.Vertices)\n    {\n        <span style=\"color:Green;\">// The regions vertices are ordered counter-clockwise, so for</span>\n        <span style=\"color:Green;\">// each vertex, there&#39;s a well-defined edge starting at that vertex.</span>\n        <span style=\"color:Green;\">// The GetNeighbor method will return the region across the edge.</span>\n        <span style=\"color:Blue;\">var</span> neighbor = region.GetNeighbor(vertex);\n\n        <span style=\"color:Green;\">// Be aware, that for an unbounded Voronoi region, the last vertex</span>\n        <span style=\"color:Green;\">// has no adjacent edge, so GetNeighbor will return null.</span>\n    }\n}\r\n</pre></div>For the above images you used the BoundedVoronoi code? I actually never got infinite edges. The issues I have are duplicate vertices and vertices at wrong locations (but still inside the polygon).<br />\n",
+    "PostedDate": "2014-05-12T10:37:12.977-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244529",
+    "ThreadId": "545057",
+    "Html": "Each region has the 'bounded' bool as true, if that's what you mean? \r<br />\n<br />\nI tried building the Voronoi with : \r<br />\n _voronoi = new TriangleNet.Tools.BoundedVoronoi (_mesh);\r<br />\n<br />\nbut it threw up an error, so I'm just using: \r<br />\n<br />\n _voronoi = new TriangleNet.Tools.Voronoi (_mesh);\r<br />\n<br />\nTo get rid of the massive regions I just check the distance between the verts bounds. Seemed the quickest way of getting results until I can make a contained region. These tiles are then excluded when hunting for neighbours.  \r<br />\n<pre><code>// Hack to cull enormous regions \n\n            bool freakLength = false;\n            for (int i = 0; i &lt; vertsV3.Count; i++)\n            {\n                if (i != vertsV3.Count - 1)\n                {\n                    float distance = Vector3.Distance (vertsV3 [i], vertsV3 [i + 1]);\n                    if (distance &gt; 2000)\n                    {\n                        freakLength = true;\n                    }\n                }\n                else\n                {\n                    float distance = Vector3.Distance (vertsV3 [i], vertsV3 [0]);\n                    if (distance &gt; 2000)\n                    {\n                        freakLength = true;\n                    }\n                }\n\n                vertsV2 [i] = new Vector2 ((float)vertsV3 [i].x, (float)vertsV3[i].z);\n            }\n\n\n\n            //   float area = poly.CalcArea ();\n\n            if (freakLength == false)\n            {\n                Polygon2 poly = new Polygon2 (vertsV2);\n                VoronoiTile tile = new VoronoiTile(poly, region, this);\n                tiles.Add (tile);\n                regionToTileDictionary.Add(region, tile);\n\n            }\n</code></pre>\n\nThis is all fine when I'm making the tiles individually (from region vert list)  however if I make one giant mesh using this : <a href=\"https://triangle.codeplex.com/discussions/445376\" rel=\"nofollow\">https://triangle.codeplex.com/discussions/445376</a> method I get infinite sides.\r<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/u/5041720/Untitled-6.jpg\" alt=\"Image\" />\r<br />\n<br />\n<br />\nIf you can think of a quicker method for culling them I'd love to hear it :)<br />\n",
+    "PostedDate": "2014-05-12T12:26:47.473-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244585",
+    "ThreadId": "545057",
+    "Html": "<ol>\n<li>Are you using the latest source code?</li>\n<li>What kind of error did you get with the BoundedVoronoi code?</li>\n<li>\nDid you use <code>mesh.Behavior.ConformingDelaunay = true</code>?<br />\n</li>\n</ol>\nI don't know if I'll add the neighbouring information to the BoundedVoronoi code anytime soon, but the normal Voronoi diagram is quite a bad choice for polygon meshes. As you already said: it get's hacky.<br />\n",
+    "PostedDate": "2014-05-12T15:09:41.48-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244808",
+    "ThreadId": "545057",
+    "Html": "1) yup\r<br />\n2) After using :<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">int</span> totalPoints = tilesPerAxis * tilesPerAxis;\n        geometry = <span style=\"color:Blue;\">new</span> TriangleNet.Geometry.InputGeometry (totalPoints);\n<span style=\"color:Green;\">// Place noise</span>\n        <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> x = 0; x &lt; tilesPerAxis; x ++)\n        {\n            <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> z = 0; z &lt; tilesPerAxis; z++)\n            {\n                <span style=\"color:Blue;\">float</span> valueX = filterX.GetValue (x, z, seedX);\n                valueX = (valueX + 1.0f) * .5f;\n                <span style=\"color:Blue;\">float</span> valueZ = filterZ.GetValue (z, seedZ, x);\n                valueZ = (valueZ + 1.0f) * .5f;\n\n                <span style=\"color:Blue;\">float</span> xPos = valueX * chunkWidth;\n                <span style=\"color:Blue;\">float</span> zPos = valueZ * chunkHeight;\n\n                geometry.AddPoint (xPos, zPos);\n\n                <span style=\"color:Green;\">//Vector3 worldPos = chunkStartPoint + new Vector3 (xPos, 0, zPos);</span>\n                <span style=\"color:Green;\">//Draw.XHere(worldPos, 5f,Color.red,false);</span>\n            }\n        }\n\n        TriangleNet.Mesh _mesh2 = <span style=\"color:Blue;\">new</span> TriangleNet.Mesh ();\n        _mesh2.Behavior.ConformingDelaunay = <span style=\"color:Blue;\">true</span>;\n        _mesh2.Triangulate (geometry);\n        TriangleNet.Tools.BoundedVoronoi _voronoi2 = <span style=\"color:Blue;\">new</span> TriangleNet.Tools.BoundedVoronoi (_mesh2);\r\n</pre></div>I get: <br />\n<blockquote>\nIndexOutOfRangeException: Array index is out of range.<br />\n(wrapper stelemref) object:stelemref (object,intptr,object)<br />\nTriangleNet.Tools.BoundedVoronoi.ConstructBoundaryBvdCell (TriangleNet.Data.Vertex vertex) (at Assets/Libs/Triangle/Tools/BoundedVoronoi.cs:458)<br />\nTriangleNet.Tools.BoundedVoronoi.Generate () (at Assets/Libs/Triangle/Tools/BoundedVoronoi.cs:98)<br />\nTriangleNet.Tools.BoundedVoronoi..ctor (TriangleNet.Mesh mesh, Boolean includeBoundary) (at Assets/Libs/Triangle/Tools/BoundedVoronoi.cs:54)<br />\nTriangleNet.Tools.BoundedVoronoi..ctor (TriangleNet.Mesh mesh)<br />\nVoronoiWorld+&lt;Build&gt;c__Iterator51.MoveNext () (at Assets/Voronoi/VoronoiWorld.cs:102)<br />\nUnityEngine.MonoBehaviour:StartCoroutine(String)<br />\nVoronoiWorld:Start() (at Assets/Voronoi/VoronoiWorld.cs:61)<br />\n</blockquote>\nShould I be defining the segments manually? <br />\n",
+    "PostedDate": "2014-05-13T06:17:18.127-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244836",
+    "ThreadId": "545057",
+    "Html": "Are you using the release from the <em>Downloads</em> section (dated Jun 18, 2013) or from the <a href=\"https://triangle.codeplex.com/SourceControl/latest\" rel=\"nofollow\">Source Code</a> section (latest changeset May 12, 2014)?<br />\n<blockquote>\nShould I be defining the segments manually?<br />\n</blockquote>\nYes, segments have to be added manually.<br />\n",
+    "PostedDate": "2014-05-13T07:26:06.727-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244879",
+    "ThreadId": "545057",
+    "Html": "Sorry, from the Downloads section - should I use latest source? <br />\n<blockquote>\nYes, segments have to be added manually.<br />\n</blockquote>\nWell, I think that's my problem :) Is there a simple method to cycle through points and generate segments? <br />\n",
+    "PostedDate": "2014-05-13T08:40:49.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1244896",
+    "ThreadId": "545057",
+    "Html": "<blockquote>\nSorry, from the Downloads section - should I use latest source?<br />\n</blockquote>\nYes.<br />\n<blockquote>\nWell, I think that's my problem :) Is there a simple method to cycle through points and generate segments?<br />\n</blockquote>\nI don't know how your geometry is defined, but take a look at the <a href=\"https://triangle.codeplex.com/wikipage?title=InputGeometry\" rel=\"nofollow\">InputGeometry</a> documentation. It should be pretty simple to add the segments.<br />\n",
+    "PostedDate": "2014-05-13T09:26:46.55-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

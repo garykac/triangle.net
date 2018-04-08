@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1254211",
+    "ThreadId": "547965",
+    "Html": "I've been searching high and low for this sort of simple result mesh refinement as a Rhino (and Grasshopper within Rhino) user and I hope someone with programing skills can create a Grasshopper component out of this C# code since that is what Grasshopper uses for the existing components I have seen made by others.\r<br />\n<br />\nUsing physical force simulation in Kangaroo within Grasshopper within Rhino is as far as I've seen it get and it's quite odd thinking in physics to achieve simple ends.<br />\n",
+    "PostedDate": "2014-06-08T17:48:03.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

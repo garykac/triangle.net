@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1055740",
+    "ThreadId": "446775",
+    "Html": "In future plans you mention quadrilateral elements. <br />\nIs your idea: generate a delaunay triangulated mesh. union two most suitable triangles that share an edge to a quadrilateral? Or did you think of a different approach? <br />\n",
+    "PostedDate": "2013-06-12T02:57:35.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1055797",
+    "ThreadId": "446775",
+    "Html": "When I wrote the future plans section I had your approach in mind, but as it seems, producing high quality quadrilateral meshes is not as trivial. I think the right way to go would be something like in the following two papers:\r<br />\n<br />\n<a href=\"http://pages.cs.wisc.edu/~csverma/imr11.pdf\" rel=\"nofollow\">Jaal: Engineering a high quality all-quadrilateral mesh generator (pdf)</a>\r<br />\n<a href=\"http://www.imr.sandia.gov/papers/imr19/Ebeida1A.2.pdf\" rel=\"nofollow\">Q-TRAN: A New Approach to Transform Triangular Meshes into Quadrilateral Meshes Locally (pdf)</a><br />\n",
+    "PostedDate": "2013-06-12T05:23:39.203-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

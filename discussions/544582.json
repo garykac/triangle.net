@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1242532",
+    "ThreadId": "544582",
+    "Html": "Is it possible to assign a maximum length of an edge as constraint? I saw their are other options but not length.\r<br />\n<br />\nI added a property to edge class which returns length.  So I can iterate over edges and see which ones are longer than desired, and mark adjacent triangles are dead. Is their a way to do it?\r<br />\n<br />\nThanks a lot. <br />\n",
+    "PostedDate": "2014-05-07T05:14:48.647-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1242610",
+    "ThreadId": "544582",
+    "Html": "This can be implemented with a user test function (you'll have to use the latest source code):<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">void</span> Test(InputGeometry geometry)\n{\n    <span style=\"color:Blue;\">var</span> mesh = <span style=\"color:Blue;\">new</span> Mesh();\n\n    mesh.Behavior.Quality = <span style=\"color:Blue;\">true</span>;\n    mesh.Behavior.UserTest = edgeConstraint;\n\n    mesh.Triangulate(geometry);\n}\n\n<span style=\"color:Blue;\">private</span> <span style=\"color:Blue;\">bool</span> edgeConstraint(ITriangle triangle, <span style=\"color:Blue;\">double</span> area)\n{\n    <span style=\"color:Blue;\">const</span> <span style=\"color:Blue;\">double</span> MAXLENGTH = 2.0;\n\n    <span style=\"color:Blue;\">var</span> p0 = triangle.GetVertex(0);\n    <span style=\"color:Blue;\">var</span> p1 = triangle.GetVertex(1);\n    <span style=\"color:Blue;\">var</span> p2 = triangle.GetVertex(2);\n\n    <span style=\"color:Blue;\">double</span> dx, dy;\n\n    <span style=\"color:Green;\">// Check edge [P0 -&gt; P1]</span>\n    dx = p0.X - p1.X;\n    dy = p0.Y - p1.Y;\n\n    <span style=\"color:Blue;\">if</span> (Math.Sqrt(dx * dx + dy * dy) &gt; MAXLENGTH)\n    {\n        <span style=\"color:Blue;\">return</span> <span style=\"color:Blue;\">true</span>;\n    }\n\n    <span style=\"color:Green;\">// Check edge [P1 -&gt; P2]</span>\n    dx = p1.X - p2.X;\n    dy = p1.Y - p2.Y;\n\n    <span style=\"color:Blue;\">if</span> (Math.Sqrt(dx * dx + dy * dy) &gt; MAXLENGTH)\n    {\n        <span style=\"color:Blue;\">return</span> <span style=\"color:Blue;\">true</span>;\n    }\n\n    <span style=\"color:Green;\">// Check edge [P2 -&gt; P0]</span>\n    dx = p2.X - p0.X;\n    dy = p2.Y - p0.Y;\n\n    <span style=\"color:Blue;\">if</span> (Math.Sqrt(dx * dx + dy * dy) &gt; MAXLENGTH)\n    {\n        <span style=\"color:Blue;\">return</span> <span style=\"color:Blue;\">true</span>;\n    }\n\n    <span style=\"color:Blue;\">return</span> <span style=\"color:Blue;\">false</span>;\n}\r\n</pre></div>",
+    "PostedDate": "2014-05-07T07:29:33.837-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

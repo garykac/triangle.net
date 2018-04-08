@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1477088",
+    "ThreadId": "655835",
+    "Html": "Hi,\r<br />\n<br />\nI have a small problem using Triangle.NET in my solution. Here is the problem:\r<br />\n<br />\nLet's say that you have contour that is shaped like a triangle. I add the contour using the polygon.Add(new Contour....-method. Afterward I want to add a Vertex that is on the contour. Since the point is calculated using double precision I can easily get an infinite when trying to triangle my mesh (the point will then be extremely close to the contour, but not exactly on it).\r<br />\n<br />\nThis can also happen with points that are very close to eachother.\r<br />\n<br />\nSo my question: Is there any way to say that points that are really close to a contour or other points should be handled as one point?\r<br />\n<br />\nBest regards\r<br />\nIsdas<br />\n",
+    "PostedDate": "2016-06-23T06:19:51.56-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477159",
+    "ThreadId": "655835",
+    "Html": "I don't think Triangle will handle this kind of situation well. It's basically a setup described on <a href=\"http://www.cs.cmu.edu/~quake/triangle.trouble.html\" rel=\"nofollow\">http://www.cs.cmu.edu/~quake/triangle.trouble.html</a> :<br />\n<br />\n<em>Strange things can happen if you've taken liberties with your PSLG. Do you have a vertex lying in the middle of a segment? Triangle sometimes copes poorly with that sort of thing. Do you want to lay out a collinear row of evenly spaced, segment-connected vertices?</em> <strong>Have you simply defined one long segment connecting the leftmost vertex to the rightmost vertex, and a bunch of vertices lying along it? This method occasionally works, especially with horizontal and vertical lines, but often it doesn't, and you'll have to connect each adjacent pair of vertices with a separate segment. If you don't like it, tough</strong>.<br />\n<br />\nCurrently there's no easy way to update a mesh in the way you describe it and Triangle is really not made for this.<br />\n",
+    "PostedDate": "2016-06-24T05:19:40.413-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1477160",
+    "ThreadId": "655835",
+    "Html": "Thank you very much for a quick answer. I had a feeling that Triangle.NET didn't support this, but I had to be sure before I started on the work around.\r<br />\n<br />\nThanks again for the answer and a great framework!\r<br />\n<br />\nBest regards,\r<br />\nIsdas<br />\n",
+    "PostedDate": "2016-06-24T05:36:25.633-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

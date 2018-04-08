@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "1456273",
+    "ThreadId": "648885",
+    "Html": "Hi,<br />\n<br />\nI really can't understand this, we love to work with vertices and indices and believe that it's the best way to deal with polygons.<br />\n<br />\nHow can Triangle.NET fast lookup for vertex indices in this way?<br />\n<br />\nThanks,<br />\n<br />\nAlberto<br />\n",
+    "PostedDate": "2015-12-17T05:53:27.513-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456281",
+    "ThreadId": "648885",
+    "Html": "This was due to a request to have fixed input vertex ids (<a href=\"https://triangle.codeplex.com/discussions/644047\" rel=\"nofollow\">https://triangle.codeplex.com/discussions/644047</a>). Making the vertex instances part of the segment was the natural way to implement this.<br />\n<br />\nCould you explain what problem you are facing?<br />\n<br />\nIf you need to access vertex indices before triangulation, make sure to setup the id's manually:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">var</span> polygon = CreateSomePolygon();\n\n<span style=\"color:Blue;\">int</span> id = 0;\n\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> p <span style=\"color:Blue;\">in</span> polygon.Points)\n{\n    p.ID = id++;\n}\r\n</pre></div>",
+    "PostedDate": "2015-12-17T07:19:33.043-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456285",
+    "ThreadId": "648885",
+    "Html": "Thanks for your answer.\r<br />\n<br />\nDo you mean that you pass a Vertex type only to get the integer index value? You aren't using vertex coordinates again, right?\r<br />\n<br />\nThanks,\r<br />\n<br />\nAlberto.<br />\n",
+    "PostedDate": "2015-12-17T07:29:20.93-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456288",
+    "ThreadId": "648885",
+    "Html": "I'm not sure what you mean.<br />\n<br />\nRegarding the meshing process:<br />\nBefore this change, a segment was identified by two integer values: the id's of the two vertices defining the segment. To insert the segment into the triangulation, I had to look up the actual vertices in a dictionary.<br />\nHaving the segments contain the actual vertex instances eliminates the need of a dictionary (and solved some other problems, making fixed vertex ids work).<br />\n",
+    "PostedDate": "2015-12-17T07:43:27.443-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1456292",
+    "ThreadId": "648885",
+    "Html": "Now I understand, thanks.\r<br />\n<br />\nIn any case, I believe that current approach could lead to problems if somebody changes the dictionary vertex, in Beta 3 approach everything was safe. In addition I would always recommend to leave the old constructor as deprecated.\r<br />\n<br />\nThanks again,\r<br />\n<br />\nAlberto<br />\n",
+    "PostedDate": "2015-12-17T07:50:06.323-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

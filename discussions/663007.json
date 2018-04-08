@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1496568",
+    "ThreadId": "663007",
+    "Html": "List&lt;PointF&gt; lstPoints;<br />\n<pre><code>        TriangleNet.Mesh mesh;\n        Random random = new Random();\n\n        TriangleNet.Geometry.InputGeometry geometry = TriangleNet.IO.FileReader.ReadNodeFile(@&quot;C:\\output\\run\\sam2.poly&quot;);\n\n        // add random z values so the interpolation works\n        foreach (TriangleNet.Geometry.Point vertex in geometry.Points)\n            vertex.Z = 0;\n\n       mesh = new TriangleNet.Mesh();\n\n       mesh.Triangulate(geometry);-------instead of triangulation i need to import mesh how to do it?</code></pre>\n\n",
+    "PostedDate": "2017-05-18T03:19:56.947-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1496571",
+    "ThreadId": "663007",
+    "Html": "Use <code>TriangleNet.Meshing.Converter.ToMesh(poly, triangles)</code>:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Green;\">// Create some input mesh.</span>\n<span style=\"color:Blue;\">var</span> mesh1 = GenericMesher.StructuredMesh(<span style=\"color:Blue;\">new</span> Rectangle(-2.0, -2.0, 4.0, 4.0), 10, 10);\n\n<span style=\"color:Green;\">// Add some z values.</span>\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> p <span style=\"color:Blue;\">in</span> mesh1.Vertices)\n{\n    p.Z = Math.Exp(-(p.X * p.X + p.Y * p.Y));\n}\n\n<span style=\"color:Green;\">// Polygon to store the input mesh points and segments.</span>\n<span style=\"color:Blue;\">var</span> poly = <span style=\"color:Blue;\">new</span> Polygon();\n\npoly.Points.AddRange(mesh1.Vertices);\npoly.Segments.AddRange(mesh1.Segments);\n\n<span style=\"color:Green;\">// Construct new mesh using input mesh data.</span>\n<span style=\"color:Blue;\">var</span> mesh2 = Converter.ToMesh(poly, mesh1.Triangles.ToArray());\r\n</pre></div><strong>EDIT</strong>: The above code requires beta 4. Since you are using beta 3, use the<br />\n<pre><code>Load(InputGeometry input, List&lt;ITriangle&gt; triangles)</code></pre>\n\nmethod of the <code>Mesh</code> class.<br />\n",
+    "PostedDate": "2017-05-18T04:47:40.283-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

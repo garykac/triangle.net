@@ -1,0 +1,138 @@
+[
+  {
+    "Id": "1487616",
+    "ThreadId": "659270",
+    "Html": "I have encountered problem with using triangle to create voronoi. The results returned by the algorithm is wrong.  Please contact me if you have solved this problem.\r<br />\n<br />\nThe input:\r<br />\n22\r<br />\n1 586.3 306.35\r<br />\n2 547.3 306.35\r<br />\n3 567.034 277.849\r<br />\n4 508.248 306.35\r<br />\n5 469.261 306.35\r<br />\n6 547.235 363.506\r<br />\n7 566.8 334.928\r<br />\n8 527.813 334.928\r<br />\n9 488.813 334.928\r<br />\n10 605.787 334.928\r<br />\n11 626.21 306.02\r<br />\n12 645.06 335.06\r<br />\n13 722.8 392.15\r<br />\n14 683.8 392.15\r<br />\n15 666.64 363.11\r<br />\n16 625.3 363.55\r<br />\n17 527.8 277.75\r<br />\n18 488.8 277.75\r<br />\n19 449.8 278.19\r<br />\n20 410.15 277.75\r<br />\n21 391.3 306.35\r<br />\n22 430.3 306.35<br />\n",
+    "PostedDate": "2016-11-08T22:17:17.737-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487621",
+    "ThreadId": "659270",
+    "Html": "Could you explain, what you think is wrong with the Voronoi diagram?<br />\n",
+    "PostedDate": "2016-11-09T02:16:15.22-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487658",
+    "ThreadId": "659270",
+    "Html": "Thanks for your reply. The Triangle is really a great work.\r<br />\nYou can view this page link: <a href=\"https://github.com/xenovacivus/PathCAM/issues/15\" rel=\"nofollow\">https://github.com/xenovacivus/PathCAM/issues/15</a> (Sorry, I don't know how to insert a image here.)\r<br />\nHowever, I have found the wrong place of the code. It is wrong to judge the condition of the line going upwards. Please confirm whether it is correct.<br />\n<pre><code>private bool BoxRayIntersection(Point pt, double dx, double dy, out Vertex intersect)\n        {\n            double x = pt.X;\n            double y = pt.Y;\n\n            double t1, x1, y1, t2, x2, y2;\n\n            // Bounding box\n            double minX = bounds.Xmin;\n            double maxX = bounds.Xmax;\n            double minY = bounds.Ymin;\n            double maxY = bounds.Ymax;\n\n            // Check if point is inside the bounds\n            if (x &lt; minX || x &gt; maxX || y &lt; minY || y &gt; maxY)\n            {\n                intersect = null;\n                return false;\n            }\n\n            // Calculate the cut through the vertical boundaries\n            if (dx &lt; 0)\n            {\n                // Line going to the left: intersect with x = minX\n                t1 = (minX - x) / dx;\n                x1 = minX;\n                y1 = y + t1 * dy;\n            }\n            else if (dx &gt; 0)\n            {\n                // Line going to the right: intersect with x = maxX\n                t1 = (maxX - x) / dx;\n                x1 = maxX;\n                y1 = y + t1 * dy;\n            }\n            else\n            {\n                // Line going straight up or down: no intersection possible\n                t1 = double.MaxValue;\n                x1 = y1 = 0;\n            }\n\n            // Calculate the cut through upper and lower boundaries\n            if (dy &lt; 0)\n            {\n                // Line going downwards: intersect with y = minY\n                t2 = (minY - y) / dy;\n                x2 = x + t2 * dx;\n                y2 = minY;\n            }\n            //else if (dx &gt; 0) //wrong place\n            else if (dy &gt; 0)  //correct code?\n            {\n                // Line going upwards: intersect with y = maxY\n                t2 = (maxY - y) / dy;\n                x2 = x + t2 * dx;\n                y2 = maxY;\n            }\n            else\n            {\n                // Horizontal line: no intersection possible\n                t2 = double.MaxValue;\n                x2 = y2 = 0;\n            }\n\n            if (t1 &lt; t2)\n            {\n                intersect = new Vertex(x1, y1, -1);\n            }\n            else\n            {\n                intersect = new Vertex(x2, y2, -1);\n            }\n\n            return true;\n        }</code></pre>\n\n",
+    "PostedDate": "2016-11-09T17:32:24.297-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487659",
+    "ThreadId": "659270",
+    "Html": "By the way, I'd like to know how to get polygons of the voronoi regions.\r<br />\nMy code is as follows. I have encountered with another problem. I wonder if it's wrong to get polygons in my way. o(╯□╰)o<br />\n<pre><code>var polygons = new List&lt;DoublePolygon&gt;();\n            foreach (var region in voronoi.Regions)\n            {\n                var ps = new DoublePolygon();\n                foreach (var item in region.Vertices)\n                {\n                    ps.Add(new DoublePoint(item.X, item.Y));\n                }\n                polygons.Add(new DoublePolygon(ps));\n            }</code></pre>\n\n",
+    "PostedDate": "2016-11-09T18:15:25.553-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487662",
+    "ThreadId": "659270",
+    "Html": "Another problem is coming.\r<br />\nWhen the points have too many decimal places, the result is wrong sometimes.\r<br />\nI have a set of points input:\r<br />\n49\r<br />\n1\t 281.17  324.959999999998<br />\n2\t 133.67  315.809999999998<br />\n3\t 91.95  367.130000000005<br />\n4\t 109.05  320.15<br />\n5\t 240.7  274.940000000002<br />\n6\t 158.29  311.459999999998<br />\n7\t 182.91  307.119999999995<br />\n8\t 181.88  373.259999999998<br />\n9\t 157.26  377.6<br />\n10\t 132.64  381.940000000002<br />\n11\t 108.02  386.280000000005<br />\n12\t 116.57  362.790000000002<br />\n13\t 141.19  358.45<br />\n14\t 165.81  354.109999999998<br />\n15\t 190.42  349.769999999995<br />\n16\t 174.36  330.609999999998<br />\n17\t 149.74  334.95<br />\n18\t 125.12  339.290000000002<br />\n19\t 215.05  345.419999999995<br />\n20\t 198.98  326.269999999995<br />\n21\t 223.6  321.930000000005<br />\n22\t 248.22  317.590000000002<br />\n23\t 256.77  294.1<br />\n24\t 281.39  289.759999999998<br />\n25\t 232.15  298.440000000002<br />\n26\t 207.53  302.780000000005<br />\n27\t 323.62  370.380000000005<br />\n28\t 255.74  360.230000000005<br />\n29\t 231.11  364.569999999995<br />\n30\t 239.66  341.080000000005<br />\n31\t 206.5  368.909999999998<br />\n32\t 222.56  388.069999999995<br />\n33\t 247.18  383.730000000005<br />\n34\t 311.84  326.940000000002<br />\n35\t 312.5  394.190000000002<br />\n36\t 296.43  375.040000000002<br />\n37\t 271.81  379.390000000002<br />\n38\t 304.98  351.55<br />\n39\t 280.36  355.890000000002<br />\n40\t 264.29  336.740000000002<br />\n41\t 272.84  313.25<br />\n42\t 362.77  319.380000000005<br />\n43\t 338.15  323.719999999995<br />\n44\t 371.32  295.880000000005<br />\n45\t 322.08  304.559999999998<br />\n46\t 337.12  389.85<br />\n47\t 345.67  366.359999999998<br />\n48\t 329.6  347.209999999998<br />\n49\t 354.22  342.869999999995<br />\n\r<br />\nAnd the result is wrong. Please view the picture:<a href=\"https://cloud.githubusercontent.com/assets/23348727/20165868/ce67164c-a74b-11e6-9ead-6c357fc690bd.jpg\" rel=\"nofollow\">https://cloud.githubusercontent.com/assets/23348727/20165868/ce67164c-a74b-11e6-9ead-6c357fc690bd.jpg</a>\r<br />\nor this page: <a href=\"https://github.com/xenovacivus/PathCAM/issues/15\" rel=\"nofollow\">https://github.com/xenovacivus/PathCAM/issues/15</a>\r<br />\n（The Triangle TestApp you provide will run error. ）<br />\n",
+    "PostedDate": "2016-11-09T21:50:13.603-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487684",
+    "ThreadId": "659270",
+    "Html": "Ok, you're using beta 3. You should have a look at the latest source code, there have been many improvements since back then. The Voronoi code has been rewritten completely. It now uses a DCEL to represent the Voronoi graph (which gives access to the complete topology). It's in the <code>TriangleNet.Voronoi</code> namespace. The old code can still be found in the <code>TriangleNet.Voronoi.Legacy</code> namespace.<br />\n<br />\nThe wrong condition in the intersection code was fixed in changeset <a href=\"https://triangle.codeplex.com/SourceControl/changeset/74966\" rel=\"nofollow\">74966</a><br />\n<br />\nNow, your second example is a completely different case. If you compute the statistics of the mesh, you will find that there's at least one triangle with tiny area (and minimum angle), which means you got a (nearly) flat triangle. Computing the circumcenter (= Voronoi vertex) of that triangle will result in a point with very large (probably useless) coordinates.<br />\n<br />\nLooking at the pictures you have provided on github, you can see that the problem occurs on the right boundary of your mesh. The 5 points seem to be collinear, but due to finite floating point precision, the points might not be exactly collinear (at least one of the points is not on the convex hull but falls slightly inside the mesh). I haven't tested, but I think that's why a flat triangle is created.<br />\n<br />\nThis is a general problem when computing Delaunay triangulations. Depending on the problem you are trying to solve, a quick fix might be to perturb the points on the mesh boundary slighty and recompute the triangulation.<br />\n",
+    "PostedDate": "2016-11-10T05:05:01.783-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487727",
+    "ThreadId": "659270",
+    "Html": "You're awesome. And thanks for your kind help. I will try to achieve it in your solution. You guys are amazing. I'm still in the world of learning to use the Voronoi. Thank you again.<br />\n",
+    "PostedDate": "2016-11-10T17:55:32.87-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487743",
+    "ThreadId": "659270",
+    "Html": "Depending on what you're doing, there might be better solutions:\r<br />\n<br />\nInstead of using the built-in Voronoi code, copy the stuff you need and then modify the code to ignore &quot;invalid&quot; triangles.\r<br />\n<em>or</em>\r<br />\nRemove &quot;invalid&quot; triangles after triangulation, reload the modified mesh and then use the built-in Voronoi code.\r<br />\n<em>or</em>\r<br />\nIf you know that the point set is actually a polygon, triangulate the polygon. For example, if you export the mesh to Triangle format (a .poly and an .ele file will be created) and look at the poly file, you'll see that segments with vertices  [44-42] and [42-46] make up the boundary to the right, so vertices 49 and 47 are the ones that mess up the triangulation. If those were added as segments in the input, the tiny triangles would be removed automatically by Triangle. The input poly file would look like this:<br />\n<pre><code>49\n1 281.17 324.959999999998\n2 133.67 315.809999999998\n3 91.95 367.130000000005\n4 109.05 320.15\n5 240.7 274.940000000002\n6 158.29 311.459999999998\n7 182.91 307.119999999995\n8 181.88 373.259999999998\n9 157.26 377.6\n10 132.64 381.940000000002\n11 108.02 386.280000000005\n12 116.57 362.790000000002\n13 141.19 358.45\n14 165.81 354.109999999998\n15 190.42 349.769999999995\n16 174.36 330.609999999998\n17 149.74 334.95\n18 125.12 339.290000000002\n19 215.05 345.419999999995\n20 198.98 326.269999999995\n21 223.6 321.930000000005\n22 248.22 317.590000000002\n23 256.77 294.1\n24 281.39 289.759999999998\n25 232.15 298.440000000002\n26 207.53 302.780000000005\n27 323.62 370.380000000005\n28 255.74 360.230000000005\n29 231.11 364.569999999995\n30 239.66 341.080000000005\n31 206.5 368.909999999998\n32 222.56 388.069999999995\n33 247.18 383.730000000005\n34 311.84 326.940000000002\n35 312.5 394.190000000002\n36 296.43 375.040000000002\n37 271.81 379.390000000002\n38 304.98 351.55\n39 280.36 355.890000000002\n40 264.29 336.740000000002\n41 272.84 313.25\n42 362.77 319.380000000005\n43 338.15 323.719999999995\n44 371.32 295.880000000005\n45 322.08 304.559999999998\n46 337.12 389.85\n47 345.67 366.359999999998\n48 329.6 347.209999999998\n49 354.22 342.869999999995\n#\n# Now the boundary segments.\n#\n10\n1 4 3\n2 5 4\n3 44 5\n4 42 44\n5 49 42 # These are the segments that are\n6 47 49 # missing when triangulating just\n7 46 47 # the point set.\n8 35 46\n9 11 35\n10 3 11\n0</code></pre>\n\n",
+    "PostedDate": "2016-11-11T02:11:26.673-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487846",
+    "ThreadId": "659270",
+    "Html": "Thank you very much for your kind help and your better solutions. I'm using Triangle to implement a common tool, so I don't know  what the input would be like in advance. Whereas,  the first and second solution seem to be better. I will try it. Your help was greatly appreciated. <br />\n",
+    "PostedDate": "2016-11-13T17:29:16.01-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487848",
+    "ThreadId": "659270",
+    "Html": "It worked by using your second solution. But  I'm not sure the way I filter the &quot;invalid&quot; triangles is right or wrong. After triangulation, I calculate the circumcenter of the triangle, and record &quot;valid&quot; triangles.<br />\n<pre><code>var triangles = new List&lt;ITriangle&gt;();\n            foreach (var triangle in mesh.Triangles)\n            {\n               double bcX = 0, bcY = 0;\n                GetTriangleBarycnt(triangle.GetVertex(0).X, triangle.GetVertex(0).Y, triangle.GetVertex(1).X,\n                    triangle.GetVertex(1).Y, triangle.GetVertex(2).X, triangle.GetVertex(2).Y, ref bcX, ref bcY);\n                if (Math.Abs(bcX) &lt; 10e10 &amp;&amp;Math.Abs(bcY) &lt; 10e10)  //filter condition???\n                    triangles.Add(triangle);\n            }\n            mesh.Load(input, triangles);\n\n            if (mesh.IsPolygon)\n            {\n                voronoi = new BoundedVoronoi(mesh);\n            }\n            else\n            {\n                voronoi = new Voronoi(mesh);\n            }</code></pre>\n\nFor all that, I still need more tests to verify my program.\r<br />\nI am sorry to have troubled you.<br />\n",
+    "PostedDate": "2016-11-13T19:01:00.397-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487857",
+    "ThreadId": "659270",
+    "Html": "No trouble at all, you're welcome.\r<br />\n<br />\nThe current code will surely fail if the input vertices are of large magnitude. You could use the <code>mesh.Bounds</code> property to get the approx. center of the mesh and then compare to that position. Multiply with the width/height to get a relative scaling.\r<br />\n<br />\nIf you have a polygon input, you shouldn't remove any triangles. It might give unexpected results.\r<br />\n<br />\nAnd I highly recommend to use the latest source code.<br />\n",
+    "PostedDate": "2016-11-14T02:08:40.73-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487904",
+    "ThreadId": "659270",
+    "Html": "Yes, you got the point. I'm skeptical about the way I removed &quot;invalid&quot;  triangles.\r<br />\nAnd I wonder if  I use the latest source code, how can I get the voronoi regions? I need to get polygons from regions.\r<br />\n<br />\nIn the previous version, my code is Like below:<br />\n<pre><code>var polygons = new List&lt;DoublePolygon&gt;();\nif (voronoi.Regions.Count &gt; 0)\n            {\n                foreach (var region in voronoi.Regions)\n                {\n                    var ps = new DoublePolygon();\n                    foreach (var item in region.Vertices)\n                    {\n                        ps.Add(new DoublePoint(item.X, item.Y));\n                    }\n                    polygons.Add(new DoublePolygon(ps));\n                }\n            } </code></pre>\n\n",
+    "PostedDate": "2016-11-15T00:40:48.413-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487907",
+    "ThreadId": "659270",
+    "Html": "Moving to the beta 4 code is more about improvements to the triangulation code. The old Voronoi code is still available (see my comment above). If you want to use the new Voronoi diagram using DCELs, the following code should work (not tested):<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">var</span> voronoi = <span style=\"color:Blue;\">new</span> StandardVoronoi(mesh);\n\n<span style=\"color:Blue;\">var</span> polygons = <span style=\"color:Blue;\">new</span> List&lt;DoublePolygon&gt;();\n\n<span style=\"color:Green;\">// DCEL vertex from TriangleNet.Topology.DCEL namespace.</span>\nVertex last;\n\n<span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> face <span style=\"color:Blue;\">in</span> voronoi.Faces)\n{\n    <span style=\"color:Blue;\">var</span> ps = <span style=\"color:Blue;\">new</span> DoublePolygon();\n    \n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> edge <span style=\"color:Blue;\">in</span> face.EnumerateEdges())\n    {\n        ps.Add(<span style=\"color:Blue;\">new</span> DoublePoint(edge.Origin.X, edge.Origin.Y));\n\n        last = edge.Twin.Origin;\n    }\n\n    <span style=\"color:Blue;\">if</span> (!face.Bounded)\n    {\n        <span style=\"color:Green;\">// If the face is unbounded, we need to manually add the</span>\n        <span style=\"color:Green;\">// last vertex.</span>\n        ps.Add(<span style=\"color:Blue;\">new</span> DoublePoint(last.X, last.Y));\n    }\n\n    polygons.Add(<span style=\"color:Blue;\">new</span> DoublePolygon(ps));\n}\r\n</pre></div>",
+    "PostedDate": "2016-11-15T02:26:27.707-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1487995",
+    "ThreadId": "659270",
+    "Html": "Thank you for your great patience. You have given me great help. Thanks again. And have a nice day at work. <br />\n",
+    "PostedDate": "2016-11-15T22:34:02.64-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488004",
+    "ThreadId": "659270",
+    "Html": "I have another idea, just as a discussion. Calculate the area of the triangle, and then ignore triangles with small area values(such as the critical value is 0.001). I think it's much better than calculate the circumcenter of the triangle.\r<br />\n I learned a lot in the process of communication with you. Really thanks!<br />\n",
+    "PostedDate": "2016-11-16T00:28:37.693-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488010",
+    "ThreadId": "659270",
+    "Html": "Be careful with that approach. You might remove triangles that are perfectly &quot;valid&quot; (for example two points that are just very close together will make an edge of a thin triangle).<br />\n<br />\n<img src=\"https://dl.dropboxusercontent.com/s/xueslk50tb9kezy/triangle-cc.png\" alt=\"Triangle circumcenters\" /><br />\n<br />\nImagine to make the triangles even thinner: triangle (1) will stay valid, triangle (2) won't. Both areas will get very small. The second case will usually occur on the boundary, but the first might also appear inside the mesh.<br />\n<br />\nSo, if you go with checking the area, also check that it's a boundary triangle (you can do this by checking that at least one of the neighbours is <code>null</code>).<br />\n",
+    "PostedDate": "2016-11-16T01:38:21.06-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1488139",
+    "ThreadId": "659270",
+    "Html": "I overlooked this, and you are always able to hold on to the point. \r<br />\nHowever, I also need to check the triangles that adjacent to the  &quot;invalid&quot; boundary triangles. \r<br />\nI have a situation, that is, an invalid triangle's neighbour is another invalid triangle. It is easy to ignore some of the invalid triangles which are close to each other.<br />\n",
+    "PostedDate": "2016-11-16T18:16:38.493-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

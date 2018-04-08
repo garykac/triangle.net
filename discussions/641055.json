@@ -1,0 +1,34 @@
+[
+  {
+    "Id": "1433477",
+    "ThreadId": "641055",
+    "Html": "Hello!\r<br />\n<br />\nHow can I output/write/access the Voronoi polygons? This is what i have so far:<br />\n<pre><code>Mesh mesh = new Mesh();\n                    \nvar geometry = TriangleNet.IO.FileReader.ReadNodeFile(filename);\nmesh.Behavior.MaxAngle = 95;\nmesh.Behavior.MinAngle = 35;\nmesh.Behavior.ConformingDelaunay = true;\nmesh.Behavior.Convex = true;\nmesh.Behavior.Quality = true;\nmesh.Behavior.Poly = true;\n                  \nmesh.Triangulate(geometry);</code></pre>\n\nbut i am not sure how to use:<br />\n<pre><code>TriangleNet.Tools.Voronoi voronoi = new TriangleNet.Tools.Voronoi(mesh);</code></pre>\n\nI also know how to WriteVoronoi to a file with <br />\n<pre><code>TriangleNet.IO.FileWriter.WriteVoronoi(mesh,  workdir + &quot;voronoi.out&quot;);</code></pre>\n\nHowever reading this text file back into my program and constructing the actual polygons is a bit tricky. I really like Triangle.NET, I just do not know (how to use it) how to get the Voronoi Polygons. What i am looking for is a string that looks something like that so i can feed it to SQL server.<br />\n<pre><code>POLYGON(120.0 30.0, 121.0 30.0,121.0 31.0, 120.0 31.0, 120.0 30.0)</code></pre>\n\nThe Voronoi Polygons are based on the behavior which i set for the triangulation, right?\r<br />\n<br />\nThanks and keep up the good work\r<br />\nMichael<br />\n",
+    "PostedDate": "2015-07-07T21:03:25.24-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433556",
+    "ThreadId": "641055",
+    "Html": "I don't think the built-in file format will be helpful. It stores the vertices and the edges, without any information about the topology. The format is<br />\n<pre><code>[#nodes] 2 [#attributes] 0\n[#] [x] [y] &lt;attributes&gt;\n...\n\n[#edges] 0\n1) [#] [i] [j]          // simple edge (i = index of start vertex, j = index of end vertex)\n2) [#] [i] -1 [dx] [dy] // infinite edge (i = index of vertex, (dx, dy) direction vector)\n...</code></pre>\n\nI suggest you have a look at the <code>IVoronoi</code> interface and the <code>VoronoiRegion</code> class and take the information you need. For example:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">static</span> <span style=\"color:Blue;\">void</span> TestVoronoi()\n{\n    Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;\n\n    <span style=\"color:Blue;\">var</span> geometry = RandomPoints(10);\n    <span style=\"color:Blue;\">var</span> mesh = CreateMesh(geometry);\n    <span style=\"color:Blue;\">var</span> voronoi = CreateVoronoi(mesh);\n\n    <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> region <span style=\"color:Blue;\">in</span> voronoi.Regions)\n    {\n        <span style=\"color:Blue;\">var</span> v = region.Vertices.ToArray();\n        <span style=\"color:Blue;\">int</span> n = v.Length;\n\n        Console.Write(<span style=\"color:#A31515;\">&quot;POLYGON({0:0.0} {1:0.0}&quot;</span>, v[0].X, v[0].Y);\n\n        <span style=\"color:Blue;\">for</span> (<span style=\"color:Blue;\">int</span> i = 1; i &lt; n; i++)\n        {\n            Console.Write(<span style=\"color:#A31515;\">&quot;, {0:0.0} {1:0.0}&quot;</span>, v[i].X, v[i].Y);\n        }\n\n        <span style=\"color:Blue;\">if</span> (region.Bounded)\n        {\n            <span style=\"color:Green;\">// Close the polygon.</span>\n            Console.WriteLine(<span style=\"color:#A31515;\">&quot;, {0:0.0} {1:0.0})&quot;</span>, v[0].X, v[0].Y);\n        }\n        <span style=\"color:Blue;\">else</span>\n        {\n            <span style=\"color:Green;\">// Unbounded Voronoi cell.</span>\n            Console.WriteLine(<span style=\"color:#A31515;\">&quot;)&quot;</span>);\n        }\n    }\n}\r\n</pre></div>",
+    "PostedDate": "2015-07-08T05:28:07.43-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1433678",
+    "ThreadId": "641055",
+    "Html": "Thanks for the answer, this looks like it will do what i need. However, I cannot find <br />\n<pre><code>CreateMesh();</code></pre>\n\nor <br />\n<pre><code>CreateVoronoi();</code></pre>\n\nI am actually not a coder, but I tried this one: which seems to be wrong, since it gives an error.<br />\n<pre><code>TriangleNet.Tools.Voronoi voronoi = new TriangleNet.Tools.Voronoi(mesh);</code></pre>\n\n",
+    "PostedDate": "2015-07-09T00:12:13.147-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1434132",
+    "ThreadId": "641055",
+    "Html": "<code>CreateMesh</code> creates a mesh for a given geometry, <code>CreateVoronoi</code> creates a voronoi diagram for a given mesh. It's the same code you used in your opening post.\r<br />\n<br />\nSince I don't know your mesh and you didn't tell me what error you get, I'm afraid I can't give you any advice.<br />\n",
+    "PostedDate": "2015-07-13T05:09:43.707-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

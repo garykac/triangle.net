@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1201758",
+    "ThreadId": "528656",
+    "Html": "Is there a procedure using triangle properties/methods to iterate over all triangles contained within an interior polygonal boundary?<br />\n",
+    "PostedDate": "2014-02-02T04:22:41.65-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1201769",
+    "ThreadId": "528656",
+    "Html": "There are two ways:<br />\n<ol>\n<li>You specify regions in your input geometry and then iterate over all triangles of the mesh, looking at the triangle's Region attribute.</li>\n<li>\nYou use the RegionIterator class.<br />\n</li>\n</ol>\nHere's some example code:<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n\n<span style=\"color:Blue;\">using</span> System;\n<span style=\"color:Blue;\">using</span> System.Collections.Generic;\n<span style=\"color:Blue;\">using</span> TriangleNet;\n<span style=\"color:Blue;\">using</span> TriangleNet.Data;\n<span style=\"color:Blue;\">using</span> TriangleNet.Tools;\n\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">static</span> <span style=\"color:Blue;\">class</span> Example\n{\n    <span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">static</span> <span style=\"color:Blue;\">void</span> RegionIteratorTest()\n    {\n        <span style=\"color:Blue;\">var</span> generator = <span style=\"color:Blue;\">new</span> MeshExplorer.Generators.CircleWithHole();\n\n        <span style=\"color:Green;\">// The geometry will have two regions with ids 1 (inner) and 2 (outer).</span>\n        <span style=\"color:Blue;\">var</span> geometry = generator.Generate(25, 25, 50);\n\n        <span style=\"color:Blue;\">var</span> mesh = <span style=\"color:Blue;\">new</span> Mesh();\n\n        mesh.Triangulate(geometry);\n\n        <span style=\"color:Blue;\">var</span> dict = <span style=\"color:Blue;\">new</span> Dictionary&lt;<span style=\"color:Blue;\">int</span>, <span style=\"color:Blue;\">bool</span>&gt;();\n\n        <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> t <span style=\"color:Blue;\">in</span> mesh.Triangles)\n        {\n            <span style=\"color:Green;\">// Use the region attribute to identify triangles.</span>\n            <span style=\"color:Blue;\">if</span> (t.Region == 1)\n            {\n                <span style=\"color:Green;\">// Add triangles of inner region.</span>\n                dict.Add(t.ID, <span style=\"color:Blue;\">false</span>);\n            }\n        }\n\n        <span style=\"color:Green;\">// Actually, in this example there&#39;s no point using the region</span>\n        <span style=\"color:Green;\">// iterator since we are processing all triangles in the above</span>\n        <span style=\"color:Green;\">// loop.</span>\n\n        <span style=\"color:Blue;\">var</span> iterator = <span style=\"color:Blue;\">new</span> RegionIterator(mesh);\n\n        <span style=\"color:Blue;\">var</span> tree = <span style=\"color:Blue;\">new</span> QuadTree(mesh);\n\n        <span style=\"color:Green;\">// The iterator needs a triangle as starting point. We use a quadtree</span>\n        <span style=\"color:Green;\">// to find a triangle in region 1.</span>\n        <span style=\"color:Blue;\">var</span> start = tree.Query(0.0, 2.0) <span style=\"color:Blue;\">as</span> Triangle;\n\n        <span style=\"color:Blue;\">try</span>\n        {\n            <span style=\"color:Green;\">// This would throw if the iterator processed a triangle</span>\n            <span style=\"color:Green;\">// outside of region 1.</span>\n            iterator.Process(start, tri =&gt; { dict[tri.ID] = <span style=\"color:Blue;\">true</span>; });\n        }\n        <span style=\"color:Blue;\">catch</span> (Exception)\n        {\n            <span style=\"color:Blue;\">throw</span>;\n        }\n\n        <span style=\"color:Blue;\">foreach</span> (<span style=\"color:Blue;\">var</span> success <span style=\"color:Blue;\">in</span> dict.Values)\n        {\n            <span style=\"color:Blue;\">if</span> (!success)\n            {\n                <span style=\"color:Green;\">// This would throw if the iterator had missed</span>\n                <span style=\"color:Green;\">// a triangle in region 1.</span>\n                <span style=\"color:Blue;\">throw</span> <span style=\"color:Blue;\">new</span> Exception();\n            }\n        }\n    }\n}\r\n</pre></div>",
+    "PostedDate": "2014-02-02T05:35:58.957-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": "2014-02-04T07:35:11.387-08:00"
+  },
+  {
+    "Id": "1202517",
+    "ThreadId": "528656",
+    "Html": "Thank you very much for your reply and sharing you hard work. Excellent coding.<br />\n",
+    "PostedDate": "2014-02-04T07:36:33.333-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

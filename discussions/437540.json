@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "1019050",
+    "ThreadId": "437540",
+    "Html": "I am going to use this program. Although I could understand the main algorithm, I am a little confused about some parts of input geometry. When the generate button in Formgenerator is clicked, an object from inputGeometry is created but how the capacity is calculated? \r<br />\nInputGeometry(int capacity)   <br />\n",
+    "PostedDate": "2013-03-21T10:29:12.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1019062",
+    "ThreadId": "437540",
+    "Html": "You shouldn't worry about the capacity parameter too much. The <code>InputGeometry</code> class uses <code>List&lt;Vertex&gt;</code> to store the points, so if you know the number of points your geomerty will contain, you can use the overloaded constructor to allocate memory up-front. I don't think it will make a big difference unless your geometry contains a huge amount of points ...<br />\n",
+    "PostedDate": "2013-03-21T10:57:43.503-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1019529",
+    "ThreadId": "437540",
+    "Html": "I have another question, In document related to the InputGeometry, there is an Example which used boundary marker &quot;5&quot;. What does it mean? <br />\n",
+    "PostedDate": "2013-03-22T07:07:37.847-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1019553",
+    "ThreadId": "437540",
+    "Html": "So, your question is what the boundary markers are good for?<br />\n<br />\nSay you're doing Finite Element (FE) calculations for example. Then you have a domain and boundary conditions which impose constraints on the mesh nodes and segments. Using boundary markers will help you assigning the correct constraints to associated nodes in the FE matrix. You don't have to process the mesh manually, because Triangle.NET will assign the right boundary markers to spilt segments and nodes added to the mesh.<br />\n<br />\nIf you're not into numerics and FE, you probably won't need to care about boundary markers.<br />\n",
+    "PostedDate": "2013-03-22T07:32:09.877-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1019578",
+    "ThreadId": "437540",
+    "Html": "Actually I want to implement this program to my program. And I want to know how to create the List&lt;Vertex&gt; and other things to give to the Triangle program and get the mesh. But I am a little confused, as I am a beginner in programming in C#. So, what exactly I need to give the program?\r<br />\nI tried to understand the program algorithm by debugging step by step. But When I click on Generate button on formgenerator, suddenly an object from InputGeometry starts to be build. And I don't have any idea that is in a kind of Loop? If it's possible for you, please explain how it works in getting the points. In this way, I can do exactly the same. Or let me know in where it starts to build the input data.   <br />\n",
+    "PostedDate": "2013-03-22T07:55:58.13-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1019968",
+    "ThreadId": "437540",
+    "Html": "Don't pay too much attention to the build in generators. To use the library you have to understand the <code>InputGeometry</code> class. Please have a look at the <a href=\"http://triangle.codeplex.com/wikipage?title=InputGeometry\" rel=\"nofollow\">documentation</a> and then tell me if there is anything unclear.<br />\n<br />\nNow, regarding the input generators: They all implement the interface <code>IGenerator</code>. So when a generator is selected in the listbox, I know I can call the <code>Generate</code> method on the object. The <code>Generate</code> method is the place where the geometry is built.<br />\n",
+    "PostedDate": "2013-03-23T05:22:24.007-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1021418",
+    "ThreadId": "437540",
+    "Html": "Dear wo80 Thanks a lot. Finally I could find out all the details. Thanks for your help.<br />\n",
+    "PostedDate": "2013-03-26T13:45:48.887-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1021774",
+    "ThreadId": "437540",
+    "Html": "Dear wo80 I have another question, what exactley StopWatch Class do and Is it okay that not using StatisticVeiw?<br />\n",
+    "PostedDate": "2013-03-27T07:07:24.443-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1021824",
+    "ThreadId": "437540",
+    "Html": "The <code>Stopwatch</code> class comes with the <code>System.Diagnostics</code> namespace and lets you measure execution time. You can remove it. And if you don't want the statistics view, you can remove the whole tab.<br />\n",
+    "PostedDate": "2013-03-27T08:18:34.26-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1022634",
+    "ThreadId": "437540",
+    "Html": "Thanks  wo80. I have another question, after meshing, is it possible to specify that each triangle belongs to which region (In case that we have more than one region)? <br />\n",
+    "PostedDate": "2013-03-28T14:05:06.403-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1022689",
+    "ThreadId": "437540",
+    "Html": "That's not possible at the moment. But you can easily fix this: just add a setter to the ITriangle interface property<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">int</span> Region { <span style=\"color:Blue;\">get</span>; <span style=\"color:Blue;\">set</span>; }\r\n</pre></div>and then fix Triangle.cs<br />\n<div style=\"color:Black;background-color:White;\"><pre>\r\n<span style=\"color:Blue;\">public</span> <span style=\"color:Blue;\">int</span> Region\n{\n    <span style=\"color:Blue;\">get</span> { <span style=\"color:Blue;\">return</span> <span style=\"color:Blue;\">this</span>.region; }\n    <span style=\"color:Blue;\">set</span> { <span style=\"color:Blue;\">this</span>.region = value; }\n}\r\n</pre></div>",
+    "PostedDate": "2013-03-28T16:15:14.627-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1022887",
+    "ThreadId": "437540",
+    "Html": "Thanks  wo80. I have another question, after meshing, is it possible to specify that each triangle belongs to which region (In case that we have more than one region)? <br />\n",
+    "PostedDate": "2013-03-29T06:42:46.547-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]
