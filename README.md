@@ -58,17 +58,21 @@ Examples:
 
 # Working with Unity
 
-One common reason for forking the Triangle.NET code is to make the library compatible with Unity.
+One common reason for forking the Triangle.NET code is to make the library compatible with Unity. The current (2017) Mono compiler used by Unity targets C# 4 and .NET 3.5, so any code in Triangle.NET that makes use of .NET 4.0 or later needs to have a workaround.
 
-From your local [source/Triangle.NET/Triangle](source/Triangle.NET/Triangle) directory, you can run:
+The upcoming 2018 release of Unity (currently at 2018.1 beta) will support C# 6 and .NET 4.7.1, so these workarounds shouldn't be necessary for much longer.
+
+However, in the meantime...
+
+To build a Unity-compatible DLL from your local [source/Triangle.NET/Triangle](source/Triangle.NET/Triangle) directory, you can run:
 
 ```
-mcs -target:library -out:triangle-net.dll -nowarn:414 -debug -define:UNITY -recurse:*.cs
+mcs -target:library -out:triangle-net.dll -sdk:2 -define:UNITY -nowarn:414 -debug -recurse:*.cs
 ```
 
-to build a DLL that will work with Unity.
-
+* `-sdk:2`: SDK version for referenced assemblies. Unity requires this to be 2 (options are 2, 4 and 4.5).
+* `-define:UNITY`: enable workarounds in the code for .NET 4.0 stuff so that Unity is happy.
 * `-nowarn:414`: suppress the warning about "TriangleNet.Meshing.Algorithm.Dwyer.rand" being assigned but never used.
 * `-debug`: generate an `.mdb` file with debugging symbols.
 
-A pre-built version of an `mcs`-compiled DLL suitable for use with Unity is located in [unity](unity).
+A pre-built version of an `mcs`-compiled DLL (and symbols) suitable for use with Unity is located in [unity](unity).
