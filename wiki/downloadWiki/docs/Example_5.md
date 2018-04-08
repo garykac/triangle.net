@@ -2,11 +2,11 @@
 
 This example will show how to find triangles at the boundary of a mesh:
 
-![](Example 5_ex5-boundary.png)
+![](Example_5_ex5-boundary.png)
 
-This example uses code from [Example 2](Example-2).
+This example uses code from [Example 2](Example_2.md).
 
-{code:c#}
+```
 namespace Examples
 {
     using System;
@@ -104,4 +104,4 @@ namespace Examples
         }
     }
 }
-{code:c#}
+```
