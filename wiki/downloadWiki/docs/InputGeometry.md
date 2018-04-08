@@ -1,21 +1,23 @@
 # InputGeometry
-The {{InputGeometry}} class provides a minimal interface to construct geometries consisting of points and segments, which may form a polygon (probably with holes), known as a _planar straight-line graph_ ([PSLG](http://en.wikipedia.org/wiki/Planar_straight-line_graph)). There are methods to add points, segments and holes. Refer to the XML documentation for details.
+The `InputGeometry` class provides a minimal interface to construct geometries consisting of points and segments, which may form a polygon (probably with holes), known as a _planar straight-line graph_ ([PSLG](http://en.wikipedia.org/wiki/Planar_straight-line_graph)). There are methods to add points, segments and holes. Refer to the XML documentation for details.
 
 Additionally the following properties give access to the geometry:
 ## Public properties
 
-|| Name || Type || Description ||
-| **{{Bounds}}** | {{BoundingBox}} | Gets the bounding box of the input geometry. |
-| **{{HasSegments}}** | {{bool}} | Indicates whether the geometry should be treated as a PSLG. |
-| **{{Count}}** | {{int}} | Gets the number of points. |
-| **{{Points}}** | {{IEnumerable<Point>}} | Gets the list of input points. |
-| **{{Segments}}** | {{ICollection<Edge>}} | Gets the list of input segments. |
-| **{{Holes}}** | {{ICollection<Point>}} | Gets the list of input holes. |
-| **{{Regions}}** | {{ICollection<RegionPointer>}} | Gets the list of regions. |
+| Name | Type | Description |
+| --- | --- | --- |
+| **`Bounds`** | `BoundingBox` | Gets the bounding box of the input geometry. |
+| **`HasSegments`** | `bool` | Indicates whether the geometry should be treated as a PSLG. |
+| **`Count`** | `int` | Gets the number of points. |
+| **`Points`** | `IEnumerable<Point>` | Gets the list of input points. |
+| **`Segments`** | `ICollection<Edge>` | Gets the list of input segments. |
+| **`Holes`** | `ICollection<Point>` | Gets the list of input holes. |
+| **`Regions`** | `ICollection<RegionPointer>` | Gets the list of regions. |
+
 ## Example
 This example shows how to use the {{InputGeometry}} class to create a square polygon with a hole, described by the following .poly file:
 
-{{
+```
 # A box with eight points, no attributes, one boundary marker.
 8 2 0 1
 # Outer box
@@ -43,9 +45,9 @@ This example shows how to use the {{InputGeometry}} class to create a square pol
 # One hole in the middle of the inner square.
 1
   1   1.5 1.5
-}}
+```
 
-{code:c#}
+```
 // Create InputGeometry using overloaded constructor which takes the number 
 // of input points as parameter.
 var geometry = new InputGeometry(8);
@@ -73,11 +75,12 @@ geometry.AddSegment(7, 4);
 
 // Add the hole.
 geometry.AddHole(1.5, 1.5);
-{code:c#}
+```
+
 ## Extending the InputGeometry class
 You can use C# extension methods to make the class more verbose:
 
-{code:c#}
+```
 /// <summary>
 /// Add a polygon ring to the geometry.
 /// </summary>
@@ -137,11 +140,11 @@ public static void AddRingAsHole(this InputGeometry geometry,
 
     geometry.AddHole(x / m, y / m);
 }
-{code:c#}
+```
 
 Using the extension methods, the above example will now read
 
-{code:c#}
+```
 // Outer square
 var outer = new Point[]() {
     new Point(0.0, 0.0),
@@ -161,7 +164,7 @@ var inner = new Point[]() {
 var geometry = new InputGeometry(8);
 geometry.AddRing(outer, 5);
 geometry.AddRingAsHole(inner);
-{code:c#}
+```
 
 **WARNING:** The new code does not produce exactly the same input as the original! Do you spot the difference?
 
