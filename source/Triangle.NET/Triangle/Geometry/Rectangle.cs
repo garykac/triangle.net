@@ -130,6 +130,19 @@ namespace TriangleNet.Geometry
             }
         }
 
+#if UNITY
+        /// <summary>
+        /// Expand rectangle to include a list of vertices.
+        /// </summary>
+        public void Expand(IEnumerable<Vertex> vertices)
+        {
+            foreach (var v in vertices)
+            {
+                Expand(v);
+            }
+        }
+#endif
+
         /// <summary>
         /// Expand rectangle to include given rectangle.
         /// </summary>

@@ -159,7 +159,14 @@ namespace TriangleNet.Smoothing
                 data.Points.Add(v);
             }
 
+#if UNITY
+            foreach (Topology.SubSegment seg in mesh.subsegs.Values)
+            {
+                data.Segments.Add(seg);
+            }
+#else
             data.Segments.AddRange(mesh.subsegs.Values);
+#endif
 
             data.Holes.AddRange(mesh.holes);
             data.Regions.AddRange(mesh.regions);
