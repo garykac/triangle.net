@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "0",
+    "Name": "Triangle.NET Beta 2",
+    "DevelopmentStatus": "Beta",
+    "Description": "NO NEW FEATURES, fixed all known issues.\n\nGreatly improved test app (Mesh Explorer).",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2012-06-20T14:08:25.75-07:00",
+    "Files": [
+      {
+        "Id": "5da3d262-058c-4411-9480-6fa65048e188",
+        "FileName": "Triangle-Source-2012-06-20.zip",
+        "Url": "./0/5da3d262-058c-4411-9480-6fa65048e188",
+        "Type": "Source Code",
+        "UploadDate": "2012-06-20T14:08:25.547-07:00"
+      },
+      {
+        "Id": "18504a62-a49c-431a-ba29-a66bc8588d29",
+        "FileName": "Mesh-Explorer-2012-06-20.zip",
+        "Url": "./0/18504a62-a49c-431a-ba29-a66bc8588d29",
+        "Type": "Application",
+        "UploadDate": "2012-06-20T14:08:25.563-07:00"
+      }
+    ]
+  },
+  {
+    "Id": "1",
+    "Name": "Triangle.NET Beta 1",
+    "DevelopmentStatus": "Beta",
+    "Description": "Initial release of Triangle.NET",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2012-03-23T00:14:33.12-07:00",
+    "Files": [
+      {
+        "Id": "7e425a1a-b475-4852-b642-bff49a541610",
+        "FileName": "Triangle-Source-2012-03-21.zip",
+        "Url": "./1/7e425a1a-b475-4852-b642-bff49a541610",
+        "Type": "Source Code",
+        "UploadDate": "2012-03-21T11:06:06.007-07:00"
+      },
+      {
+        "Id": "49bdfc90-d63b-474d-86b6-7164f8d2eb2e",
+        "FileName": "Triangle-TestApp-2012-03-21.zip",
+        "Url": "./1/49bdfc90-d63b-474d-86b6-7164f8d2eb2e",
+        "Type": "Application",
+        "UploadDate": "2012-03-21T10:57:41.197-07:00"
+      }
+    ]
+  },
+  {
+    "Id": "2",
+    "Name": "Triangle.NET Beta 3",
+    "DevelopmentStatus": "Beta",
+    "Description": "Added (simple) mesh smoothing.\nAdded RCM node renumbering.\n\nTriangle.NET requires [url:.NET Framework 4.0|http://www.microsoft.com/en-us/download/details.aspx?id=17718].",
+    "ReleasedDatge": "0001-01-01T00:00:00",
+    "ModifiedDate": "2013-06-18T02:56:04.917-07:00",
+    "Files": [
+      {
+        "Id": "b0a258ac-5c6b-46b1-bb3c-9beb8c484f0e",
+        "FileName": "Triangle-Source-2013-06-18.zip",
+        "Url": "./2/b0a258ac-5c6b-46b1-bb3c-9beb8c484f0e",
+        "Type": "Source Code",
+        "UploadDate": "2013-06-18T02:56:04.65-07:00"
+      },
+      {
+        "Id": "05802e71-873a-4453-9c74-58653f5a93f4",
+        "FileName": "Mesh-Explorer-2013-06-18.zip",
+        "Url": "./2/05802e71-873a-4453-9c74-58653f5a93f4",
+        "Type": "Application",
+        "UploadDate": "2013-06-18T02:56:04.743-07:00"
+      }
+    ]
+  }
+]
