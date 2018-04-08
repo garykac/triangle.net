@@ -4,7 +4,7 @@ This example will show how to deal with degeneracies on a mesh boundary caused b
 
 Assume we have a simple box shape given by a point set and the corresponding mesh. Now let's rotate the box and triangulate the rotated point set:
 
-![](Example 10_example-10.png)
+![](Example%2010_example-10.png)
 
 You would expect the generated meshes to be equivalent (in a topological sense), but you will find that some flat triangles have been created on the boundary.
 
@@ -12,7 +12,7 @@ The problem here is, though the points of the original box are exactly collinear
 
 The resulting mesh will be a perfectly valid Delaunay triangulation and Triangle.NET won't detect this kind of degeneracy automatically. The following code will report boundary triangles with a maximum angle near 180 degrees:
 
-{code:c#}
+```
 namespace Examples
 {
     using System;
@@ -134,4 +134,4 @@ namespace Examples
         }
     }
 }
-{code:c#}
+```
