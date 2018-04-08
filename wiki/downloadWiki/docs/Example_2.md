@@ -2,7 +2,7 @@
 
 This example will show how to define a polygon using contours with point and segment markers:
 
-{code:c#}
+```
 namespace Examples
 {
     using System;
@@ -60,4 +60,4 @@ namespace Examples
         }
     }
 }
-{code:c#}
+```
