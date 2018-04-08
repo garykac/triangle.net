@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Does not apply to the latest changeset.",
+    "ClosedDate": "2016-08-02T04:26:39.763-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The System.Data reference is only used in the Mesh Explorer project, but the Triangle project also has it. This can add unnecessary bloat to program sizes if only the Triangle project is used and not the Mesh Explorer project.",
+    "LastUpdatedDate": "2016-08-02T04:26:39.763-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2016-03-30T12:05:07.207-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Triangle contains unnecessary reference to System.Data",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11077
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

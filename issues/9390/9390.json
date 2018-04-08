@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Changeset &#35;67385 contains a workaround for this. See Carver.cs, CarveHoles&#40;&#41; for an explanation.",
+    "ClosedDate": "2012-05-12T02:42:07.95-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I have attached 3 polyfiles that were genereated from \nthe Natural Earth 10m Dataset that can be loaded in the TestApp\nbut that can not be triangulated. The triangulation process enters \nat some point an infinite loop...\n \n(The other 4032 poly files from this dataset just work fine.)\n \nTom",
+    "LastUpdatedDate": "2013-05-16T01:49:19.237-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2012-05-10T01:32:13.617-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Triangulate fails (Infinite loop on some poly files)",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9390
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3014,
+      "FileName": "polyNotWorking.zip",
+      "DownloadUrl": ".\\3014"
+    }
+  ],
+  "Comments": []
+}

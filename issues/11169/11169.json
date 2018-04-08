@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Issue was addressed in changeset 79801. \nSee https://triangle.codeplex.com/wikipage?title=Example%2010",
+    "ClosedDate": "2017-05-15T09:17:43.37-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Add a method to `MeshValidator` that will check a mesh for thin boundary triangles.",
+    "LastUpdatedDate": "2017-05-15T09:17:43.37-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2017-04-24T01:53:21.95-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Report thin boundary triangles",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 2,
+    "Id": 11169
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "\nIn the meantime, what approach would be used to remove the triangles manually?  I can identify them, I just can't figure out how to modify the mesh appropriately.\r\n\r\nThanks!\r\n\r\nMike",
+      "PostedDate": "2017-05-08T04:47:21.71-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-05-08T07:34:27.59-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-05-15T09:17:43.37-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

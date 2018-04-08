@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in changeset &#35;71218",
+    "ClosedDate": "2012-12-07T05:04:31.607-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "i thing i have found new bug in GetWedgeIntersectionWithoutMaxAngle\n...\n\n            double[] petalx = new double[24];\n            double[] petaly = new double[24];\n            double[] petalr = new double[24];\n\n\nchanged to\n...\n\n            double[] petalx = new double[numpoints * 2];\n            double[] petaly = new double[numpoints * 2];\n            double[] petalr = new double[numpoints * 2];\n\nthe methode is called with numpoints = 24\nnumpoints_r = GetStarPoints(badotri, torg, tdest, tapex, 3, ref points_r); \n\nline 2157 - 2177",
+    "LastUpdatedDate": "2013-05-16T01:49:18.84-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2012-12-07T00:59:43.91-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Bug in GetWedgeIntersectionWithoutMaxAngle",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9771
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

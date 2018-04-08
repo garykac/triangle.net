@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in changeset &#35;71203",
+    "ClosedDate": "2012-12-05T10:33:17.343-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "hallo,\n\ni thing in the file NewLocation.cs is a bug\n\n... \n\n// keeps the coordinates of circumcenter of itself and neighbor triangle circumcenter\nPoint myCircumcenter = default(Point()), neighborCircumcenter = default(Point);\n\n...\n\nmyCircumcenter.x = torg.x + dx;\nmyCircumcenter.y = torg.y + dy;must ...Point myCircumcenter = new Point(), neighborCircumcenter = default(Point);",
+    "LastUpdatedDate": "2013-05-16T01:49:18.973-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2012-12-05T01:33:23.427-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Bug in FindNewLocationWithoutMaxAngle",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9768
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,70 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Removed triangle attributes in changeset #71645",
+    "ClosedDate": "2013-01-22T10:26:29.077-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Carver.cs appears to have an issue in lines 479-492, specifically:\n\n\tif (mesh.behavior.RegionAttrib)\n\t{\n\t\t// Make the triangle's attributes larger.\n\t\tdouble[] attributes = new double[mesh.eextras + 1];\n\n\t\t// Assign every triangle a regional attribute of zero.\n\t\ttri.orient = 0;\n\t\tforeach (var t in mesh.triangles.Values)\n\t\t{\n\t\t\tArray.Copy(tri.triangle.attributes, attributes, mesh.eextras);\n\t\t\ttri.triangle = t;\n\t\t\ttri.triangle.attributes = attributes;\n\t\t}\n\t}\n\nthis basically means if you try to fill in the region attributes via code, it always ignores them since RegionAttrib is never set, and if you DO manually set RegionAttrib, it will crash on the Array.Copy due to tri.triangle.attributes not being filled in.\n\nAnyway, this should fix it:\n\n\tif (mesh.behavior.RegionAttrib)\n\t{\n\t\t// Assign every triangle a regional attribute of zero.\n\t\tforeach (var t in mesh.triangles.Values)\n\t\t{\n\t\t\tif( t.attributes == null )\n\t\t\t\tt.attributes = new double[mesh.eextras+1];\n\t\t\telse\n\t\t\t\tArray.Resize( ref t.attributes, mesh.eextras+1 );\n\n\t\t\tt.attributes[ mesh.eextras ] = 0;\n\t\t}\n\t}",
+    "LastUpdatedDate": "2013-05-16T01:49:18.53-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2013-01-20T06:57:34.967-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Can't use region attribs from code",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9849
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Yeah, actually I was thinking about dropping the attribues array completely and instead have just a region marker. Never used the double array anyway. You could always do the computation of element attributes after triangulation. What do you think?",
+      "PostedDate": "2013-01-20T10:35:16.143-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "That sounds good. For the region marker, either have \"int regionMarker\", or perhaps even more useful would be \"object regionMarker\" - then you could store anything you liked in it, including an int.\n",
+      "PostedDate": "2013-01-20T11:25:31.857-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-01-22T10:26:29.077-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Fantastic, thanks for implementing this :)",
+      "PostedDate": "2013-01-22T10:58:14.267-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-13T19:58:03.12-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T01:49:18.53-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

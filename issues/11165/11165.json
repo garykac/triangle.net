@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in changeset 79822.",
+    "ClosedDate": "2017-05-15T09:15:24.747-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When compiling with USE_Z, the z coordinate should be interpolated properly (QualityMesher.cs).",
+    "LastUpdatedDate": "2017-05-15T09:15:24.747-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2017-03-02T02:32:40.57-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Interpolate z coordinate when compiling with USE_Z",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11165
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

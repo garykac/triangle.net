@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in changeset 67675",
+    "ClosedDate": "2012-05-28T07:37:48.527-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Please find attached a number of polygons (.poly files) for which the tesselation failed. For most polygons the system gets stuck in an infinite loop, others cause an exception (message: ''Inconsistent topology.'). All polygons can be successfully triangulated using the C-version of the Triangle project.\n \nGreetings from Hamburg and thanks for the great project.",
+    "LastUpdatedDate": "2013-05-16T01:49:19.107-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2012-05-25T08:02:51.333-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Triangulation Failure",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9419
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3024,
+      "FileName": "TriangulationFailurePolygons.zip",
+      "DownloadUrl": ".\\3024"
+    }
+  ],
+  "Comments": []
+}

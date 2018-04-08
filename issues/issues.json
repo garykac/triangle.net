@@ -1,0 +1,130 @@
+[
+  {
+    "Id": 9346,
+    "Title": "Exception in Triangle.NET (Duplicate input vertices)"
+  },
+  {
+    "Id": 9389,
+    "Title": "Sampler is not reseted in subsequently calls to mesh.Triangulate(..."
+  },
+  {
+    "Id": 9390,
+    "Title": "Triangulate fails (Infinite loop on some poly files)"
+  },
+  {
+    "Id": 9419,
+    "Title": "Triangulation Failure"
+  },
+  {
+    "Id": 9768,
+    "Title": "Bug in FindNewLocationWithoutMaxAngle"
+  },
+  {
+    "Id": 9771,
+    "Title": "Bug in GetWedgeIntersectionWithoutMaxAngle"
+  },
+  {
+    "Id": 9774,
+    "Title": "Triangulation using Dwyer fails"
+  },
+  {
+    "Id": 9849,
+    "Title": "Can't use region attribs from code"
+  },
+  {
+    "Id": 9858,
+    "Title": "Fully implement callback to user-supplied triangle quality test function"
+  },
+  {
+    "Id": 9868,
+    "Title": "Minor speed improvements possible by replacing use of Math.Sqrt with a dot product"
+  },
+  {
+    "Id": 10284,
+    "Title": "Divide and conquer algorithm fails"
+  },
+  {
+    "Id": 10285,
+    "Title": "Sweepline algorithm fails"
+  },
+  {
+    "Id": 10309,
+    "Title": "Index out of bounds exception in FastExpansionSumZeroElim"
+  },
+  {
+    "Id": 10582,
+    "Title": "display"
+  },
+  {
+    "Id": 10583,
+    "Title": "display"
+  },
+  {
+    "Id": 10599,
+    "Title": "Invalid Bounded Voronoi"
+  },
+  {
+    "Id": 10615,
+    "Title": "Voronoi region neighbours"
+  },
+  {
+    "Id": 10683,
+    "Title": "Fix GetHashCode"
+  },
+  {
+    "Id": 10863,
+    "Title": "IndexOutOfRangeException in ConstructBoundaryBvdCell"
+  },
+  {
+    "Id": 10906,
+    "Title": "Sampler is not reset in subsequent calls to Mesh.Triangulate"
+  },
+  {
+    "Id": 10959,
+    "Title": "IndexOutOfRangeException: Array index is out of range in Dwyer.cs"
+  },
+  {
+    "Id": 10963,
+    "Title": "Voronoi for polyons with touching points crashes"
+  },
+  {
+    "Id": 10971,
+    "Title": "Vertex Attributes Problems (Refinement)"
+  },
+  {
+    "Id": 10987,
+    "Title": "Vertex IDs as input"
+  },
+  {
+    "Id": 11035,
+    "Title": "re-running triangulation on modified polygon fails"
+  },
+  {
+    "Id": 11038,
+    "Title": "Contour.FindPointInPolygon parameter"
+  },
+  {
+    "Id": 11077,
+    "Title": "Triangle contains unnecessary reference to System.Data"
+  },
+  {
+    "Id": 11103,
+    "Title": "Bug in Triangulation"
+  },
+  {
+    "Id": 11132,
+    "Title": "Using Triangle to create voronoi and the result is wrong"
+  },
+  {
+    "Id": 11165,
+    "Title": "Interpolate z coordinate when compiling with USE_Z"
+  },
+  {
+    "Id": 11169,
+    "Title": "Report thin boundary triangles"
+  },
+  {
+    "Id": 11174,
+    "Title": "Stuck in a loop"
+  }
+]

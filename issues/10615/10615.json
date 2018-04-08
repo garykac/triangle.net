@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "The new DCEL base code provides all the topology information one might need. The old code won't be maintained anymore.",
+    "ClosedDate": "2015-03-08T16:01:01.48-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "> Doesn't the Voronoi calculation have to take into account neighbouring points in order to form its regions? If so, wouldn't there be a way of snagging the points at that level?\n\nSure. Just have a look at Voronoi.cs, Line 162:\n```c#\n// Go counterclockwise until we reach the border or the initial triangle.\nwhile (f_next.triangle != Mesh.dummytri)\n{\n    // Add circumcenter of current triangle\n    vpoints.Add(points[f.triangle.id]);\n\n    // [...]\n\n    f_next.Copy(ref f);\n    f_next.OnextSelf();\n}\n```\nThe ID of vertex _f.Apex()_ is actually the ID of the neighbouring Voronoi cell (across the edge _points[f.triangle.id]_ -> _points[f_next.triangle.id]_). This information could easily be stored in a Dictionary<int, VoronoiRegion> (the bounded Voronoi case could be quite a bit more complex, though).",
+    "LastUpdatedDate": "2015-03-08T16:01:01.48-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2014-05-12T03:38:16.113-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Voronoi region neighbours",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 10615
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

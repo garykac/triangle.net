@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2013-08-30T16:09:02.433-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Fix: increase the size of the B and u arrays in CounterClockwiseAdapt from 4 to 5.",
+    "LastUpdatedDate": "2013-08-30T16:09:02.433-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2013-08-29T16:44:10.593-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Index out of bounds exception in FastExpansionSumZeroElim",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 10309
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Resolved with changeset 73549: Fix index out of range exception in FastExpansionSumZeroElim",
+      "PostedDate": "2013-08-30T16:09:02.433-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

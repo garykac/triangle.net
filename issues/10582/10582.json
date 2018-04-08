@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Doesn't concern Triangle.NET",
+    "ClosedDate": "2014-04-04T01:44:23.713-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "how to display the triangulation",
+    "LastUpdatedDate": "2014-04-04T01:44:23.713-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2014-04-03T22:27:36.687-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "display",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 10582
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

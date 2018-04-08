@@ -1,0 +1,61 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2016-11-19T02:55:34.153-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "The input:\n22\n1 586.3 306.35\n2 547.3 306.35\n3 567.034 277.849\n4 508.248 306.35\n5 469.261 306.35\n6 547.235 363.506\n7 566.8 334.928\n8 527.813 334.928\n9 488.813 334.928\n10 605.787 334.928\n11 626.21 306.02\n12 645.06 335.06\n13 722.8 392.15\n14 683.8 392.15\n15 666.64 363.11\n16 625.3 363.55\n17 527.8 277.75\n18 488.8 277.75\n19 449.8 278.19\n20 410.15 277.75\n21 391.3 306.35\n22 430.3 306.35\n\nThe error results are as follows.",
+    "LastUpdatedDate": "2016-11-19T02:55:34.153-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2016-11-08T21:52:54.5-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Using Triangle to create voronoi and the result is wrong",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11132
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5825,
+      "FileName": "wrong voronoi.PNG",
+      "DownloadUrl": ".\\5825"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "I have encountered problem by using triangle to create voronoi. The results returned by the algorithm is wrong.  Please contact me if you have solved this problem.",
+      "PostedDate": "2016-11-08T22:00:46.963-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Beta 3. Does not apply to latest source code.",
+      "PostedDate": "2016-11-19T02:55:26.103-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-11-19T02:55:34.153-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

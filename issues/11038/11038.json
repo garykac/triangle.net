@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-12-17T12:31:11.27-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Hi,\n\nI need to increase the _limit_ from 8 to 10 in with my polygons inside this function. It would be great to add a small description on how this method finds a point in a polygon and why you may need to increase the _limit = 8_ threshold.\n\nThanks,\n\nAlberto",
+    "LastUpdatedDate": "2015-12-17T12:31:11.27-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2015-12-17T05:38:22.703-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Contour.FindPointInPolygon parameter",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11038
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Resolved with changeset 77800: Improve robustness of Contour.FindInteriorPoint",
+      "PostedDate": "2015-12-17T12:31:11.27-08:00",
+      "Id": -2147483648
+    }
+  ]
+}

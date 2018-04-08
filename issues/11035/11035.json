@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Using the latest development source, I was doing the folloing:\n* add a few vertices to a polygon p\n* perform p.Triangulate\n* add another vertex to p\n* perform p.Triangulate again\n\nThis currently fails with:\n\n```\nArgumentException: An element with the same key already exists in the dictionary.\nSystem.Collections.Generic.Dictionary`2[System.Int32,TriangleNet.Geometry.Vertex].Add (Int32 key, TriangleNet.Geometry.Vertex value) (at /Users/builduser/buildslave/mono-runtime-and-classlibs/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:404)\nTriangleNet.Mesh.TransferNodes (IList`1 points) (at Assets/scripts/Triangle/Mesh.cs:446)\nTriangleNet.Meshing.Algorithm.Dwyer.Triangulate (IList`1 points) (at Assets/scripts/Triangle/Meshing/Algorithm/Dwyer.cs:79)\nTriangleNet.Meshing.GenericMesher.Triangulate (IPolygon polygon, TriangleNet.Meshing.ConstraintOptions options, TriangleNet.Meshing.QualityOptions quality) (at Assets/scripts/Triangle/Meshing/GenericMesher.cs:68)\nTriangleNet.Geometry.ExtensionMethods.Triangulate (IPolygon polygon, TriangleNet.Meshing.ConstraintOptions options, TriangleNet.Meshing.QualityOptions quality) (at Assets/scripts/Triangle/Geometry/ExtensionMethods.cs:43)\nDelauneyTest.Update () (at Assets/scripts/DelauneyTest.cs:57)\n```\n\nI guess the reason is related to the \"userId\" heuristic in Mesh.cs line 427. As a crude work-around I now enforce userId = false. Maybe the Polygon class should have a \"ResetVertexIDs\" method? In general it is a bit ugly that triangulate has a side effect on the input data.",
+    "LastUpdatedDate": "2016-11-06T18:47:46.983-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2015-12-06T07:55:58.41-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "re-running triangulation on modified polygon fails",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 2,
+    "Id": 11035
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

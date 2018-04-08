@@ -1,0 +1,106 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2017-06-13T16:08:46.513-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "First of all I've been using this libarary for a while now and really loving it.\nI'm occisionally getting this error though (might be after upgrading to beta4, I'm not sure) and finally managed to find a sample for it.\nAs far as I can see, it goes into FindDirection function and gets stuck in \"while (leftflag)\" loop, freezing the whole application. Now this might be due to bad vertex placement and I can preprocess them but I just can't identify the problem precisely.\n\nPoints are shown below (I'll try to add them as text right after posting this)",
+    "LastUpdatedDate": "2017-06-13T16:08:46.513-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2017-06-13T05:55:17.37-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Stuck in a loop",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11174
+  },
+  "FileAttachments": [
+    {
+      "FileId": 5851,
+      "FileName": "2017-06-13_15-00-03.png",
+      "DownloadUrl": ".\\5851"
+    },
+    {
+      "FileId": 5852,
+      "FileName": "chrome_2017-06-14_00-35-51.png",
+      "DownloadUrl": ".\\5852"
+    },
+    {
+      "FileId": 5853,
+      "FileName": "chrome_2017-06-14_00-35-51.png",
+      "DownloadUrl": ".\\5853"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "466.385314941406-25.8568592071533,\n481.911590576172-25.8568592071533,\n482.210144042969-24.5720443725586,\n474.1484375-24.73264503479,\n469.072540283203-24.73264503479,\n463.996643066406-24.73264503479,\n464.295227050781-25.5356540679932,\n466.385314941406-25.5356540679932,\n466.385314941406-25.8568592071533,\n---\n423.688049316406-23.608434677124,\n464.295227050781-23.608434677124,\n463.996643066406-24.73264503479,\n423.389465332031-23.2872314453125,\n423.688049316406-23.608434677124\r\n\r\nThis is what I'm passing to Triangulate function with polygon objcet. That's 14 vertices there, I added a separator and two parts are supposed to be different polygons (but probably sharing an edge or something).\r\n\r\nthanks in advance",
+      "PostedDate": "2017-06-13T06:15:00.237-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I cannot reproduce the problem (using beta 4). The following node file triangulates as expected (with some warnings about duplicate vertices). Do you apply any custom settings (like quality constraints)?\r\n\r\nThe values you gave in text format are not the same as in the screenshot. Is this intended? I used the following input:\n```\n# file: test.node\n14\n0 466.385314941406 25.8568592071533\n1 481.911590576172 25.8568592071533\n2 482.210144042969 24.5720443725586\n3 474.1484375 24.73264503479\n4 469.072540283203 24.73264503479\n5 463.996643066406 24.73264503479\n6 464.295227050781 25.5356540679932\n7 466.385314941406 25.5356540679932\n8 466.385314941406 25.8568592071533\n9 423.688049316406 23.608434677124\n10 464.295227050781 23.608434677124\n11 463.996643066406 24.73264503479\n12 423.389465332031 23.2872314453125\n13 423.688049316406 23.608434677124\n```",
+      "PostedDate": "2017-06-13T12:34:59.257-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Ah my bad, I printed the wrong coordinates up there, correct list should be;\r\n\r\n\n466.385314941406-340.682220458984,\n481.911590576172-340.383636474609,\n482.210144042969-291.117584228516,\n474.1484375-291.117584228516,\n469.072540283203-288.430358886719,\n463.996643066406-292.311920166016,\n464.295227050781-327.544616699219,\n466.385314941406-327.544616699219,\n466.385314941406-340.682220458984,\r\n\r\n423.688049316406-328.738952636719,\n464.295227050781-328.440368652344,\n463.996643066406-289.624664306641,\n423.389465332031-289.923248291016,\n423.688049316406-328.738952636719\r\n\r\n",
+      "PostedDate": "2017-06-13T13:09:01.647-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-06-13T14:55:07.28-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "I believe it should looks something like this but in lower res. First part is on the right and second part is on the left.",
+      "PostedDate": "2017-06-13T14:55:08.02-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-06-13T15:10:51.08-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": " ",
+      "PostedDate": "2017-06-13T15:10:51.7-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "uh new file attached at the first post, didn't know it works like that.",
+      "PostedDate": "2017-06-13T15:11:44.433-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "There are overlapping segments in your input. This will always cause trouble.\r\n\r\nThe problem is not the ```FindDirection``` function, but ongoing refinement of the mesh. Though the polygon is triangulated on my machine without an error, the ```mesh.Triangles.Count``` property is way too high. One option might be to set ```ConformingDelaunay = false```?\r\n\r\nI will close this issue. Please use the [discussions](https://triangle.codeplex.com/discussions) section if you have any further questions!",
+      "PostedDate": "2017-06-13T16:07:43.97-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2017-06-13T16:08:46.513-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

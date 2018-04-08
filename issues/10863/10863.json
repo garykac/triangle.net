@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "In general, you cannot expect the Voronoi code to succeed without using the \"Conforming Delaunay\" option.\n\nI have checked with the latest code (rev. 75300) and it works just fine.",
+    "ClosedDate": "2015-01-04T15:23:18.26-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "* Open A.poly\n* Select Quality mesh with Minimum angle of 10.\n* Triangulate\n* View Voronoi Diagram\n* OutOfRangeException in ConstructBoundaryBvdCell, Line 542:\n           points[n + segIndex] = p;\nn = 37\nsegIndex = 185\npoints.Length = 222",
+    "LastUpdatedDate": "2015-01-04T15:23:18.26-08:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2015-01-04T12:30:05.6-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "IndexOutOfRangeException in ConstructBoundaryBvdCell",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 10863
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

@@ -1,0 +1,55 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "You should try the latest source code from https://triangle.codeplex.com/SourceControl/latest",
+    "ClosedDate": "2016-08-02T04:20:16.18-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When I try to triangulate the following node file, an exception occurs:\n\n9\n1 -96.689538955688477 145.48226928710938\n2 24.683777745150536 24.108952586270366\n3 24.7637459559535 24.0289843754674\n4 24.927736387712958 23.864993943707937\n5 25.086042097934662 23.706688233486233\n6 25.167258742987563 23.625471588433332\n7 25.251729895250552 23.541000436170346\n8 26.108919553977344 22.683810777443554\n9 154.30370036685534 145.48226928710938",
+    "LastUpdatedDate": "2016-08-02T04:20:16.18-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2016-08-01T12:46:58.57-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Bug in Triangulation",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 11103
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Are you using beta 3? The latest source code doesn't fail.\r\n\r\nYour input contains some nearly collinear points on the convex hull, so be careful when using quality meshing (see http://www.cs.cmu.edu/~quake/triangle.trouble.html).\n",
+      "PostedDate": "2016-08-01T14:02:05.433-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "The release from June 2013? Yes, I have tried it with this version.\nI have noticed that it works when I use sweep line instead. So everything should be fine.",
+      "PostedDate": "2016-08-02T02:08:37.97-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2016-08-02T04:20:16.18-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

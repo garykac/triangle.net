@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Added in changeset 74818",
+    "ClosedDate": "2014-04-06T08:21:44.847-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I added a delegate to Quality.cs for this:\n\n    public delegate bool UserQualityTest( Mesh pMesher, Triangle pTriangle, double pArea );\n\n(although I don't use the Mesh at the moment).\n\nAlso added to the Options enum:\n\n     /// \n     /// Sets the usertest function for triangle quality\n     /// \n     UserTest\n\nAnd added SetOption support for that in Mesh.cs:\n\n     public void SetOption( Options option, UserQualityTest func )\n     {\n         if( option == Options.UserTest )\n         {\n             behavior.Usertest = (func != null);\n             quality.userTest = func;\n         }\n     }\n\nThen, of course, it's just a case of changing Quality.cs to pass the correct arguments:\n\n     if( userTest( mesh, testtri.triangle, area ) )\n\nHope this helps!",
+    "LastUpdatedDate": "2014-04-06T08:21:44.847-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2013-01-22T11:39:08.477-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Fully implement callback to user-supplied triangle quality test function",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9858
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

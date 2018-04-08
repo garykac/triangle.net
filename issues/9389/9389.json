@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2012-05-12T02:39:34.103-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When batch processing many poly files, i found that some poly files threw an exception in sampler.GetSamples called by Locate called by FormSkeleton:\n \nforeach( var filePath in filePaths)\n{\n  MeshData meshData = FileReader.ReadFile(filePath);\n  mesh.Triangulate(meshData);\n  ...\n}\n \nI didn't see this behaviour with the TestApp, so after some investigation\ni found that sampler instance in the mesh is not reseted and uses keys\nfrom the previous Triangulate.\n \nReseting the sampler in ResetData fixed this issue for me:\n \n \n        private void ResetData()\n        {\n            this.sampler = new Sampler();  // Reset sampler\n            \n            vertices.Clear();\n            triangles.Clear();\n            subsegs.Clear();\n            ...\n \nTom",
+    "LastUpdatedDate": "2013-05-16T01:49:19.363-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2012-05-10T01:14:59.58-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Sampler is not reseted in subsequently calls to mesh.Triangulate(...",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9389
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Fixed in changeset #67385",
+      "PostedDate": "2012-05-12T02:39:05.07-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2012-05-12T02:39:34.103-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-13T19:58:04.097-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T01:49:19.363-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

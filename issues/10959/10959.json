@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-09-10T16:05:30.043-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Only had this exception once out of many runs, but thought it's worth reporting. Using triangle-76341 in a multi threaded application within Unity3D\n\n```\nIndexOutOfRangeException: Array index is out of range.\nSystem.Random.Sample () (at /Users/builduser/buildslave/mono-runtime-and-classlibs/build/mcs/class/corlib/System/Random.cs:96)\nSystem.Random.Next (Int32 minValue, Int32 maxValue) (at /Users/builduser/buildslave/mono-runtime-and-classlibs/build/mcs/class/corlib/System/Random.cs:127)\nTriangleNet.Meshing.Algorithm.Dwyer.VertexMedian (Int32 left, Int32 right, Int32 median, Int32 axis) (at c:/Users/cmb/Downloads/Chrome Downloads/triangle-76341/Triangle.NET/Triangle/Meshing/Algorithm/Dwyer.cs:247)\nTriangleNet.Meshing.Algorithm.Dwyer.VertexMedian (Int32 left, Int32 right, Int32 median, Int32 axis) (at c:/Users/cmb/Downloads/Chrome Downloads/triangle-76341/Triangle.NET/Triangle/Meshing/Algorithm/Dwyer.cs:282)\nTriangleNet.Meshing.Algorithm.Dwyer.AlternateAxes (Int32 left, Int32 right, Int32 axis) (at c:/Users/cmb/Downloads/Chrome Downloads/triangle-76341/Triangle.NET/Triangle/Meshing/Algorithm/Dwyer.cs:317)\nTriangleNet.Meshing.Algorithm.Dwyer.Triangulate (ICollection`1 points) (at c:/Users/cmb/Downloads/Chrome Downloads/triangle-76341/Triangle.NET/Triangle/Meshing/Algorithm/Dwyer.cs:115)\nTriangleNet.Meshing.GenericMesher.Triangulate (IPolygon polygon, TriangleNet.Meshing.ConstraintOptions options, TriangleNet.Meshing.QualityOptions quality) (at c:/Users/cmb/Downloads/Chrome Downloads/triangle-76341/Triangle.NET/Triangle/Meshing/GenericMesher.cs:54)\nTriangleNet.Meshing.GenericMesher.Triangulate (IPolygon polygon) (at c:/Users/cmb/Downloads/Chrome Downloads/triangle-76341/Triangle.NET/Triangle/Meshing/GenericMesher.cs:36)\n```",
+    "LastUpdatedDate": "2015-09-10T16:05:30.043-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2015-07-12T19:53:25.823-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "IndexOutOfRangeException: Array index is out of range in Dwyer.cs",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 10959
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "This seems more like a problem with Mono's System.Random implementation.\n\n** Closed by wo80 13.07.2015 02:08",
+      "PostedDate": "2015-07-13T03:15:23.84-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2015-07-13T03:15:24.01-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "This is probable a threading issue. Random is not threadsafe by design, so the Random instance of the Dwyer class should not be static (or marked as ThreadStatic).",
+      "PostedDate": "2015-07-13T03:18:49.31-07:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "Resolved with changeset 77246: Add interface for geometric predicates\nAdd factory for Voronoi mesh entities (reduces allocations in SimpleSmoother)\nFix issue #10959",
+      "PostedDate": "2015-09-10T16:05:30.043-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

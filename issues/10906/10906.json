@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Doesn't apply to the latest (beta 4) code (there's no mesh.Triangulate() method anymore).\n\nAnyways, added the reset to TriangleLocator in changeset 76341.",
+    "ClosedDate": "2015-04-01T04:58:55.97-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "When using the Incremental algorithm, subsequent calls to Mesh.Triangulate cause the call to System.Random.Next(int,int) to throw an ArgumentOutOfRangeException.\n\nThe \"samples\" counter in the Sampler class is not reset, which results in the \"range\" variable, computed as triangleCount / samples, to be 0. The input to following call to System.Random.Next is (0, -1).\n\nAdding sampler.Reset() to the Reset() method in TriangleLocator seems to fix the problem.",
+    "LastUpdatedDate": "2015-04-01T04:58:55.97-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2015-03-31T22:20:20.23-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Fixed"
+    },
+    "Summary": "Sampler is not reset in subsequent calls to Mesh.Triangulate",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 10906
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

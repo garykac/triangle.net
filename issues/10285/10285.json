@@ -1,0 +1,51 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2013-08-20T07:52:42.393-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Sweepline algorithm fails for attached input (mesh is not Delaunay).",
+    "LastUpdatedDate": "2013-08-20T07:52:42.393-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2013-08-19T04:48:07.283-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Sweepline algorithm fails",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 10285
+  },
+  "FileAttachments": [
+    {
+      "FileId": 3455,
+      "FileName": "sweepline.node",
+      "DownloadUrl": ".\\3455"
+    }
+  ],
+  "Comments": [
+    {
+      "Message": "Resolved with changeset 73454: Added Shewchuk's robust geometric predicates\nFixed bug in sweepline algorithm",
+      "PostedDate": "2013-08-20T07:52:42.393-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2015-08-24T02:28:16.38-07:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "It should be possible to fix vertex IDs for input (so they don't get overwritten in Mesh.TransferNodes).",
+    "LastUpdatedDate": "2015-08-24T02:28:16.38-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2015-08-23T16:25:33.833-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Vertex IDs as input",
+    "Type": {
+      "Name": "Unassigned",
+      "Id": 5
+    },
+    "VoteCount": 1,
+    "Id": 10987
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Resolved with changeset 77158: Do not overwrite input vertex ids",
+      "PostedDate": "2015-08-24T02:28:16.38-07:00",
+      "Id": -2147483648
+    }
+  ]
+}

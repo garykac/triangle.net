@@ -1,0 +1,60 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed in changeset #71767",
+    "ClosedDate": "2013-01-31T14:52:44.177-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "In Quality.cs TestTriangle and NewLocation.cs IsBadTriangleAngle, the code calculates the cosine of angles using code which looks like this:\n\n    maxangle = (orglen + destlen - apexlen) / (2 * Math.Sqrt(orglen) * Math.Sqrt(destlen));\n\nhowever, these can all be replaced with code that does no square roots:\n\n    maxangle = Dot( torg.x - tapex.x, torg.y - tapex.y, tdest.x - tapex.x, tdest.y - tapex.y ) / (orglen * destlen);\n\n\nwhere \"Dot\" is a function which calculates the dot product of two vectors:\n\n\t\tpublic static double Dot( double pLx, double pLy, double pRx, double pRy )\n\t\t{\n\t\t\treturn pLx * pRx + pLy * pRy;\n\t\t}",
+    "LastUpdatedDate": "2013-05-16T01:49:18.057-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "triangle",
+    "ReportedDate": "2013-01-23T09:45:55.65-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Minor speed improvements possible by replacing use of Math.Sqrt with a dot product",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 9868
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "No, orglen etc. are the squared lengths. You will still need to use sqrt. But the code can be improved doing the product first and the sqrt only once:\r\n\r\n```\nmaxangle = (orglen + destlen - apexlen) / (2 * Math.Sqrt(orglen * destlen));\n```",
+      "PostedDate": "2013-01-31T14:45:47.463-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-01-31T14:52:44.177-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-02-13T19:58:02.367-08:00",
+      "Id": -2147483648
+    },
+    {
+      "Message": "",
+      "PostedDate": "2013-05-16T01:49:18.057-07:00",
+      "Id": -2147483648
+    }
+  ]
+}
