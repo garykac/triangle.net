@@ -1,8 +1,8 @@
 # Refining regions
 
-This example will show how to refine a mesh in a specific region. The following code assumes to be run from the Mesh Explorer project, since it uses the {{CircleWithHole}} generator located in {{MeshExplorer.Generators}}:
+This example will show how to refine a mesh in a specific region. The following code assumes to be run from the Mesh Explorer project, since it uses the `CircleWithHole` generator located in `MeshExplorer.Generators`:
 
-{code:c#}
+```
 // Generate the input geometry
 var geometry = (new CircleWithHole()).Generate(100, 8, 0);
 
@@ -31,6 +31,8 @@ mesh.Behavior.VarArea = true;
 mesh.Behavior.MinAngle = 25;
 mesh.Refine();
 mesh.Smooth();
-{code:c#}
+```
+
 ## Resulting mesh
+
 ![](Regions_region.jpg)
