@@ -1,0 +1,66 @@
+<div class="wikidoc"><h1>Example 7 - Boolean operations on meshes</h1>
+This example will show how to use regions to perform boolean operations on meshes. The code uses the <a href="https://triangle.codeplex.com/SourceControl/latest#Triangle.NET/Triangle/Meshing/Iterators/RegionIterator.cs">RegionIterator</a> class:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">namespace</span> Examples
+{
+    <span style="color:Blue;">using</span> System;
+    <span style="color:Blue;">using</span> System.Collections.Generic;
+    <span style="color:Blue;">using</span> System.Linq;
+    <span style="color:Blue;">using</span> TriangleNet;
+    <span style="color:Blue;">using</span> TriangleNet.Geometry;
+    <span style="color:Blue;">using</span> TriangleNet.Meshing.Iterators;
+    <span style="color:Blue;">using</span> TriangleNet.Tools;
+    <span style="color:Blue;">using</span> TriangleNet.Topology;
+
+    <span style="color:Blue;">public</span> <span style="color:Blue;">static</span> <span style="color:Blue;">class</span> Example7
+    {
+        <span style="color:Blue;">public</span> <span style="color:Blue;">static</span> <span style="color:Blue;">void</span> FindRegions()
+        {
+            <span style="color:Green;">// Generate the input geometry.</span>
+            <span style="color:Blue;">var</span> polygon = <span style="color:Blue;">new</span> Polygon(8, <span style="color:Blue;">true</span>);
+
+            <span style="color:Green;">// Two intersecting rectangles.</span>
+            <span style="color:Blue;">var</span> A = CreateRectangle(0.0, 4.0, 4.0, 0.0, 1);
+            <span style="color:Blue;">var</span> B = CreateRectangle(1.0, 5.0, 3.0, 1.0, 2);
+
+            polygon.Add(A);
+            polygon.Add(B);
+
+            <span style="color:Green;">// Generate mesh.</span>
+            <span style="color:Blue;">var</span> mesh = (Mesh)polygon.Triangulate();
+
+            <span style="color:Green;">// Find a seeding triangle (in this case, the point (2, 2) lies in</span>
+            <span style="color:Green;">// both rectangles).</span>
+            <span style="color:Blue;">var</span> seed = (<span style="color:Blue;">new</span> TriangleQuadTree(mesh)).Query(2.0, 2.0) <span style="color:Blue;">as</span> Triangle;
+
+            <span style="color:Blue;">var</span> iterator = <span style="color:Blue;">new</span> RegionIterator(mesh);
+
+            iterator.Process(seed, t =&gt; t.Label ^= 1, 1);
+            iterator.Process(seed, t =&gt; t.Label ^= 2, 2);
+
+            <span style="color:Green;">// At this point, all triangles will have label 1, 2 or 3 (= 1 xor 2).</span>
+
+            <span style="color:Green;">// The intersection of A and B.</span>
+            <span style="color:Blue;">var</span> intersection = mesh.Triangles.Where(t =&gt; t.Label == 3);
+
+            <span style="color:Green;">// The difference A \ B.</span>
+            <span style="color:Blue;">var</span> difference = mesh.Triangles.Where(t =&gt; t.Label == 1);
+
+            <span style="color:Green;">// The xor of A and B.</span>
+            <span style="color:Blue;">var</span> xor = mesh.Triangles.Where(t =&gt; t.Label == 1 || t.Label == 2);
+        }
+
+        <span style="color:Blue;">private</span> <span style="color:Blue;">static</span> Contour CreateRectangle(<span style="color:Blue;">double</span> left, <span style="color:Blue;">double</span> top,
+            <span style="color:Blue;">double</span> right, <span style="color:Blue;">double</span> bottom, <span style="color:Blue;">int</span> mark)
+        {
+            <span style="color:Blue;">var</span> points = <span style="color:Blue;">new</span> List&lt;Vertex&gt;(4);
+
+            points.Add(<span style="color:Blue;">new</span> Vertex(left, top, mark));
+            points.Add(<span style="color:Blue;">new</span> Vertex(right, top, mark));
+            points.Add(<span style="color:Blue;">new</span> Vertex(right, bottom, mark));
+            points.Add(<span style="color:Blue;">new</span> Vertex(left, bottom, mark));
+
+            <span style="color:Blue;">return</span> <span style="color:Blue;">new</span> Contour(points, mark, <span style="color:Blue;">true</span>);
+        }
+    }
+}
+</pre></div></div><div class="ClearBoth"></div>

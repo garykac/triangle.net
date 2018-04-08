@@ -1,0 +1,17 @@
+<div class="wikidoc"><h1>Options</h1>The <span class="codeInline">Behavior</span> class controls the meshing behavior of Trianlge.NET.
+<h2>Public properties</h2>
+<table><tr><th> Name </th><th> Type </th><th> Description </th></tr>
+<tr><td> <b><span class="codeInline">Quality</span></b> </td><td> <span class="codeInline">bool</span> </td><td> Turn quality meshing on/off. </td></tr>
+<tr><td> <b><span class="codeInline">MinAngle</span></b> </td><td> <span class="codeInline">double</span> </td><td> Minimum angle constraint. </td></tr>
+<tr><td> <b><span class="codeInline">MaxAngle</span></b> </td><td> <span class="codeInline">double</span> </td><td> Maximum angle constraint. </td></tr>
+<tr><td> <b><span class="codeInline">MaxArea</span></b> </td><td> <span class="codeInline">double</span> </td><td> Global maximum area constraint. </td></tr>
+<tr><td> <b><span class="codeInline">VarArea</span></b> </td><td> <span class="codeInline">double</span> </td><td> Consider per triangle area constraints. </td></tr>
+<tr><td> <b><span class="codeInline">SteinerPoints</span></b> </td><td> <span class="codeInline">int</span> </td><td> Maximum number of Steiner points. </td></tr>
+<tr><td> <b><span class="codeInline">NoBisect</span></b> </td><td> <span class="codeInline">int</span> </td><td> No new vertices on the boundary. </td></tr>
+<tr><td> <b><span class="codeInline">ConformingDelaunay</span></b> </td><td> <span class="codeInline">bool</span> </td><td> Generate conforming Delaunay triangulations. </td></tr>
+<tr><td> <b><span class="codeInline">Algorithm</span></b> </td><td> <span class="codeInline">TriangulationAlgorithm</span> </td><td> Triangulation algorithm. </td></tr>
+<tr><td> <b><span class="codeInline">UseBoundaryMarkers</span></b> </td><td> <span class="codeInline">bool</span> </td><td> Use boundary markers. </td></tr>
+<tr><td> <b><span class="codeInline">Convex</span></b> </td><td> <span class="codeInline">bool</span> </td><td> Create segments on the convex hull. </td></tr></table>
+<h2>Remarks</h2><ul><li>Setting <span class="codeInline">MinAngle</span>, <span class="codeInline">MaxAngle</span> or <span class="codeInline">MaxArea</span> will automatically turn quality on.</li>
+<li>The static property <span class="codeInline">Verbose</span> turn logging on/off.</li>
+<li>The static property <span class="codeInline">NoExact</span> will turn off exact arithmetic (faster, but likely to fail in general).</li></ul></div><div class="ClearBoth"></div>

@@ -1,0 +1,69 @@
+<div class="wikidoc"><h1>Example 4 - Refining regions</h1>
+This example will show how to refine a mesh in a specific region (this example uses code from <a href="https://triangle.codeplex.com/wikipage?title=Example%202&referringTitle=Example%204">Example 2</a>):<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">namespace</span> Examples
+{
+    <span style="color:Blue;">using</span> TriangleNet;
+    <span style="color:Blue;">using</span> TriangleNet.Geometry;
+    <span style="color:Blue;">using</span> TriangleNet.Meshing;
+    <span style="color:Blue;">using</span> TriangleNet.Smoothing;
+    <span style="color:Blue;">using</span> TriangleNet.Tools;
+
+    <span style="color:Blue;">public</span> <span style="color:Blue;">class</span> Example4
+    {
+        <span style="color:Blue;">public</span> <span style="color:Blue;">static</span> Mesh RefineRegions()
+        {
+            <span style="color:Green;">// Generate the input geometry.</span>
+            <span style="color:Blue;">var</span> poly = <span style="color:Blue;">new</span> Polygon();
+            
+            <span style="color:Blue;">var</span> center = <span style="color:Blue;">new</span> Point(0, 0);
+
+            <span style="color:Green;">// Three concentric circles.</span>
+            poly.Add(Example2.Circle(1.0, center, 0.1, 1), center);
+            poly.Add(Example2.Circle(2.0, center, 0.1, 2));
+            poly.Add(Example2.Circle(3.0, center, 0.3, 3));
+
+            <span style="color:Green;">// Define regions.</span>
+            poly.Regions.Add(<span style="color:Blue;">new</span> RegionPointer(1.5, 0.0, 1));
+            poly.Regions.Add(<span style="color:Blue;">new</span> RegionPointer(2.5, 0.0, 2));
+
+            <span style="color:Green;">// Set quality and constraint options.</span>
+            <span style="color:Blue;">var</span> options = <span style="color:Blue;">new</span> ConstraintOptions() { ConformingDelaunay = <span style="color:Blue;">true</span> };
+            <span style="color:Blue;">var</span> quality = <span style="color:Blue;">new</span> QualityOptions() { MinimumAngle = 25.0 };
+
+            <span style="color:Green;">// Generate mesh.</span>
+            <span style="color:Blue;">var</span> mesh = (Mesh)poly.Triangulate(options, quality);
+
+            <span style="color:Blue;">var</span> smoother = <span style="color:Blue;">new</span> SimpleSmoother();
+
+            <span style="color:Green;">// Smooth mesh and re-apply quality options.</span>
+            smoother.Smooth(mesh);
+            mesh.Refine(quality);
+
+            <span style="color:Green;">// Calculate mesh quality</span>
+            <span style="color:Blue;">var</span> statistic = <span style="color:Blue;">new</span> QualityMeasure();
+
+            statistic.Update(mesh);
+
+            <span style="color:Green;">// Use the minimum triangle area for region refinement</span>
+            <span style="color:Blue;">double</span> area = 1.75 * statistic.AreaMinimum;
+
+            <span style="color:Blue;">foreach</span> (<span style="color:Blue;">var</span> t <span style="color:Blue;">in</span> mesh.Triangles)
+            {
+                <span style="color:Green;">// Set area constraint for all triangles in region 1</span>
+                <span style="color:Blue;">if</span> (t.Label == 1) t.Area = area;
+            }
+
+            <span style="color:Green;">// Use per triangle area constraint for next refinement</span>
+            quality.VariableArea = <span style="color:Blue;">true</span>;
+
+            <span style="color:Green;">// Refine mesh to meet area constraint.</span>
+            mesh.Refine(quality);
+
+            <span style="color:Green;">// Smooth once again.</span>
+            smoother.Smooth(mesh);
+
+            <span style="color:Blue;">return</span> mesh;
+        }
+    }
+}
+</pre></div></div><div class="ClearBoth"></div>

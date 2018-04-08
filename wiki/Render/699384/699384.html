@@ -1,0 +1,147 @@
+<div class="wikidoc"><h1>InputGeometry</h1>The <span class="codeInline">InputGeometry</span> class provides a minimal interface to construct geometries consisting of points and segments, which may form a polygon (probably with holes), known as a <i>planar straight-line graph</i> (<a href="http://en.wikipedia.org/wiki/Planar_straight-line_graph">PSLG</a>). There are methods to add points, segments and holes. Refer to the XML documentation for details.<br /><br />Additionally the following properties give access to the geometry:
+<h2>Public properties</h2>
+<table><tr><th> Name </th><th> Type </th><th> Description </th></tr>
+<tr><td> <b><span class="codeInline">Bounds</span></b> </td><td> <span class="codeInline">BoundingBox</span> </td><td> Gets the bounding box of the input geometry. </td></tr>
+<tr><td> <b><span class="codeInline">HasSegments</span></b> </td><td> <span class="codeInline">bool</span> </td><td> Indicates whether the geometry should be treated as a PSLG. </td></tr>
+<tr><td> <b><span class="codeInline">Count</span></b> </td><td> <span class="codeInline">int</span> </td><td> Gets the number of points. </td></tr>
+<tr><td> <b><span class="codeInline">Points</span></b> </td><td> <span class="codeInline">IEnumerable&lt;Point&gt;</span> </td><td> Gets the list of input points. </td></tr>
+<tr><td> <b><span class="codeInline">Segments</span></b> </td><td> <span class="codeInline">ICollection&lt;Edge&gt;</span> </td><td> Gets the list of input segments. </td></tr>
+<tr><td> <b><span class="codeInline">Holes</span></b> </td><td> <span class="codeInline">ICollection&lt;Point&gt;</span> </td><td> Gets the list of input holes. </td></tr>
+<tr><td> <b><span class="codeInline">Regions</span></b> </td><td> <span class="codeInline">ICollection&lt;RegionPointer&gt;</span> </td><td> Gets the list of regions. </td></tr></table>
+<h2>Example</h2>This example shows how to use the <span class="codeInline">InputGeometry</span> class to create a square polygon with a hole, described by the following .poly file:<br /><br /><pre>
+# A box with eight points, no attributes, one boundary marker.
+8 2 0 1
+# Outer box
+  1   0 0   0
+  2   3 0   0
+  3   3 3   0
+  4   0 3   1
+# Inner square
+  5   1 1   0
+  6   2 1   0
+  7   2 2   0
+  8   1 2   0
+# Eight segments with boundary markers.
+8 1
+# Outer box
+  1   1 2   0
+  2   2 3   0
+  3   3 4   5
+  4   4 1   5
+# Inner square
+  5   5 6   0
+  6   6 7   0
+  7   7 8   0
+  8   8 5   0
+# One hole in the middle of the inner square.
+1
+  1   1.5 1.5
+</pre><br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create InputGeometry using overloaded constructor which takes the number </span>
+<span style="color:Green;">// of input points as parameter.</span>
+<span style="color:Blue;">var</span> geometry = <span style="color:Blue;">new</span> InputGeometry(8);
+
+<span style="color:Green;">// Add the points. </span>
+geometry.AddPoint(0.0, 0.0); <span style="color:Green;">// Index 0</span>
+geometry.AddPoint(3.0, 0.0); <span style="color:Green;">// Index 1 etc.</span>
+geometry.AddPoint(3.0, 3.0);
+geometry.AddPoint(0.0, 3.0, 1); <span style="color:Green;">// Add a marker.</span>
+geometry.AddPoint(1.0, 1.0);
+geometry.AddPoint(2.0, 1.0);
+geometry.AddPoint(2.0, 2.0);
+geometry.AddPoint(1.0, 2.0);
+
+<span style="color:Green;">// Add the segments. Notice the zero based indexing (in</span>
+<span style="color:Green;">// contrast to Triangle&#39;s file format).</span>
+geometry.AddSegment(0, 1);
+geometry.AddSegment(1, 2);
+geometry.AddSegment(2, 3, 5); <span style="color:Green;">// Add a marker.</span>
+geometry.AddSegment(3, 0, 5);
+geometry.AddSegment(4, 5);
+geometry.AddSegment(5, 6);
+geometry.AddSegment(6, 7);
+geometry.AddSegment(7, 4);
+
+<span style="color:Green;">// Add the hole.</span>
+geometry.AddHole(1.5, 1.5);
+</pre></div><h2>Extending the InputGeometry class</h2>You can use C# extension methods to make the class more verbose:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;summary&gt;</span>
+<span style="color:Gray;">///</span><span style="color:Green;"> Add a polygon ring to the geometry.</span>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;/summary&gt;</span>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;param name=&quot;points&quot;&gt;</span><span style="color:Green;">List of points which make up the polygon.&lt;/param&gt;</span>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;param name=&quot;mark&quot;&gt;</span><span style="color:Green;">Common boundary mark for all segments of the polygon.&lt;/param&gt;</span>
+<span style="color:Blue;">public</span> <span style="color:Blue;">static</span> <span style="color:Blue;">void</span> AddRing(<span style="color:Blue;">this</span> InputGeometry geometry, 
+        IEnumerable&lt;Point&gt; points, <span style="color:Blue;">int</span> mark = 0)
+{
+    <span style="color:Green;">// Save the current number of points.</span>
+    <span style="color:Blue;">int</span> N = geometry.Count;
+
+    <span style="color:Blue;">int</span> m = 0;
+    <span style="color:Blue;">foreach</span> (<span style="color:Blue;">var</span> pt <span style="color:Blue;">in</span> points)
+    {
+        geometry.AddPoint(pt.X, pt.Y, pt.Boundary, pt.Attributes);
+        m++;
+    }
+
+    <span style="color:Blue;">for</span> (<span style="color:Blue;">int</span> i = 0; i &lt; m; i++)
+    {
+        geometry.AddSegment(N + i, N + ((i + 1) % m), mark);
+    }
+}
+
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;summary&gt;</span>
+<span style="color:Gray;">///</span><span style="color:Green;"> Add a polygon ring to the geometry and make it a hole.</span>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;/summary&gt;</span>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;remarks&gt;</span>
+<span style="color:Gray;">///</span><span style="color:Green;"> WARNING: This works for convex polygons, but not for non-convex regions in general.</span>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;/remarks&gt;</span>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;param name=&quot;points&quot;&gt;</span><span style="color:Green;">List of points which make up the hole.&lt;/param&gt;</span>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;param name=&quot;mark&quot;&gt;</span><span style="color:Green;">Common boundary mark for all segments of the hole.&lt;/param&gt;</span>
+<span style="color:Blue;">public</span> <span style="color:Blue;">static</span> <span style="color:Blue;">void</span> AddRingAsHole(<span style="color:Blue;">this</span> InputGeometry geometry, 
+        IEnumerable&lt;Point&gt; points, <span style="color:Blue;">int</span> mark = 0)
+{
+    <span style="color:Green;">// Save the current number of points.</span>
+    <span style="color:Blue;">int</span> N = geometry.Count;
+
+    <span style="color:Green;">// Hole coordinates</span>
+    <span style="color:Blue;">double</span> x = 0.0;
+    <span style="color:Blue;">double</span> y = 0.0;
+
+    <span style="color:Blue;">int</span> m = 0;
+    <span style="color:Blue;">foreach</span> (<span style="color:Blue;">var</span> pt <span style="color:Blue;">in</span> points)
+    {
+        x += pt.X;
+        y += pt.Y;
+
+        geometry.AddPoint(pt.X, pt.Y, pt.Boundary, pt.Attributes);
+        m++;
+    }
+
+    <span style="color:Blue;">for</span> (<span style="color:Blue;">int</span> i = 0; i &lt; m; i++)
+    {
+        geometry.AddSegment(N + i, N + ((i + 1) % m), mark);
+    }
+
+    geometry.AddHole(x / m, y / m);
+}
+</pre></div><br />Using the extension methods, the above example will now read<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Outer square</span>
+<span style="color:Blue;">var</span> outer = <span style="color:Blue;">new</span> Point[] {
+    <span style="color:Blue;">new</span> Point(0.0, 0.0),
+    <span style="color:Blue;">new</span> Point(3.0, 0.0),
+    <span style="color:Blue;">new</span> Point(3.0, 3.0),
+    <span style="color:Blue;">new</span> Point(0.0, 3.0, 1),
+};
+
+<span style="color:Green;">// Inner square</span>
+<span style="color:Blue;">var</span> inner = <span style="color:Blue;">new</span> Point[] {
+    <span style="color:Blue;">new</span> Point(1.0, 1.0),
+    <span style="color:Blue;">new</span> Point(2.0, 1.0),
+    <span style="color:Blue;">new</span> Point(2.0, 2.0),
+    <span style="color:Blue;">new</span> Point(1.0, 2.0),
+};
+
+<span style="color:Blue;">var</span> geometry = <span style="color:Blue;">new</span> InputGeometry(8);
+geometry.AddRing(outer, 5);
+geometry.AddRingAsHole(inner);
+</pre></div><br /><b>WARNING:</b> The new code does not produce exactly the same input as the original! Do you spot the difference?<br /><br /><br /></div><div class="ClearBoth"></div>

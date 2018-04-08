@@ -1,0 +1,38 @@
+<div class="wikidoc"><h1>Creating a Mesh (Beta 4)</h1>
+Mesh creation in <i>Triangle.NET</i> is controlled by three interfaces:<br />
+<ul><li><span class="codeInline">ITriangulator</span> for triangulating point sets</li>
+<li><span class="codeInline">IConstraintMesher</span> for triangulating polygons</li>
+<li><span class="codeInline">IQualityMesher</span> for creating quality meshes of polygons</li></ul>
+All three interfaces are implemented by the <span class="codeInline">GenericMesher</span> class (located in the <i>TriangleNet.Meshing</i> namespace).<br /><br />The following example shows (from left to right) an input polygon, the triangulated point set, the mesh with segments inserted, and the mesh with quality settings applied:<br /><br /><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=triangle&DownloadId=1491496" alt="T.png" title="T.png" /><br />
+<h2>Triangulation algorithms</h2>
+The triangulation algorithms in the <i>TriangleNet.Meshing.Algorithm</i> namespace include<br />
+<ul><li>Dwyer (Divide &amp; Conquer) (<i>the default algorithm</i>)</li>
+<li>Sweepline (<i>reasonably fast</i>)</li>
+<li>Incremental (<i>slow</i>)</li></ul>
+All classes implement the <span class="codeInline">ITriangulator</span> interface, so they can be used to create a mesh from a given point set.<br />
+<h2>Triangulating a polygon</h2>
+The easiest way to triangulate a <span class="codeInline">Polygon</span> is to use one of the <span class="codeInline">Triangulate</span> extension methods, which are available through the <i>TriangleNet.Geometry</i> namespace.<br /><br />These methods make use of the <span class="codeInline">GenericMesher</span> class. It is recommended that you use the extension methods, unless you want to change the default triangulation algorithm, which can be done using the constructor overloads of the <span class="codeInline">GenericMesher</span> class.<br /><br />Here&#39;s a simple example, using the <i>Lake Superior</i> polygon file:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">using</span> TriangleNet.Geometry;
+<span style="color:Blue;">using</span> TriangleNet.IO;
+<span style="color:Blue;">using</span> TriangleNet.Meshing;
+
+<span style="color:Blue;">public</span> <span style="color:Blue;">static</span> <span style="color:Blue;">void</span> Example()
+{
+    <span style="color:Green;">// Load polygon from file.</span>
+    <span style="color:Blue;">var</span> polygon = FileProcessor.Read(<span style="color:#A31515;">&quot;superior.poly&quot;</span>);
+
+    <span style="color:Blue;">var</span> options = <span style="color:Blue;">new</span> ConstraintOptions() { ConformingDelaunay = <span style="color:Blue;">true</span> };
+    <span style="color:Blue;">var</span> quality = <span style="color:Blue;">new</span> QualityOptions() { MinimumAngle = 25 };
+
+    <span style="color:Green;">// Triangulate the polygon</span>
+    <span style="color:Blue;">var</span> mesh = polygon.Triangulate(options, quality);
+}
+</pre></div>
+<h2>Generating a structured mesh</h2>
+The <span class="codeInline">GenericMesher</span> provides a static utility function to create structured meshes of rectangular domains:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Create unit square.</span>
+<span style="color:Blue;">var</span> bounds = <span style="color:Blue;">new</span> Rectangle(-1.0, -1.0, 2.0, 2.0);
+
+<span style="color:Green;">// Generate mesh.</span>
+<span style="color:Blue;">var</span> mesh = GenericMesher.StructuredMesh(bounds, 20, 20);
+</pre></div><br /></div><div class="ClearBoth"></div>

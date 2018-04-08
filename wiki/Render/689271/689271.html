@@ -1,0 +1,31 @@
+<div class="wikidoc"><h1>Refining regions</h1>
+This example will show how to refine a mesh in a specific region. The following code assumes to be run from the Mesh Explorer project, since it uses the <span class="codeInline">CircleWithHole</span> generator located in <span class="codeInline">MeshExplorer.Generators</span>:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Generate the input geometry</span>
+<span style="color:Blue;">var</span> geometry = (<span style="color:Blue;">new</span> CircleWithHole()).Generate(100, 8, 0);
+
+<span style="color:Green;">// Generate quality mesh</span>
+<span style="color:Blue;">var</span> mesh = <span style="color:Blue;">new</span> Mesh();
+mesh.Behavior.MinAngle = 30;
+mesh.Triangulate(geometry);
+mesh.Smooth();
+mesh.Refine();
+
+<span style="color:Green;">// Calculate mesh quality</span>
+<span style="color:Blue;">var</span> quality = <span style="color:Blue;">new</span> QualityMeasure();
+quality.Update(mesh);
+
+<span style="color:Green;">// Use the minimum triangle area for region refinement</span>
+<span style="color:Blue;">double</span> area = 1.75 * quality.AreaMinimum;
+
+<span style="color:Blue;">foreach</span> (<span style="color:Blue;">var</span> t <span style="color:Blue;">in</span> mesh.Triangles)
+{
+    <span style="color:Green;">// Set area constraint for all triangles in region 1</span>
+    <span style="color:Blue;">if</span> (t.Region == 1) t.Area = area;
+}
+
+<span style="color:Green;">// Use per triangle area constraint for next refinement</span>
+mesh.Behavior.VarArea = <span style="color:Blue;">true</span>;
+mesh.Behavior.MinAngle = 25;
+mesh.Refine();
+mesh.Smooth();
+</pre></div><h2>Resulting mesh</h2><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=triangle&DownloadId=619035" alt="region.jpg" title="region.jpg" /></div><div class="ClearBoth"></div>

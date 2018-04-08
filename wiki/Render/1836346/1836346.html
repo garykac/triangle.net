@@ -1,0 +1,60 @@
+<div class="wikidoc"><h1>The Mesh class</h1>
+<h2>Instance methods</h2>
+The <span class="codeInline">Triangulate</span> method creates a mesh from a given geometry (may be a point set or a PSLG):<br /><br /><div style="color:Black;background-color:White;"><pre>
+Mesh mesh = <span style="color:Blue;">new</span> Mesh();
+
+<span style="color:Green;">// Triangulate a geometry stored in a .poly file with Triangle format.</span>
+mesh.Triangulate(<span style="color:#A31515;">&quot;some-geometry.poly&quot;</span>);
+
+<span style="color:Green;">// Triangulate a geometry using the InputGeometry class.</span>
+<span style="color:Blue;">var</span> geometry = FileReader.ReadPolyFile(<span style="color:#A31515;">&quot;some-geometry.poly&quot;</span>);
+mesh.Triangulate(geometry);
+
+<span style="color:Green;">// Use the FileWriter class to save the mesh.</span>
+FileWriter.Write(mesh, <span style="color:#A31515;">&quot;some-mesh.ele&quot;</span>);
+</pre></div>The <span class="codeInline">Load</span> method reconstructs a previously generated mesh:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Load a Triangle format mesh file.</span>
+mesh.Load(<span style="color:#A31515;">&quot;some-mesh.ele&quot;</span>);
+
+<span style="color:Green;">// Load a mesh using an InputGeometry and a List&lt;ITriangle&gt;.</span>
+<span style="color:Blue;">var</span> geometry = FileReader.ReadPolyFile(<span style="color:#A31515;">&quot;some-mesh.poly&quot;</span>);
+<span style="color:Blue;">var</span> triangles = FileReader.ReadEleFile(<span style="color:#A31515;">&quot;some-mesh.ele&quot;</span>);
+mesh.Load(geometry, triangles);
+</pre></div>The <span class="codeInline">Refine</span> method refines the current mesh. There are some shorthand overloads, but usually you will use the <span class="codeInline">Behavior</span> class (see Behavior <a href="https://triangle.codeplex.com/wikipage?title=Options&referringTitle=Mesh-Old">Options</a> page) to set refinement parameters:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Refine by setting an area constraint to half the maximum triangle area.</span>
+mesh.Refine(<span style="color:Blue;">true</span>);
+
+<span style="color:Green;">// Get mesh statistics.</span>
+<span style="color:Blue;">var</span> statistic = <span style="color:Blue;">new</span> Statistic();
+statistic.Update(mesh);
+
+<span style="color:Green;">// Refine by setting a custom maximum area constraint.</span>
+mesh.Refine(statistic.LargestArea / 4);
+
+<span style="color:Green;">// Refine by setting a minimum angle constraint using the Behavior property.</span>
+mesh.Behavior.MinAngle = 20;
+mesh.Refine();
+</pre></div>The <span class="codeInline">Renumber</span> method will renumber the mesh nodes using a given numbering scheme:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Green;">// Renumber the mesh nodes using the Reverse Cuthill McKee algorithm to</span>
+<span style="color:Green;">// reduce the adjacency matrix bandwidth.</span>
+mesh.Renumber(NodeNumbering.CuthillMcKee);
+
+<span style="color:Green;">// Renumber the mesh nodes in linear order.</span>
+mesh.Renumber();
+</pre></div>Finally, the <span class="codeInline">Check</span> method returns boolean values, indicating whether the mesh topology is ok and the mesh is Delaunay. If the static property <span class="codeInline">Behavior.Verbose</span> is set to <span class="codeInline">true</span>, the log will contain more information about what&#39;s wrong with the mesh.<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">bool</span> isConsistent, isDelaunay;
+mesh.Check(<span style="color:Blue;">out</span> isConsistent, <span style="color:Blue;">out</span> isDelaunay);
+</pre></div>
+<h2>Public properties</h2>
+<b>Warning:</b> The properties returning an <span class="codeInline">ICollection</span> are read-only, so the underlying collections can&#39;t be modified.<br /><br /><table><tr><th> Name </th><th> Type </th><th> Description </th></tr>
+<tr><td> <b><span class="codeInline">Behavior</span></b> </td><td> <span class="codeInline">Behavior</span> </td><td> Gets the mesh Behavior instance. </td></tr>
+<tr><td> <b><span class="codeInline">Bounds</span></b> </td><td> <span class="codeInline">BoundingBox</span> </td><td> Gets the mesh bounding box. </td></tr>
+<tr><td> <b><span class="codeInline">Vertices</span></b> </td><td> <span class="codeInline">ICollection&lt;Vertex&gt;</span> </td><td> Gets the mesh vertices. </td></tr>
+<tr><td> <b><span class="codeInline">Triangles</span></b> </td><td> <span class="codeInline">ICollection&lt;Triangle&gt;</span> </td><td> Gets the mesh triangles. </td></tr>
+<tr><td> <b><span class="codeInline">Segments</span></b> </td><td> <span class="codeInline">ICollection&lt;Segment&gt;</span> </td><td> Gets the mesh segments. </td></tr>
+<tr><td> <b><span class="codeInline">Edges</span></b> </td><td> <span class="codeInline">IEnumerable&lt;Edge&gt;</span> </td><td> Gets the mesh edges. </td></tr>
+<tr><td> <b><span class="codeInline">Holes</span></b> </td><td> <span class="codeInline">IList&lt;Point&gt;</span> </td><td> Gets the mesh holes. </td></tr>
+<tr><td> <b><span class="codeInline">NumberOfInputPoints</span></b> </td><td> <span class="codeInline">int</span> </td><td> Gets the number of input vertices. </td></tr>
+<tr><td> <b><span class="codeInline">NumberOfEdges</span></b> </td><td> <span class="codeInline">int</span> </td><td> Gets the number of mesh edges. </td></tr>
+<tr><td> <b><span class="codeInline">IsPolygon</span></b> </td><td> <span class="codeInline">bool</span> </td><td> Indicates whether the input is a PSLG or a point set. </td></tr>
+<tr><td> <b><span class="codeInline">CurrentNumbering</span></b> </td><td> <span class="codeInline">NodeNumbering</span> </td><td> Gets the current node numbering. </td></tr></table><br /><br /></div><div class="ClearBoth"></div>

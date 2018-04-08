@@ -1,0 +1,95 @@
+<div class="wikidoc"><h1>Using Quadratic Elements</h1>
+Triangle.NET itself does not support the output of quadratic elements. The following example code shows, how to create the extra nodes and save the necessary information to access the elements nodes:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;summary&gt;</span>
+<span style="color:Gray;">///</span><span style="color:Green;"> Create extra nodes for quadratic subparametric elements.</span>
+<span style="color:Gray;">///</span> <span style="color:Gray;">&lt;/summary&gt;</span>
+<span style="color:Blue;">public</span> <span style="color:Blue;">class</span> QuadraticElements
+{
+    <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;summary&gt;</span>
+    <span style="color:Gray;">///</span><span style="color:Green;"> Gets the list of new vertices (edge midpoints).</span>
+    <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;/summary&gt;</span>
+    <span style="color:Blue;">public</span> List&lt;Point&gt; Vertices { <span style="color:Blue;">get</span>; <span style="color:Blue;">private</span> <span style="color:Blue;">set</span>; }
+
+    <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;summary&gt;</span>
+    <span style="color:Gray;">///</span><span style="color:Green;"> Gets the new vertex indices for each triangle.</span>
+    <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;/summary&gt;</span>
+    <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;remarks&gt;</span>
+    <span style="color:Gray;">///</span><span style="color:Green;"> For a triangle with index k, Indices[k, i] (i = 0, 1, 2) corresponds to</span>
+    <span style="color:Gray;">///</span><span style="color:Green;"> the vertex on the edge shared with the i-th neighbor, e.g. Indices[k, 0]</span>
+    <span style="color:Gray;">///</span><span style="color:Green;"> is the vertex shared by triangle k and it&#39;s neighbor N0 and lies on the</span>
+    <span style="color:Gray;">///</span><span style="color:Green;"> side opposite of P0.</span>
+    <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;/remarks&gt;</span>
+    <span style="color:Blue;">public</span> <span style="color:Blue;">int</span>[,] Indices { <span style="color:Blue;">get</span>; <span style="color:Blue;">private</span> <span style="color:Blue;">set</span>; }
+
+    <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;summary&gt;</span>
+    <span style="color:Gray;">///</span><span style="color:Green;"> Initializes a new instance of the &lt;see cref=&quot;QuadraticElements&quot; /&gt; class.</span>
+    <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;/summary&gt;</span>
+    <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;param name=&quot;mesh&quot;&gt;</span><span style="color:Green;">The mesh.&lt;/param&gt;</span>
+    <span style="color:Blue;">public</span> QuadraticElements(Mesh mesh)
+    {
+        QuadraticOrder(mesh);
+    }
+
+    <span style="color:Blue;">private</span> <span style="color:Blue;">void</span> QuadraticOrder(Mesh mesh)
+    {
+        mesh.Renumber();
+
+        Vertices = <span style="color:Blue;">new</span> List&lt;Point&gt;(mesh.NumberOfEdges);
+        Indices = <span style="color:Blue;">new</span> <span style="color:Blue;">int</span>[mesh.Triangles.Count, 3];
+
+        Point org, dest, middle;
+        ITriangle neighbor, neighbor2;
+        <span style="color:Blue;">int</span> nid, nid2;
+        <span style="color:Blue;">int</span> orient = 0, count = 0;
+
+        <span style="color:Blue;">foreach</span> (<span style="color:Blue;">var</span> tri <span style="color:Blue;">in</span> mesh.Triangles)
+        {
+            <span style="color:Blue;">for</span> (<span style="color:Blue;">int</span> i = 0; i &lt; 3; i++)
+            {
+                <span style="color:Green;">// The neighbor opposite of vertex i.</span>
+                GetNeighbor(tri, i, <span style="color:Blue;">out</span> neighbor, <span style="color:Blue;">out</span> nid);
+
+                <span style="color:Green;">// Consider each edge only once.</span>
+                <span style="color:Blue;">if</span> ((tri.ID &lt; nid) || (nid &lt; 0))
+                {
+                    <span style="color:Green;">// Get the edge endpoints.</span>
+                    org = tri.GetVertex((i + 1) % 3);
+                    dest = tri.GetVertex((i + 2) % 3);
+
+                    <span style="color:Green;">// Create a new node in the middle of the edge.</span>
+                    middle = <span style="color:Blue;">new</span> Point(0.5 * (org.X + dest.X), 0.5 * (org.Y + dest.Y),
+                        Math.Min(org.Boundary, dest.Boundary));
+
+                    Vertices.Add(middle);
+
+                    <span style="color:Green;">// Record the new node. </span>
+                    Indices[tri.ID, i] = count;
+
+                    <span style="color:Green;">// Record the new node in the neighbor element. </span>
+                    <span style="color:Blue;">if</span> (nid != -1)
+                    {
+                        GetNeighbor(neighbor, orient, <span style="color:Blue;">out</span> neighbor2, <span style="color:Blue;">out</span> nid2);
+
+                        <span style="color:Green;">// Get the neighbors orientation.</span>
+                        <span style="color:Blue;">while</span> (nid2 != tri.ID)
+                        {
+                            orient = (orient + 1) % 3;
+                            GetNeighbor(neighbor, orient, <span style="color:Blue;">out</span> neighbor2, <span style="color:Blue;">out</span> nid2);
+                        }
+
+                        Indices[neighbor.ID, orient] = count;
+                    }
+
+                    count++;
+                }
+            }
+        }
+    }
+
+    <span style="color:Blue;">private</span> <span style="color:Blue;">void</span> GetNeighbor(ITriangle tri, <span style="color:Blue;">int</span> i, <span style="color:Blue;">out</span> ITriangle neighbor, <span style="color:Blue;">out</span> <span style="color:Blue;">int</span> nid)
+    {
+        neighbor = tri.GetNeighbor(i);
+        nid = neighbor == <span style="color:Blue;">null</span> ? -1 : neighbor.ID;
+    }
+}
+</pre></div></div><div class="ClearBoth"></div>

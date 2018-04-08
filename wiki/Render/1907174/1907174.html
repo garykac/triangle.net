@@ -1,0 +1,124 @@
+<div class="wikidoc"><h1>Example 10 - Troubleshooting 1</h1>
+This example will show how to deal with degeneracies on a mesh boundary caused by nearly collinear points.<br /><br />Assume we have a simple box shape given by a point set and the corresponding mesh. Now let&#39;s rotate the box and triangulate the rotated point set:<br /><br /><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=triangle&DownloadId=1661349" alt="example-10.png" title="example-10.png" /><br /><br />You would expect the generated meshes to be equivalent (in a topological sense), but you will find that some flat triangles have been created on the boundary.<br /><br />The problem here is, though the points of the original box are exactly collinear, the rotated points may fail to be so, due to finite precision floating point arithmetics. Some of the edge midpoints might fall slightly inside the convex hull of the box and cause some very thin triangles to be created.<br /><br />The resulting mesh will be a perfectly valid Delaunay triangulation and Triangle.NET won&#39;t detect this kind of degeneracy automatically. The following code will report boundary triangles with a maximum angle near 180 degrees:<br /><br /><div style="color:Black;background-color:White;"><pre>
+<span style="color:Blue;">namespace</span> Examples
+{
+    <span style="color:Blue;">using</span> System;
+    <span style="color:Blue;">using</span> System.Collections.Generic;
+    <span style="color:Blue;">using</span> System.Linq;
+    <span style="color:Blue;">using</span> TriangleNet.Geometry;
+    <span style="color:Blue;">using</span> TriangleNet.Meshing;
+    <span style="color:Blue;">using</span> TriangleNet.Tools;
+
+    <span style="color:Blue;">public</span> <span style="color:Blue;">class</span> Example10
+    {
+        <span style="color:Blue;">public</span> <span style="color:Blue;">static</span> <span style="color:Blue;">void</span> Run()
+        {
+            <span style="color:Blue;">var</span> pts = <span style="color:Blue;">new</span> List&lt;Vertex&gt;
+            {
+                <span style="color:Green;">// The 4 corners of the box.</span>
+                <span style="color:Blue;">new</span> Vertex(1.5, 1.0),
+                <span style="color:Blue;">new</span> Vertex(1.5, -1.0),
+                <span style="color:Blue;">new</span> Vertex(-1.5, -1.0),
+                <span style="color:Blue;">new</span> Vertex(-1.5, 1.0),
+
+                <span style="color:Green;">// The edge midpoints.</span>
+                <span style="color:Blue;">new</span> Vertex(0.0, 1.0),
+                <span style="color:Blue;">new</span> Vertex(0.0, -1.0),
+                <span style="color:Blue;">new</span> Vertex(1.5, 0.0),
+                <span style="color:Blue;">new</span> Vertex(-1.5, 0.0)
+            };
+
+            <span style="color:Blue;">var</span> r = <span style="color:Blue;">new</span> Random(78403);
+
+            <span style="color:Green;">// The original box.</span>
+            <span style="color:Blue;">var</span> poly = Rotate(pts, 0);
+
+            <span style="color:Blue;">for</span> (<span style="color:Blue;">int</span> i = 0; i &lt; 10; i++)
+            {
+                <span style="color:Blue;">var</span> mesh = poly.Triangulate();
+
+                <span style="color:Blue;">var</span> list = CheckBoundary(mesh).ToList();
+
+                <span style="color:Blue;">if</span> (list.Count &gt; 0)
+                {
+                    Console.WriteLine(<span style="color:#A31515;">&quot;Iteration {0}: found {1} invalid triangle(s).&quot;</span>,
+                        i, list.Count);
+
+                    <span style="color:Blue;">foreach</span> (<span style="color:Blue;">var</span> t <span style="color:Blue;">in</span> list)
+                    {
+                        Console.WriteLine(<span style="color:#A31515;">&quot;   [{0} {1} {2}]&quot;</span>,
+                            t.GetVertexID(0),
+                            t.GetVertexID(1),
+                            t.GetVertexID(2));
+                    }
+                }
+
+                <span style="color:Green;">// Random rotation.</span>
+                poly = Rotate(pts, Math.PI * r.NextDouble());
+            }
+        }
+
+        <span style="color:Blue;">private</span> <span style="color:Blue;">static</span> IEnumerable&lt;ITriangle&gt; CheckBoundary(IMesh mesh,
+            <span style="color:Blue;">double</span> threshold = 1e-8)
+        {
+            <span style="color:Green;">// We will compare against the squared cosine of the maximum angle.</span>
+            threshold = Math.Sqrt(threshold);
+
+            <span style="color:Blue;">var</span> data = <span style="color:Blue;">new</span> <span style="color:Blue;">double</span>[6];
+
+            <span style="color:Green;">// See Statistic.ComputeAngles():</span>
+            <span style="color:Green;">//</span>
+            <span style="color:Green;">// data[0] = squared cosine of minimum angle</span>
+            <span style="color:Green;">// data[1] = squared cosine of maximum angle</span>
+            <span style="color:Green;">// data[2] = -1 =&gt; maximum angle is obtuse</span>
+
+            <span style="color:Blue;">foreach</span> (<span style="color:Blue;">var</span> triangle <span style="color:Blue;">in</span> mesh.Triangles)
+            {
+                <span style="color:Blue;">for</span> (<span style="color:Blue;">int</span> i = 0; i &lt; 3; i++)
+                {
+                    <span style="color:Blue;">var</span> neighbor = triangle.GetNeighbor(i);
+
+                    <span style="color:Green;">// Triangle lies on mesh boundary.</span>
+                    <span style="color:Blue;">if</span> (neighbor == <span style="color:Blue;">null</span>)
+                    {
+                        Statistic.ComputeAngles(triangle, data);
+
+                        <span style="color:Green;">// The squared cosine of the maximum angle will be near</span>
+                        <span style="color:Green;">// 1.0 only if the maximum angle is near 180 degrees.</span>
+                        <span style="color:Blue;">if</span> (Math.Abs(1.0 - data[1]) &lt; threshold)
+                        {
+                            <span style="color:Blue;">yield</span> <span style="color:Blue;">return</span> triangle;
+                        }
+
+                        <span style="color:Green;">// Next triangle.</span>
+                        <span style="color:Blue;">break</span>;
+                    }
+                }
+            }
+        }
+
+        <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;summary&gt;</span>
+        <span style="color:Gray;">///</span><span style="color:Green;"> Rotate given point set around the origin.</span>
+        <span style="color:Gray;">///</span> <span style="color:Gray;">&lt;/summary&gt;</span>
+        <span style="color:Blue;">private</span> <span style="color:Blue;">static</span> IPolygon Rotate(List&lt;Vertex&gt; points, <span style="color:Blue;">double</span> radians)
+        {
+            <span style="color:Blue;">var</span> polygon = <span style="color:Blue;">new</span> Polygon(points.Count);
+
+            <span style="color:Blue;">int</span> id = 0;
+
+            <span style="color:Blue;">foreach</span> (<span style="color:Blue;">var</span> p <span style="color:Blue;">in</span> points)
+            {
+                <span style="color:Blue;">double</span> x = p.X;
+                <span style="color:Blue;">double</span> y = p.Y;
+
+                <span style="color:Blue;">double</span> xr = Math.Cos(radians) * x - Math.Sin(radians) * y;
+                <span style="color:Blue;">double</span> yr = Math.Sin(radians) * x + Math.Cos(radians) * y;
+
+                polygon.Points.Add(<span style="color:Blue;">new</span> Vertex(xr, yr) { ID = id++ });
+            }
+
+            <span style="color:Blue;">return</span> polygon;
+        }
+    }
+}
+</pre></div></div><div class="ClearBoth"></div>
