@@ -1,5 +1,5 @@
 # Options
-The `Behavior` class controls the meshing behavior of Trianlge.NET.
+The `Behavior` class controls the meshing behavior of Triangle.NET.
 
 ## Public properties
 
