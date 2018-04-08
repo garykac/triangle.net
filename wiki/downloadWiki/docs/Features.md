@@ -13,7 +13,7 @@
 * Interface to most of the library features
 * View mesh statistics and quality information
 * Export mesh as graphics (.png, .eps or .svg)
-* See [Screenshots](Screenshots)
+* See [Screenshots](Screenshots.md)
 
 # Future plans
 * Advanced mesh smoothing (with density functions)
