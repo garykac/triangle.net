@@ -35,6 +35,21 @@ Note that there are significant differences between Beta 3 and Beta 4, which are
 
 The earlier releases are archived in the [releases](/releases) directory. The current Beta 4 release is in [source](/source).
 
+# Unity
+
+One common reason for forking the Triangle.NET code is to make the library compatible with Unity.
+
+From your local [source/Triangle.NET/Triangle](source/Triangle.NET/Triangle) directory, you can run:
+
+```
+mcs -target:library -out:triangle-net.dll -nowarn:414 -debug -recurse:*.cs
+```
+
+to build a DLL that will work with Unity.
+
+* `-nowarn:414`: suppress the warning about "TriangleNet.Meshing.Algorithm.Dwyer.rand" being assigned but never used.
+* `-debug`: generate an `.mdb` file with debugging symbols.
+
 # Documentation
 
 This documention has been transferred from the wiki in the original Codeplex site (with links fixed, et al).
