@@ -4,7 +4,7 @@
 
 With the shutdown of [Codeplex](https://archive.codeplex.com/) in 2017, [Christian Woltering](https://github.com/wo80)'s [Triangle.NET](https://archive.codeplex.com/?p=triangle) project was placed in read-only mode and archived.
 
-Since then, a number of snapshots have been made:
+Since the shutdown announcement, a number of snapshots have been made:
 
 * [Chaosed0/DelaunayUnity](https://github.com/Chaosed0/DelaunayUnity) - Feb 2017, source code only + Unity support
    * Author wrote companion post [Delaunay Triangulation for Terrain Generation in Unity](https://straypixels.net/delaunay-triangulation-terrain/)
