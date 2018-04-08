@@ -1,8 +1,8 @@
 # Example 7 - Boolean operations on meshes
 
-This example will show how to use regions to perform boolean operations on meshes. The code uses the [RegionIterator](https://triangle.codeplex.com/SourceControl/latest#Triangle.NET/Triangle/Meshing/Iterators/RegionIterator.cs) class:
+This example will show how to use regions to perform boolean operations on meshes. The code uses the [RegionIterator](/source/Triangle.NET/Triangle/Meshing/Iterators/RegionIterator.cs) class:
 
-{code:c#}
+```
 namespace Examples
 {
     using System;
@@ -66,4 +66,4 @@ namespace Examples
         }
     }
 }
-{code:c#}
+```
