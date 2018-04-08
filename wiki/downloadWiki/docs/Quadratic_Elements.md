@@ -2,7 +2,7 @@
 
 Triangle.NET itself does not support the output of quadratic elements. The following example code shows, how to create the extra nodes and save the necessary information to access the elements nodes:
 
-{code:c#}
+```
 /// <summary>
 /// Create extra nodes for quadratic subparametric elements.
 /// </summary>
@@ -95,4 +95,4 @@ public class QuadraticElements
         nid = neighbor == null ? -1 : neighbor.ID;
     }
 }
-{code:c#}
+```
