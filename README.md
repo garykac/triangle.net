@@ -1,3 +1,5 @@
+![Mesh Lake Superior](wiki/Home_mesh-superior.png)
+
 # Triangle.NET (by Christian Woltering)
 
 With the shutdown of [Codeplex](https://archive.codeplex.com/) in 2017, Christian Woltering's [Triangle.NET](https://archive.codeplex.com/?p=triangle) project was placed in read-only mode and archived.
@@ -31,7 +33,7 @@ and a current "Beta 4" version.
 
 Note that there are significant differences between Beta 3 and Beta 4, which are discussed in the [From Beta 3 to 4](wiki/From_Beta_3_To_4.md) page.
 
-The earlier releases are archived in the [releases](/releases) directory. The current release is in [source](/source).
+The earlier releases are archived in the [releases](/releases) directory. The current Beta 4 release is in [source](/source).
 
 # Documentation
 
