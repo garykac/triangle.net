@@ -76,3 +76,5 @@ mcs -target:library -out:triangle-net.dll -sdk:2 -define:UNITY -nowarn:414 -debu
 * `-debug`: generate an `.mdb` file with debugging symbols.
 
 A pre-built version of an `mcs`-compiled DLL (and symbols) suitable for use with Unity is located in [unity](unity).
+
+The changes required to make Unity's runtime happy are in [this cl](https://github.com/garykac/triangle.net/commit/19bfd1b4eb79eb783511f69bc1593cf84261b256).
