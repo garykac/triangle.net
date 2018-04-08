@@ -1,8 +1,8 @@
 # Example 4 - Refining regions
 
-This example will show how to refine a mesh in a specific region (this example uses code from [Example 2](Example-2)):
+This example will show how to refine a mesh in a specific region (this example uses code from [Example 2](Example_2.md)):
 
-{code:c#}
+```
 namespace Examples
 {
     using TriangleNet;
@@ -69,4 +69,4 @@ namespace Examples
         }
     }
 }
-{code:c#}
+```
