@@ -18,6 +18,7 @@ The triangulation algorithms in the _TriangleNet.Meshing.Algorithm_ namespace in
 * Dwyer (Divide & Conquer) (_the default algorithm_)
 * Sweepline (_reasonably fast_)
 * Incremental (_slow_)
+
 All classes implement the `ITriangulator` interface, so they can be used to create a mesh from a given point set.
 
 ## Triangulating a polygon
