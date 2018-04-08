@@ -64,7 +64,7 @@ The upcoming 2018 release of Unity (currently at 2018.1 beta) will support C# 6 
 
 However, in the meantime...
 
-To build a Unity-compatible DLL from your local [source/Triangle.NET/Triangle](source/Triangle.NET/Triangle) directory, you can run:
+To build a Unity-compatible DLL from your local `source/Triangle.NET/Triangle` directory, you can run:
 
 ```
 mcs -target:library -out:triangle-net.dll -sdk:2 -define:UNITY -nowarn:414 -debug -recurse:*.cs
