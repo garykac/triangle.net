@@ -4,7 +4,7 @@ This example will show how to deal with degeneracies on a mesh boundary caused b
 
 Assume we have a simple box shape given by a point set and the corresponding mesh. Now let's rotate the box and triangulate the rotated point set:
 
-![](Example%2010_example-10.png)
+![](Example_10_example-10.png)
 
 You would expect the generated meshes to be equivalent (in a topological sense), but you will find that some flat triangles have been created on the boundary.
 
