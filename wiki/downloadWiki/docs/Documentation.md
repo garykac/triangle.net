@@ -1,5 +1,5 @@
 ## Beta 4 coming
-With the new beta, which will be released soon, quite a few breaking changes have been introduced. Please read the [From Beta 3 To 4](From-Beta-3-To-4.md) guide for a short overview. The new code is available in the _SOURCE CODE_ section.
+With the new beta, which will be released soon, quite a few breaking changes have been introduced. Please read the [From Beta 3 To 4](From_Beta_3_To_4.md) guide for a short overview. The new code is available in the _SOURCE CODE_ section.
 
 ## Triangle.NET API (Beta 4)
 * Creating a [Mesh](Mesh.md)
@@ -16,5 +16,5 @@ With the new beta, which will be released soon, quite a few breaking changes hav
 
 ## More information
 * Mesh [Topology](Topology.md)
-* Using [Quadratic Elements](Quadratic-Elements.md)
+* Using [Quadratic Elements](Quadratic_Elements.md)
 * Refining [Regions](Regions.md)
