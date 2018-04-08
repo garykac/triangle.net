@@ -50,5 +50,6 @@ Examples:
 * [Example 7 - Boolean operations on meshes](wiki/Example_7.md)
 * [Example 10 - Troubleshooting 1](wiki/Example_10.md)
 * [Refining regions](wiki/Regions.md)
+* [Using Quadratic Elements](wiki/Quadratic_Elements.md)
 
 (No, I don't know why there are numbering gaps. The "missing" examples are most like elsewhere in the documentation.)
