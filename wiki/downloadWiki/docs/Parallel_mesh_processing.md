@@ -1,6 +1,6 @@
 ## Example 6: Parallel mesh processing
 
-{code:c#}
+```
 namespace Example6
 {
     using System;
@@ -167,4 +167,4 @@ namespace Example6
         }
     }
 }
-{code:c#}
+```
