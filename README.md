@@ -2,6 +2,12 @@
 
 # Triangle.NET (by Christian Woltering)
 
+=====
+
+UPDATE: Christian appears to have revived this project in Github around 2022. It now lives at [https://github.com/wo80/Triangle.NET](https://github.com/wo80/Triangle.NET).
+
+=====
+
 With the shutdown of [Codeplex](https://archive.codeplex.com/) in 2017, [Christian Woltering](https://github.com/wo80)'s [Triangle.NET](https://archive.codeplex.com/?p=triangle) project was placed in read-only mode and archived.
 
 Since the shutdown announcement, a number of snapshots have been made:
@@ -21,7 +27,7 @@ And now this one (sigh, cue relevant [XKCD comic](https://xkcd.com/927/)).
 
 One thing missing from these other releases is the documentation that was present on the original Codeplex site. With the project now being archived, these documents are no longer readily accessible on the web -- you need to download the `zip` archive and view them in one of the various archived formats (`html`, `md` or `codeplexwiki`), all of which suffer from various broken links.
 
-To the best of my knowledge, there isn't an "official" new home for Triangle.NET. If one is created, then I will add a link here (or transfer this repo over to him).
+~~To the best of my knowledge, there isn't an "official" new home for Triangle.NET. If one is created, then I will add a link here (or transfer this repo over to him).~~
 
 # Triangle.NET versions
 
